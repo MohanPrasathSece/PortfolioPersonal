@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Portfolio Design System - Vibrant Orange & Black Theme */
+
+@layer base {
+  :root {
+    /* Dark theme with vibrant orange */
+    --background: 0 0% 3%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+
+    /* Vibrant Orange Primary */
+    --primary: 16 100% 60%;
+    --primary-foreground: 0 0% 2%;
+    --primary-glow: 16 100% 65%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 16 100% 60%;
+    --accent-foreground: 0 0% 2%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 16 100% 60%;
+
+    --radius: 0.75rem;
+
+    /* Custom Portfolio Colors */
+    --orange-vibrant: 16 100% 60%;
+    --orange-glow: 16 100% 65%;
+    --orange-dark: 16 100% 45%;
+    --black-primary: 0 0% 3%;
+    --black-card: 0 0% 8%;
+    --black-surface: 0 0% 12%;
+    --gray-text: 0 0% 70%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--orange-vibrant)) 0%, hsl(var(--orange-dark)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--black-card)) 0%, hsl(var(--black-surface)) 100%);
+    --gradient-orange: linear-gradient(90deg, hsl(var(--orange-vibrant)) 0%, hsl(var(--orange-glow)) 100%);
+    
+    /* Shadows */
+    --shadow-orange: 0 10px 40px hsl(var(--orange-vibrant) / 0.3);
+    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 30px hsl(var(--orange-vibrant) / 0.5);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .dark {
+    /* Using same values as we want dark theme by default */
+    --background: 0 0% 3%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 16 100% 60%;
+    --primary-foreground: 0 0% 2%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 16 100% 60%;
+    --accent-foreground: 0 0% 2%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 16 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Portfolio specific components */
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+  
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+  
+  .orange-gradient {
+    background: var(--gradient-orange);
+  }
+  
+  .glow-orange {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .card-shadow {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .orange-shadow {
+    box-shadow: var(--shadow-orange);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+  
+  /* Animated border for profile image */
+  .animated-border {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: conic-gradient(from 0deg, hsl(var(--orange-vibrant)), hsl(var(--orange-glow)), hsl(var(--orange-vibrant)));
+    border-radius: 50%;
+    animation: spin 3s linear infinite;
+    z-index: -1;
+  }
+  
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-smooth hover:-translate-y-2 hover:glow-orange;
+  }
+  
+  .hover-glow {
+    @apply transition-smooth hover:glow-orange;
+  }
+  
+  /* Typing animation */
+  .typing-animation {
+    border-right: 2px solid hsl(var(--orange-vibrant));
+    animation: typing 3s steps(40) 1s forwards, blink 1s infinite;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes typing {
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 50% { border-color: hsl(var(--orange-vibrant)); }
+  51%, 100% { border-color: transparent; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-orange {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(var(--orange-vibrant) / 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px hsl(var(--orange-vibrant) / 0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
