@@ -1,4 +1,12 @@
 import { Award, ExternalLink, Calendar } from "lucide-react";
+import awsImg from "@/assets/certificates/aws.png";
+import goldmanImg from "@/assets/certificates/goldman.png";
+import mongodbImg from "@/assets/certificates/mongodb.png";
+import nptelImg from "@/assets/certificates/nptel.png";
+import postmanImg from "@/assets/certificates/postman.png";
+import pythonImg from "@/assets/certificates/python.png";
+import reactImg from "@/assets/certificates/react.png";
+import udemyImg from "@/assets/certificates/udemy.png";
 
 const CertificationsSection = () => {
   const certifications = [
@@ -8,7 +16,8 @@ const CertificationsSection = () => {
       description: "Comprehensive course on algorithms and data structures",
       year: "2023",
       category: "Algorithms",
-      verified: true
+      verified: true,
+      image: nptelImg
     },
     {
       title: "Postman API Student Expert",
@@ -16,7 +25,8 @@ const CertificationsSection = () => {
       description: "API testing and development expertise certification",
       year: "2023",
       category: "API Development",
-      verified: true
+      verified: true,
+      image: postmanImg
     },
     {
       title: "AWS Solutions Architecture",
@@ -24,7 +34,8 @@ const CertificationsSection = () => {
       description: "Cloud architecture and AWS services virtual experience program",
       year: "2024",
       category: "Cloud Computing",
-      verified: true
+      verified: true,
+      image: awsImg
     },
     {
       title: "Goldman Sachs Virtual Experience",
@@ -32,7 +43,8 @@ const CertificationsSection = () => {
       description: "Software engineering virtual experience program",
       year: "2024",
       category: "Software Engineering",
-      verified: true
+      verified: true,
+      image: goldmanImg
     },
     {
       title: "Data Structures & Algorithms",
@@ -40,7 +52,8 @@ const CertificationsSection = () => {
       description: "Complete DSA course in C/C++ with practical implementations",
       year: "2023",
       category: "Programming",
-      verified: true
+      verified: true,
+      image: udemyImg
     },
     {
       title: "React Development Fundamentals",
@@ -48,7 +61,8 @@ const CertificationsSection = () => {
       description: "Advanced React development and modern frontend practices",
       year: "2024",
       category: "Frontend Development",
-      verified: true
+      verified: true,
+      image: reactImg
     },
     {
       title: "Node.js Backend Development",
@@ -64,7 +78,8 @@ const CertificationsSection = () => {
       description: "NoSQL database design and optimization techniques",
       year: "2023",
       category: "Database",
-      verified: true
+      verified: true,
+      image: mongodbImg
     },
     {
       title: "JavaScript ES6+ Mastery",
@@ -88,7 +103,8 @@ const CertificationsSection = () => {
       description: "Advanced Python concepts and application development",
       year: "2023",
       category: "Programming",
-      verified: true
+      verified: true,
+      image: pythonImg
     },
     {
       title: "Agile Development Methodology",
@@ -135,12 +151,25 @@ const CertificationsSection = () => {
               className="card-gradient card-shadow rounded-xl p-4 hover-lift group"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              {/* Certificate Image Placeholder */}
-              <div className="aspect-[4/3] bg-secondary border-2 border-dashed border-primary/30 rounded-lg mb-4 flex items-center justify-center group-hover:border-primary transition-smooth">
-                <div className="text-center">
-                  <Award className="h-8 w-8 text-primary mx-auto mb-1 opacity-50 group-hover:opacity-100 transition-smooth" />
-                  <p className="text-xs text-gray-text">Certificate Image</p>
-                </div>
+              {/* Certificate Image */}
+              <div className="aspect-[4/3] bg-secondary border-2 border-dashed border-primary/30 rounded-lg mb-4 flex items-center justify-center overflow-hidden group-hover:border-primary transition-smooth">
+                {cert.image ? (
+                  <img
+                    src={cert.image}
+                    alt={`${cert.title} - ${cert.provider}`}
+                    className="w-full h-full object-contain p-2"
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (target.src.endsWith("/placeholder.svg")) return;
+                      target.src = "/placeholder.svg";
+                    }}
+                  />
+                ) : (
+                  <div className="text-center">
+                    <Award className="h-8 w-8 text-primary mx-auto mb-1 opacity-50 group-hover:opacity-100 transition-smooth" />
+                    <p className="text-xs text-gray-text">Certificate Image</p>
+                  </div>
+                )}
               </div>
 
               {/* Header */}
@@ -179,10 +208,22 @@ const CertificationsSection = () => {
 
               {/* Hover Effect - Show Link */}
               <div className="mt-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <div className="flex items-center text-primary text-xs hover:text-primary-glow cursor-pointer">
-                  <ExternalLink className="h-3 w-3 mr-1" />
-                  View
-                </div>
+                {cert.image ? (
+                  <a
+                    href={cert.image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center text-primary text-xs hover:text-primary-glow"
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    View
+                  </a>
+                ) : (
+                  <div className="flex items-center text-primary text-xs hover:text-primary-glow cursor-default">
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    View
+                  </div>
+                )}
               </div>
             </div>
           ))}

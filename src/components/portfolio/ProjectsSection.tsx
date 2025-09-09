@@ -1,9 +1,8 @@
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 const ProjectsSection = () => {
-  const [currentProject, setCurrentProject] = useState(0);
+  // Horizontal scroll variant – no active state needed
 
   const projects = [
     {
@@ -37,21 +36,7 @@ const ProjectsSection = () => {
       github: "#",
       demo: "#"
     },
-    {
-      title: "Task Manager",
-      tagline: "Collaborative Task Management",
-      description: "A simple but functional task management web app with collaboration features and productivity insights.",
-      features: [
-        "Task creation & assignment",
-        "Task progress tracking",
-        "Collaboration support (multi-user)",
-        "Task reporting for productivity insights"
-      ],
-      techStack: ["JavaScript", "HTML", "CSS"],
-      image: "/placeholder-project.jpg",
-      github: "#",
-      demo: "#"
-    },
+    // 'Task Manager' project removed per request
     {
       title: "Food Rescue Network",
       tagline: "Real-time Food Donation Platform",
@@ -122,14 +107,9 @@ const ProjectsSection = () => {
   const sortedProjects = hasYears
     ? [...projects].sort((a: any, b: any) => (b.year ?? -Infinity) - (a.year ?? -Infinity))
     : projects;
+  const visibleProjects = sortedProjects.filter((p) => p.title !== "Task Manager");
 
-  const nextProject = () => {
-    setCurrentProject((prev) => (prev + 1) % sortedProjects.length);
-  };
-
-  const prevProject = () => {
-    setCurrentProject((prev) => (prev - 1 + sortedProjects.length) % sortedProjects.length);
-  };
+  // Navigation state removed in scroll variant
 
   const getTechBadgeColor = (tech: string) => {
     const colors: { [key: string]: string } = {
@@ -157,28 +137,15 @@ const ProjectsSection = () => {
           </p>
         </div>
 
-        {/* Navigation Controls */}
-        <div className="flex justify-center items-center gap-4 mb-8">
-          <Button variant="outline" size="sm" onClick={prevProject} className="rounded-full">
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <span className="text-primary font-semibold">
-            {currentProject + 1} of {sortedProjects.length}
-          </span>
-          <Button variant="outline" size="sm" onClick={nextProject} className="rounded-full">
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
+        {/* Horizontal Scroll Controls (scroll with trackpad/mouse) */}
+        <div className="text-center mb-6 text-sm text-gray-text">Scroll to view more projects →</div>
 
-        {/* Project Carousel */}
-        <div className="relative overflow-hidden">
-          <div 
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentProject * 100}%)` }}
-          >
-            {sortedProjects.map((project, index) => (
-              <div key={index} className="w-full flex-shrink-0 px-4">
-                <div className="card-gradient card-shadow rounded-2xl overflow-hidden hover-lift max-w-5xl mx-auto">
+        {/* Project List - Horizontal Scroll */}
+        <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
+          <div className="flex gap-6 snap-x snap-mandatory">
+            {visibleProjects.map((project, index) => (
+              <div key={index} className="snap-start min-w-[320px] md:min-w-[560px] lg:min-w-[860px]">
+                <div className="card-gradient card-shadow rounded-2xl overflow-hidden hover-lift">
                   <div className="grid lg:grid-cols-2 gap-0">
                     {/* Project Image */}
                     <div className="aspect-video lg:aspect-square bg-muted flex items-center justify-center">
@@ -246,20 +213,7 @@ const ProjectsSection = () => {
           </div>
         </div>
 
-        {/* Project Indicators */}
-        <div className="flex justify-center mt-8 gap-2">
-          {sortedProjects.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentProject(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentProject ? 'bg-primary' : 'bg-muted'
-              }`}
-              aria-label={`Go to project ${index + 1}`}
-              title={`Go to project ${index + 1}`}
-            />
-          ))}
-        </div>
+        {/* Indicators removed in scrollable variant */}
       </div>
     </section>
   );

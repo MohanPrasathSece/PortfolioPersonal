@@ -35,8 +35,8 @@ const ContactSection = () => {
     {
       icon: <Linkedin className="h-6 w-6" />,
       label: "LinkedIn",
-      href: "#",
-      username: "LinkedIn"
+      href: "https://www.linkedin.com/in/mohan-prasath-s-fullstackdeveloper",
+      username: "mohan-prasath-s-fullstackdeveloper"
     },
     {
       icon: <Code className="h-6 w-6" />,

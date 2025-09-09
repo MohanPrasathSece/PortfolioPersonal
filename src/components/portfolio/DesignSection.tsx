@@ -1,13 +1,19 @@
 import { Palette, Figma, Layers, PenTool, Zap } from "lucide-react";
+import melProfile from "@/assets/profile.png";
+import melSearch from "@/assets/search.png";
+import melLibrary from "@/assets/library.png";
+import melExplore from "@/assets/explore.png";
+import melHome from "@/assets/home.png";
+import melSong from "@/assets/song.png";
 
 const DesignSection = () => {
   const melodiaScreens = [
-    { id: 1, title: "Profile Screen", description: "My Profile with stats and player", image: "/melodia-profile.png" },
-    { id: 2, title: "Search Screen", description: "Search results with suggestions", image: "/melodia-search.png" },
-    { id: 3, title: "Playlist View", description: "Custom playlist management" },
-    { id: 4, title: "Search & Browse", description: "Advanced music search and categories" },
-    { id: 5, title: "Profile & Settings", description: "User profile and app preferences" },
-    { id: 6, title: "Social Features", description: "Music sharing and social interactions" }
+    { id: 1, title: "Profile", description: "My Profile with stats and player", image: melProfile },
+    { id: 2, title: "Search", description: "Search results with suggestions", image: melSearch },
+    { id: 3, title: "Playlists", description: "Custom playlist management", image: melLibrary },
+    { id: 4, title: "Explore", description: "Advanced music search and categories", image: melExplore },
+    { id: 5, title: "Home", description: "User profile and app preferences", image: melHome },
+    { id: 6, title: "Now Playing", description: "Music sharing and social interactions", image: melSong }
   ];
 
   const designTools = [
@@ -18,7 +24,7 @@ const DesignSection = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-black-surface">
+    <section className="py-20 px-6 bg-black">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-4">
@@ -45,8 +51,9 @@ const DesignSection = () => {
               </div>
               <h3 className="font-semibold mb-2">{tool.name}</h3>
               {/* Proficiency removed as requested */}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Melodia Project Info */}
@@ -71,20 +78,21 @@ const DesignSection = () => {
         </div>
 
         {/* Melodia Screen Gallery */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {melodiaScreens.map((screen, index) => (
-            <div
-              key={screen.id}
-              className="group card-gradient card-shadow rounded-xl overflow-hidden hover-lift"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
+        <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
+          <div className="flex gap-6 snap-x snap-mandatory">
+            {melodiaScreens.map((screen, index) => (
+              <div
+                key={screen.id}
+                className="group rounded-xl overflow-hidden hover-lift snap-start min-w-[260px] md:min-w-[280px] border border-muted/50 bg-transparent hover:bg-black/20 transition-smooth"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
               {/* Image or Placeholder */}
               {screen.image ? (
-                <div className="bg-secondary h-[420px] md:h-[460px] lg:h-[500px]">
+                <div className="bg-black/60 aspect-[9/16] mx-auto w-[200px] md:w-[220px] rounded-[1.6rem] p-3 border border-muted shadow-inner">
                   <img
                     src={screen.image}
                     alt={`Melodia ${screen.title}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain object-top rounded-xl shadow-md"
                     onError={(e) => {
                       const target = e.currentTarget as HTMLImageElement;
                       if (target.src.endsWith("/placeholder.svg")) return;
@@ -93,7 +101,7 @@ const DesignSection = () => {
                   />
                 </div>
               ) : (
-                <div className="bg-secondary h-[420px] md:h-[460px] lg:h-[500px] border-2 border-dashed border-primary/30 flex items-center justify-center group-hover:border-primary transition-smooth">
+                <div className="bg-black/60 aspect-[9/16] mx-auto w-[200px] md:w-[220px] rounded-[1.6rem] p-3 border-2 border-dashed border-primary/30 flex items-center justify-center group-hover:border-primary transition-smooth">
                   <div className="text-center">
                     <Palette className="h-12 w-12 text-primary mx-auto mb-2 opacity-50 group-hover:opacity-100 transition-smooth" />
                     <p className="text-sm text-gray-text">Melodia {screen.title}</p>
@@ -103,17 +111,8 @@ const DesignSection = () => {
               )}
               
               {/* Screen Info */}
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm bg-primary/20 text-primary px-2 py-1 rounded-full">
-                    Mobile App
-                  </span>
-                  <div className="flex items-center text-sm text-gray-text">
-                    <Figma className="h-4 w-4 mr-1" />
-                    Figma
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-smooth">
+              <div className="p-5">
+                <h3 className="text-xl font-semibold mb-1.5 group-hover:text-primary transition-smooth">
                   {screen.title}
                 </h3>
                 <p className="text-gray-text text-sm">
