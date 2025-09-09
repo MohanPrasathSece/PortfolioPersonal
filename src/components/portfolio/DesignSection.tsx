@@ -56,23 +56,12 @@ const DesignSection = () => {
           </div>
         </div>
 
-        {/* Melodia Project Info */}
-        <div className="mb-12">
-          <div className="card-gradient card-shadow rounded-xl p-8 max-w-4xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-3xl font-bold text-primary mb-2">Melodia</h3>
-                <p className="text-gray-text">Music Streaming Mobile App</p>
-              </div>
-              <div className="flex items-center text-primary">
-                <Figma className="h-8 w-8 mr-2" />
-                <span className="font-semibold">Figma Design</span>
-              </div>
-            </div>
-            <p className="text-gray-text leading-relaxed">
-              A modern music streaming application designed with focus on user experience, 
-              featuring intuitive navigation, personalized recommendations, and social music sharing. 
-              The design emphasizes accessibility and seamless interaction across all screens.
+        {/* Melodia Project Info (compact) */}
+        <div className="mb-10">
+          <div className="rounded-xl border border-muted/50 bg-black/20 p-6 max-w-3xl mx-auto text-center">
+            <h3 className="text-2xl font-bold mb-2 text-primary">Melodia</h3>
+            <p className="text-sm text-gray-text">
+              A concept music app focused on clean navigation, quick search, playlists, and social listening.
             </p>
           </div>
         </div>
@@ -83,7 +72,7 @@ const DesignSection = () => {
             {melodiaScreens.map((screen, index) => (
               <div
                 key={screen.id}
-                className="group rounded-xl overflow-hidden hover-lift snap-start min-w-[260px] md:min-w-[280px] border border-muted/50 bg-transparent hover:bg-black/20 transition-smooth"
+                className="group rounded-xl overflow-hidden snap-start min-w-[260px] md:min-w-[280px] border border-muted/50 bg-transparent hover:bg-black/20 transition-smooth hover:-translate-y-1"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
               {/* Image or Placeholder */}

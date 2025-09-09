@@ -108,6 +108,13 @@ const ProjectsSection = () => {
     ? [...projects].sort((a: any, b: any) => (b.year ?? -Infinity) - (a.year ?? -Infinity))
     : projects;
   const visibleProjects = sortedProjects.filter((p) => p.title !== "Task Manager");
+  // Bring MediSmart-AI to the front
+  const orderedProjects = [
+    ...visibleProjects.filter((p) => p.title === "MediSmart-AI"),
+    ...visibleProjects.filter((p) => p.title === "Food Rescue Network"),
+    ...visibleProjects.filter((p) => p.title !== "MediSmart-AI" && p.title !== "Food Rescue Network"),
+  ];
+  const featuredTitles = new Set(["MediSmart-AI", "Food Rescue Network"]);
 
   // Navigation state removed in scroll variant
 
@@ -143,28 +150,35 @@ const ProjectsSection = () => {
         {/* Project List - Horizontal Scroll */}
         <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
           <div className="flex gap-6 snap-x snap-mandatory">
-            {visibleProjects.map((project, index) => (
-              <div key={index} className="snap-start min-w-[320px] md:min-w-[560px] lg:min-w-[860px]">
-                <div className="card-gradient card-shadow rounded-2xl overflow-hidden hover-lift">
-                  <div className="grid lg:grid-cols-2 gap-0">
-                    {/* Project Image */}
-                    <div className="aspect-video lg:aspect-square bg-muted flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <ExternalLink className="h-8 w-8 text-primary" />
+            {orderedProjects.map((project, index) => {
+              const isFeatured = featuredTitles.has(project.title);
+              return (
+                <div key={index} className="snap-start min-w-[320px] sm:min-w-[560px] lg:min-w-[900px]">
+                  <div className={`card-gradient card-shadow rounded-2xl overflow-hidden hover-lift h-full relative ${isFeatured ? 'border border-primary/40' : ''}`}>
+                    {isFeatured && (
+                      <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground shadow-md">
+                        Featured
+                      </div>
+                    )}
+                    <div className="grid lg:grid-cols-2 gap-0">
+                      {/* Project Image */}
+                      <div className="bg-muted flex items-center justify-center h-[220px] md:h-[260px] lg:h-[320px]">
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <ExternalLink className="h-8 w-8 text-primary" />
+                          </div>
+                          <p className="text-muted-foreground">Project Screenshot</p>
+                          <p className="text-sm text-gray-text mt-1">Image placeholder - insert project screenshot</p>
                         </div>
-                        <p className="text-muted-foreground">Project Screenshot</p>
-                        <p className="text-sm text-gray-text mt-1">Image placeholder - insert project screenshot</p>
                       </div>
-                    </div>
 
-                    {/* Project Details */}
-                    <div className="p-8">
-                      <div className="mb-4">
-                        <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                        <p className="text-primary font-medium mb-4">{project.tagline}</p>
-                        <p className="text-gray-text leading-relaxed">{project.description}</p>
-                      </div>
+                      {/* Project Details */}
+                      <div className="p-8">
+                        <div className="mb-4">
+                          <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+                          <p className="text-primary font-medium mb-4">{project.tagline}</p>
+                          <p className="text-gray-text leading-relaxed">{project.description}</p>
+                        </div>
 
                       {/* Features */}
                       <div className="mb-6">
@@ -207,9 +221,10 @@ const ProjectsSection = () => {
                       </div>
                     </div>
                   </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
