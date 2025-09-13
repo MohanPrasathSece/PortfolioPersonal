@@ -10,7 +10,7 @@ import ContactSection from "@/components/portfolio/ContactSection";
 
 const Index = () => {
   return (
-    <main className="bg-background text-foreground">
+    <main className="bg-background text-foreground relative">
       {/* Hero Section */}
       <HeroSection />
       
@@ -37,6 +37,7 @@ const Index = () => {
       
       {/* Contact Section */}
       <ContactSection />
+
     </main>
   );
 };

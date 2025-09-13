@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { Download, Mail, ChevronDown } from "lucide-react";
+import { Download, Mail } from "lucide-react";
 import profileImg from "@/assets/hero-profile.jpg";
+import OrbBot from "@/components/OrbBot";
 
 const HeroSection = () => {
   return (
     <section className="min-h-screen flex items-center justify-center px-6 py-20 relative">
       <div className="container max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Profile Image */}
+          {/* Profile Image */
+          }
           <div className="flex justify-center lg:order-2">
             <div className="relative">
               <div className="animated-border w-80 h-80">
@@ -22,6 +24,7 @@ const HeroSection = () => {
                   }}
                 />
               </div>
+              {/* OrbBot moved to top-right as absolute overlay */}
             </div>
           </div>
 
@@ -68,18 +71,11 @@ const HeroSection = () => {
               </Button>
             </div>
           </div>
-          {/* Scroll Cue */}
-          <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-            <a
-              href="#skills"
-              className="flex flex-col items-center text-gray-text hover:text-primary transition-smooth float-anim"
-              aria-label="Scroll to skills"
-            >
-              <ChevronDown className="h-6 w-6" aria-hidden="true" />
-              <span className="text-xs mt-1">Scroll</span>
-            </a>
-          </div>
         </div>
+      </div>
+      {/* OrbBot in the top-right corner */}
+      <div className="pointer-events-none absolute right-4 top-4 md:right-8 md:top-8">
+        <OrbBot size={160} />
       </div>
     </section>
   );
