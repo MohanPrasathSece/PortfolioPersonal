@@ -206,6 +206,19 @@
   50% { transform: translateY(-10px); }
 }
 
+/* Utility for floating animation (used by scroll cue) */
+@layer utilities {
+  .float-anim {
+    animation: float 3s ease-in-out infinite;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .float-anim {
+    animation: none !important;
+  }
+}
 @layer utilities {
   /* Hide scrollbar utility (keeps scrolling functional) */
   .no-scrollbar::-webkit-scrollbar {

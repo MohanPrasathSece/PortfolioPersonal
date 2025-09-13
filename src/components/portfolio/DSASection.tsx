@@ -1,5 +1,13 @@
-import { Trophy, Target, Brain, BarChart3, Code } from "lucide-react";
+import { Trophy, Target, Brain, BarChart3 } from "lucide-react";
 
+
+// Brand logo URLs (Simple Icons SVG CDN / site favicon)
+const ICONS = {
+  leetcode: "https://cdn.simpleicons.org/leetcode/ffffff",
+  hackerrank: "https://cdn.simpleicons.org/hackerrank/ffffff",
+  codechef: "https://cdn.simpleicons.org/codechef/ffffff",
+  skillrack: "https://skillrack.com/favicon.ico",
+};
 
 const DSASection = () => {
   const dsaTopics = [
@@ -55,7 +63,7 @@ const DSASection = () => {
               >
                 <div className="flex items-center">
                   <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
-                    <Code className="h-5 w-5" />
+                    <img src={ICONS.leetcode} alt="LeetCode" className="h-5 w-5" />
                   </div>
                   <div>
                     <div className="font-medium">LeetCode</div>
@@ -80,7 +88,7 @@ const DSASection = () => {
                 >
                   <div className="flex items-center">
                     <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
-                      <Code className="h-5 w-5" />
+                      <img src={ICONS.hackerrank} alt="HackerRank" className="h-5 w-5" />
                     </div>
                     <div>
                       <div className="font-medium">HackerRank</div>
@@ -97,7 +105,7 @@ const DSASection = () => {
                 >
                   <div className="flex items-center">
                     <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
-                      <Code className="h-5 w-5" />
+                      <img src={ICONS.skillrack} alt="Skillrack" className="h-5 w-5 rounded-sm" />
                     </div>
                     <div>
                       <div className="font-medium">Skillrack</div>
@@ -113,7 +121,9 @@ const DSASection = () => {
                   className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-glow group"
                 >
                   <div className="flex items-center">
-                    <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">CC</div>
+                    <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
+                      <img src={ICONS.codechef} alt="CodeChef" className="h-5 w-5" />
+                    </div>
                     <div>
                       <div className="font-medium">CodeChef</div>
                       <div className="text-gray-text text-sm">156 Problems Solved</div>
