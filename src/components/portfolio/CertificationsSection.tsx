@@ -14,7 +14,7 @@ const CertificationsSection = () => {
       title: "NPTEL Algorithms",
       provider: "NPTEL",
       description: "Comprehensive course on algorithms and data structures",
-      year: "2023",
+      year: "2025",
       category: "Algorithms",
       verified: true,
       image: nptelImg
@@ -23,25 +23,33 @@ const CertificationsSection = () => {
       title: "Postman API Student Expert",
       provider: "Postman",
       description: "API testing and development expertise certification",
-      year: "2023",
+      year: "2025",
       category: "API Development",
       verified: true,
       image: postmanImg
     },
     {
+      title: "Java Certification",
+      provider: "Red Hat",
+      description: "Core Java concepts and enterprise-grade Java practices",
+      year: "2025",
+      category: "Programming",
+      verified: true
+    },
+    {
       title: "AWS Solutions Architecture",
       provider: "Forage (Virtual Experience)",
       description: "Cloud architecture and AWS services virtual experience program",
-      year: "2024",
+      year: "2025",
       category: "Cloud Computing",
       verified: true,
       image: awsImg
     },
     {
       title: "Goldman Sachs Virtual Experience",
-      provider: "Goldman Sachs",
+      provider: "Forage (Virtual Experience)",
       description: "Software engineering virtual experience program",
-      year: "2024",
+      year: "2025",
       category: "Software Engineering",
       verified: true,
       image: goldmanImg
@@ -59,7 +67,7 @@ const CertificationsSection = () => {
       title: "Learning React",
       provider: "Infosys",
       description: "Advanced React development and modern frontend practices",
-      year: "2024",
+      year: "2025",
       category: "Frontend Development",
       verified: true,
       image: reactImg
@@ -73,10 +81,10 @@ const CertificationsSection = () => {
       verified: true
     },
     {
-      title: "MongoDB Database Design",
+      title: "Learning MongoDB",
       provider: "Infosys",
       description: "NoSQL database design and optimization techniques",
-      year: "2023",
+      year: "2025",
       category: "Database",
       verified: true,
       image: mongodbImg
@@ -98,10 +106,10 @@ const CertificationsSection = () => {
       verified: true
     },
     {
-      title: "Python Programming Advanced",
-      provider: "Python Institute",
+      title: "Python Essentials",
+      provider: "Cisco",
       description: "Advanced Python concepts and application development",
-      year: "2023",
+      year: "2024",
       category: "Programming",
       verified: true,
       image: pythonImg
@@ -144,11 +152,14 @@ const CertificationsSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {certifications.filter((c) => !!c.image).map((cert, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+          {[...certifications]
+            .sort((a, b) => Number(b.year) - Number(a.year))
+            .filter((c) => !!c.image)
+            .map((cert, index) => (
             <div
               key={cert.title}
-              className="card-gradient card-shadow rounded-xl p-4 hover-lift group"
+              className="card-gradient card-shadow rounded-xl p-5 hover-lift group"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Certificate Image */}
@@ -157,7 +168,7 @@ const CertificationsSection = () => {
                   <img
                     src={cert.image}
                     alt={`${cert.title} - ${cert.provider}`}
-                    className="w-full h-full object-contain p-2"
+                    className="w-full h-full object-contain p-3"
                     onError={(e) => {
                       const target = e.currentTarget as HTMLImageElement;
                       if (target.src.endsWith("/placeholder.svg")) return;
