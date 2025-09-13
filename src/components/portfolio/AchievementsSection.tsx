@@ -50,7 +50,22 @@ const AchievementsSection = () => {
           <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-primary/30 h-full"></div>
 
           <div className="space-y-12">
-            {[...achievements].sort((a, b) => Number(b.year) - Number(a.year)).map((achievement, index) => (
+            {[...achievements]
+              .sort((a, b) => {
+                // Primary sort: by year (desc)
+                const yearDiff = Number(b.year) - Number(a.year);
+                if (yearDiff !== 0) return yearDiff;
+                // Secondary sort: explicit priority among same-year items
+                const priority: Record<string, number> = {
+                  "Top 10 - Gen-AI Hackathon (133 Teams)": 0,
+                  "1st Prize - VR Escape Room Game": 1,
+                  "Skillrack 700+ Problems": 2,
+                };
+                const pa = priority[a.title] ?? 99;
+                const pb = priority[b.title] ?? 99;
+                return pa - pb;
+              })
+              .map((achievement, index) => (
               <div
                 key={achievement.title}
                 className={`flex items-center ${

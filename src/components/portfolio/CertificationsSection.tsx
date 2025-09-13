@@ -145,7 +145,7 @@ const CertificationsSection = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {certifications.map((cert, index) => (
+          {certifications.filter((c) => !!c.image).map((cert, index) => (
             <div
               key={cert.title}
               className="card-gradient card-shadow rounded-xl p-4 hover-lift group"

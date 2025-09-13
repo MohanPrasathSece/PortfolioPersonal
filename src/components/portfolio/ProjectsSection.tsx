@@ -132,13 +132,13 @@ const ProjectsSection = () => {
         <div className="text-center mb-6 text-sm text-gray-text">Scroll to view more projects →</div>
 
         {/* Project List - Horizontal Scroll */}
-        <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
+        <div className="overflow-x-auto overflow-y-visible no-scrollbar -mx-4 px-4 pb-2">
           <div className="flex gap-6 snap-x snap-mandatory">
             {orderedProjects.map((project, index) => {
               const isFeatured = featuredTitles.has(project.title);
               return (
                 <div key={index} className="snap-start min-w-[320px] sm:min-w-[560px] lg:min-w-[900px]">
-                  <div className={`card-gradient card-shadow rounded-2xl overflow-hidden hover-lift h-full relative ${isFeatured ? 'border border-primary/40' : ''}`}>
+                  <div className={`card-gradient card-shadow rounded-2xl overflow-hidden hover-lift h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
                     {isFeatured && (
                       <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground shadow-md">
                         Featured
