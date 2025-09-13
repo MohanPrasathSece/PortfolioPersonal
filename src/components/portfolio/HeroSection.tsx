@@ -41,7 +41,7 @@ const HeroSection = () => {
             
             <p className="text-lg text-gray-text mb-8 max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               Passionate full-stack developer with expertise in modern web technologies, 
-              competitive programming, and creative photography. Ready to bring your 
+              competitive programming, and UI/UX design. Ready to bring your 
               ideas to life with clean, efficient code.
             </p>
 

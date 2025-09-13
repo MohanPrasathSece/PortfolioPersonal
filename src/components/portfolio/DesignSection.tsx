@@ -23,6 +23,8 @@ const DesignSection = () => {
     { name: "Design Systems", icon: <Zap className="h-6 w-6" /> }
   ];
 
+  // Minimal, no state needed
+
   return (
     <section className="py-20 px-6 bg-black">
       <div className="container max-w-6xl mx-auto">
@@ -33,18 +35,15 @@ const DesignSection = () => {
               Design <span className="orange-gradient bg-clip-text text-transparent">Portfolio</span>
             </h2>
           </div>
-          <p className="text-lg text-gray-text max-w-2xl mx-auto">
-            Melodia - A comprehensive music streaming mobile app designed with modern UI/UX principles
-          </p>
+          <p className="text-lg text-gray-text max-w-2xl mx-auto">Melodia — spotlight the core flows with a focused preview and quick screen switcher.</p>
         </div>
 
-        {/* Design Tools Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        {/* Design Tools (minimal) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           {designTools.map((tool, index) => (
             <div
               key={tool.name}
-              className="card-gradient card-shadow rounded-xl p-4 text-center hover-lift"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="card-gradient card-shadow rounded-xl p-4 text-center"
             >
               <div className="text-primary mb-2 flex justify-center">
                 {tool.icon}
@@ -54,71 +53,34 @@ const DesignSection = () => {
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Melodia Project Info (compact) */}
-        <div className="mb-10">
-          <div className="rounded-xl border border-muted/50 bg-black/20 p-6 max-w-3xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-2 text-primary">Melodia</h3>
-            <p className="text-sm text-gray-text">
-              A concept music app focused on clean navigation, quick search, playlists, and social listening.
-            </p>
+        {/* Minimal layout – no intro card */}
+
+        {/* Melodia Horizontal Scroll Gallery (images only) */}
+        <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
+          <div className="flex gap-6 snap-x snap-mandatory">
+            {melodiaScreens.map((screen) => (
+              <div key={screen.id} className="snap-start min-w-[260px] sm:min-w-[300px]">
+                <div className="rounded-2xl p-3 transition-smooth">
+                  <div className="bg-black aspect-[9/16] mx-auto w-[220px] md:w-[240px] rounded-[1.6rem] p-3 shadow-xl">
+                    <img
+                      src={screen.image}
+                      alt={`Melodia ${screen.title}`}
+                      className="w-full h-full object-contain object-top rounded-xl"
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement;
+                        if (target.src.endsWith('/placeholder.svg')) return;
+                        target.src = '/placeholder.svg';
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Melodia Screen Gallery */}
-        <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
-          <div className="flex gap-6 snap-x snap-mandatory">
-            {melodiaScreens.map((screen, index) => (
-              <div
-                key={screen.id}
-                className="group rounded-xl overflow-hidden snap-start min-w-[260px] md:min-w-[280px] border border-muted/50 bg-transparent hover:bg-black/20 transition-smooth hover:-translate-y-1"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-              {/* Image or Placeholder */}
-              {screen.image ? (
-                <div className="bg-black/60 aspect-[9/16] mx-auto w-[200px] md:w-[220px] rounded-[1.6rem] p-3 border border-muted shadow-inner">
-                  <img
-                    src={screen.image}
-                    alt={`Melodia ${screen.title}`}
-                    className="w-full h-full object-contain object-top rounded-xl shadow-md"
-                    onError={(e) => {
-                      const target = e.currentTarget as HTMLImageElement;
-                      if (target.src.endsWith("/placeholder.svg")) return;
-                      target.src = "/placeholder.svg";
-                    }}
-                  />
-                </div>
-              ) : (
-                <div className="bg-black/60 aspect-[9/16] mx-auto w-[200px] md:w-[220px] rounded-[1.6rem] p-3 border-2 border-dashed border-primary/30 flex items-center justify-center group-hover:border-primary transition-smooth">
-                  <div className="text-center">
-                    <Palette className="h-12 w-12 text-primary mx-auto mb-2 opacity-50 group-hover:opacity-100 transition-smooth" />
-                    <p className="text-sm text-gray-text">Melodia {screen.title}</p>
-                    <p className="text-xs text-gray-text mt-1">Mobile Screen Design</p>
-                  </div>
-                </div>
-              )}
-              
-              {/* Screen Info */}
-              <div className="p-5">
-                <h3 className="text-xl font-semibold mb-1.5 group-hover:text-primary transition-smooth">
-                  {screen.title}
-                </h3>
-                <p className="text-gray-text text-sm">
-                  {screen.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <p className="text-gray-text mb-6">Interested in mobile app design or UI/UX collaboration?</p>
-          <button className="btn-primary">
-            Discuss Your Design Project
-          </button>
-        </div>
+        {/* End minimal layout */}
       </div>
     </section>
   );
