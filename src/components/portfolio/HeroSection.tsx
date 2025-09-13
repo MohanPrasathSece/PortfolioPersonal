@@ -30,12 +30,12 @@ const HeroSection = () => {
             <div className="mb-6">
               <h1 className="text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-up">
                 Hi, I'm{" "}
-                <span className="orange-gradient bg-clip-text text-transparent">
+                <span className="orange-gradient bg-clip-text text-transparent whitespace-nowrap">
                   Mohan Prasath
                 </span>
               </h1>
               <p className="text-2xl lg:text-3xl text-gray-text mb-2">
-                Developer & Problem Solver
+                Full Stack Developer & Problem Solver
               </p>
             </div>
             
@@ -57,7 +57,11 @@ const HeroSection = () => {
                 </a>
               </Button>
               <Button variant="outline-orange" size="lg" className="group" asChild>
-                <a href="mailto:mohanprasath563@gmail.com">
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=mohanprasath563@gmail.com&su=Freelance%20Project%20Inquiry&body=Hi%20Mohan%2C%0A%0AI'd%20like%20to%20discuss%20a%20project.%20Here%20are%20some%20details%3A%0A-%20Scope%3A%20%0A-%20Timeline%3A%20%0A-%20Budget%3A%20%0A%0AThanks!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Mail className="mr-2 h-5 w-5 group-hover:animate-pulse" />
                   Hire Me for Freelance
                 </a>
