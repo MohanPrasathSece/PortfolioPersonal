@@ -166,12 +166,12 @@ const ProjectsSection = () => {
                     )}
                     <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl items-stretch">
                       {/* Project Image / Gallery */}
-                      <div className="bg-muted flex items-center justify-center min-h-[220px] md:min-h-[260px] lg:min-h-[320px] h-full">
+                      <div className="bg-muted flex items-center justify-center min-h-[160px] sm:min-h-[180px] md:min-h-[220px] lg:min-h-[260px] h-full">
                         {Array.isArray((project as any).gallery) && (project as any).gallery.length > 0 ? (
-                          <div className="w-full h-full overflow-x-auto no-scrollbar px-4">
-                            <div className="flex gap-4 h-full items-center">
+                          <div className="w-full h-full overflow-x-auto no-scrollbar px-3 sm:px-4 snap-x snap-mandatory">
+                            <div className="flex gap-3 sm:gap-4 h-full items-center">
                               {(project as any).gallery.map((src: string, gi: number) => (
-                                <div key={gi} className="min-w-[240px] md:min-w-[320px] lg:min-w-[420px] h-full rounded-xl overflow-hidden bg-black">
+                                <div key={gi} className="snap-start min-w-[200px] sm:min-w-[260px] md:min-w-[320px] lg:min-w-[420px] h-full rounded-xl overflow-hidden bg-black">
                                   <div className="w-full h-full flex items-center justify-center">
                                     <img
                                       src={src}
@@ -190,7 +190,7 @@ const ProjectsSection = () => {
                           </div>
                         ) : project.title === "MediSmart-AI" ? (
                           <div className="w-full h-full flex items-center justify-center">
-                            <div className="w-[92%] h-[90%] rounded-2xl overflow-hidden shadow-inner" style={{background: 'linear-gradient(180deg,#16a34a 0%, #0f8a3b 100%)'}}>
+                            <div className="w-[92%] h-[85%] rounded-2xl overflow-hidden shadow-inner" style={{background: 'linear-gradient(180deg,#16a34a 0%, #0f8a3b 100%)'}}>
                               <div className="h-full w-full flex flex-col items-center justify-center text-white text-center px-4">
                                 <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold mb-2">Your Health, Delivered.</h3>
                                 <p className="text-xs md:text-sm text-white/90 max-w-md mb-4">
@@ -219,7 +219,7 @@ const ProjectsSection = () => {
                       </div>
 
                       {/* Project Details */}
-                      <div className="p-8">
+                      <div className="p-6">
                         <div className="mb-4">
                           <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
                           <p className="text-primary font-medium mb-4">{project.tagline}</p>
@@ -227,9 +227,9 @@ const ProjectsSection = () => {
                         </div>
 
                       {/* Features */}
-                      <div className="mb-6">
+                      <div className="mb-4">
                         <h4 className="font-semibold mb-3 text-primary">Key Features:</h4>
-                        <ul className="space-y-2">
+                        <ul className="space-y-1.5">
                           {project.features.map((feature, idx) => (
                             <li key={idx} className="flex items-start">
                               <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
@@ -240,7 +240,7 @@ const ProjectsSection = () => {
                       </div>
 
                       {/* Tech Stack */}
-                      <div className="mb-6">
+                      <div className="mb-4">
                         <h4 className="font-semibold mb-3 text-primary">Tech Stack:</h4>
                         <div className="flex flex-wrap gap-2">
                           {project.techStack.map((tech) => (
