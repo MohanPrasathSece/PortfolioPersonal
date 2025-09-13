@@ -21,7 +21,7 @@ const ProjectsSection = () => {
       demo: "#"
     },
     {
-      title: "FinalCampusLink",
+      title: "Campus Link",
       tagline: "Modern Campus Web Application",
       description: "A campus-focused web app built with modern React ecosystem, featuring deployment options via Lovable and custom domain support.",
       features: [
@@ -65,22 +65,6 @@ const ProjectsSection = () => {
         "Deployed prototype with secure authentication"
       ],
       techStack: ["MERN", "Hugging Face", "Tesseract.js", "Socket.io"],
-      image: "/placeholder-project.jpg",
-      github: "#",
-      demo: "#"
-    },
-    {
-      title: "Inventory Tracker",
-      tagline: "Supplier-Linked Inventory Management",
-      description: "Comprehensive inventory management system for businesses with supplier integration and role-based access control.",
-      features: [
-        "Secure CRUD operations",
-        "Supplier-product linking",
-        "JWT authentication & role-based access",
-        "React dashboard with real-time stock updates",
-        "Color-coded stock indicators for clarity"
-      ],
-      techStack: ["MongoDB", "Express.js", "React.js", "Node.js"],
       image: "/placeholder-project.jpg",
       github: "#",
       demo: "#"

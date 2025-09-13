@@ -56,8 +56,8 @@ const CertificationsSection = () => {
       image: udemyImg
     },
     {
-      title: "React Development Fundamentals",
-      provider: "Meta",
+      title: "Learning React",
+      provider: "Infosys",
       description: "Advanced React development and modern frontend practices",
       year: "2024",
       category: "Frontend Development",
@@ -74,7 +74,7 @@ const CertificationsSection = () => {
     },
     {
       title: "MongoDB Database Design",
-      provider: "MongoDB University",
+      provider: "Infosys",
       description: "NoSQL database design and optimization techniques",
       year: "2023",
       category: "Database",

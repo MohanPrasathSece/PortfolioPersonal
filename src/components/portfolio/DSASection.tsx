@@ -1,5 +1,5 @@
 import { Trophy, Target, Brain, BarChart3 } from "lucide-react";
-import streakImg from "@/assets/leetcode.png";
+
 
 const DSASection = () => {
   const dsaTopics = [
@@ -41,27 +41,12 @@ const DSASection = () => {
                   <div className="text-gray-text">Contest Rating</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">250+</div>
+                  <div className="text-3xl font-bold text-primary mb-2">300</div>
                   <div className="text-gray-text">Problems Solved</div>
                 </div>
               </div>
 
-              {/* LeetCode Streak Image */}
-              <div className="mt-6">
-                <img
-                  src={streakImg}
-                  alt="LeetCode submissions heatmap (streak)"
-                  className="w-full rounded-lg border border-border"
-                  onError={(e) => {
-                    const target = e.currentTarget as HTMLImageElement;
-                    if (target.src.endsWith("/placeholder.svg")) return;
-                    target.src = "/placeholder.svg";
-                  }}
-                />
-                <p className="text-sm text-gray-text mt-2 text-center">
-                  LeetCode submissions in the past year
-                </p>
-              </div>
+              
             </div>
 
             <div className="card-gradient card-shadow rounded-xl p-6">
@@ -77,6 +62,10 @@ const DSASection = () => {
                 <div className="flex justify-between items-center">
                   <span>Skillrack</span>
                   <span className="text-primary font-semibold">700+ Problems</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>CodeChef</span>
+                  <span className="text-primary font-semibold">156 Problems Solved</span>
                 </div>
               </div>
             </div>
