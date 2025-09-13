@@ -37,6 +37,15 @@ const CertificationsSection = () => {
       verified: true
     },
     {
+      title: "Red Hat Certified Java Developer",
+      provider: "Red Hat",
+      description: "Advanced Java development and best practices validated by Red Hat.",
+      year: "2025",
+      category: "Programming",
+      verified: true,
+      image: "/placeholder.svg"
+    },
+    {
       title: "AWS Solutions Architecture",
       provider: "Forage (Virtual Experience)",
       description: "Cloud architecture and AWS services virtual experience program",
