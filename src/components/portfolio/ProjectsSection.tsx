@@ -138,13 +138,13 @@ const ProjectsSection = () => {
               const isFeatured = featuredTitles.has(project.title);
               return (
                 <div key={index} className="snap-start min-w-[320px] sm:min-w-[560px] lg:min-w-[900px]">
-                  <div className={`card-gradient card-shadow rounded-2xl overflow-hidden hover-lift h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
+                  <div className={`card-gradient card-shadow rounded-2xl hover-glow h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
                     {isFeatured && (
                       <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground shadow-md">
                         Featured
                       </div>
                     )}
-                    <div className="grid lg:grid-cols-2 gap-0">
+                    <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl">
                       {/* Project Image */}
                       <div className="bg-muted flex items-center justify-center h-[220px] md:h-[260px] lg:h-[320px]">
                         <div className="text-center">

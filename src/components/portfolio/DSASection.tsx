@@ -1,4 +1,4 @@
-import { Trophy, Target, Brain, BarChart3 } from "lucide-react";
+import { Trophy, Target, Brain, BarChart3, Code } from "lucide-react";
 
 
 const DSASection = () => {
@@ -46,7 +46,24 @@ const DSASection = () => {
                 </div>
               </div>
 
-              
+              {/* LeetCode Profile Link (moved here) */}
+              <a
+                href="https://leetcode.com/u/MohanPrasathSece"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-glow group"
+              >
+                <div className="flex items-center">
+                  <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
+                    <Code className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="font-medium">LeetCode</div>
+                    <div className="text-gray-text text-sm">MohanPrasathSece - LeetCode Profile</div>
+                  </div>
+                </div>
+                <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">→</div>
+              </a>
             </div>
 
             <div className="card-gradient card-shadow rounded-xl p-6">
@@ -55,18 +72,55 @@ const DSASection = () => {
                 Other Platforms
               </h4>
               <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span>HackerRank</span>
-                  <span className="text-primary font-semibold">Silver Badge (C, Java, Python)</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>Skillrack</span>
-                  <span className="text-primary font-semibold">700+ Problems</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>CodeChef</span>
-                  <span className="text-primary font-semibold">156 Problems Solved</span>
-                </div>
+                <a
+                  href="https://www.hackerrank.com/profile/MohanPrasathSece"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-glow group"
+                >
+                  <div className="flex items-center">
+                    <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
+                      <Code className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-medium">HackerRank</div>
+                      <div className="text-gray-text text-sm">Silver Badge (C, Java, Python)</div>
+                    </div>
+                  </div>
+                  <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">→</div>
+                </a>
+                <a
+                  href="https://skillrack.com/faces/resume.xhtml?id=484447&key=93fccd1923168209fb2de154e69195ba5f0882c7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-glow group"
+                >
+                  <div className="flex items-center">
+                    <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
+                      <Code className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-medium">Skillrack</div>
+                      <div className="text-gray-text text-sm">700+ Problems Solved</div>
+                    </div>
+                  </div>
+                  <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">→</div>
+                </a>
+                <a
+                  href="https://www.codechef.com/users/mohanprasaths"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-glow group"
+                >
+                  <div className="flex items-center">
+                    <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">CC</div>
+                    <div>
+                      <div className="font-medium">CodeChef</div>
+                      <div className="text-gray-text text-sm">156 Problems Solved</div>
+                    </div>
+                  </div>
+                  <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">→</div>
+                </a>
               </div>
             </div>
           </div>
