@@ -2,6 +2,84 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, Github, Linkedin, Code, Send, MapPin } from "lucide-react";
+import { useState } from "react";
+
+const ContactForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const to = "mohanprasath563@gmail.com";
+    const su = subject || "New message from portfolio";
+    const bodyLines = [
+      name ? `Name: ${name}` : "",
+      email ? `Email: ${email}` : "",
+      "",
+      message || "",
+    ].filter(Boolean);
+    const body = bodyLines.join("%0A");
+    const url = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(su)}&body=${body}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <form className="space-y-6" onSubmit={handleSubmit}>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-foreground">Name</label>
+          <Input
+            placeholder="Your name"
+            className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-foreground">Email</label>
+          <Input
+            type="email"
+            placeholder="your.email@example.com"
+            className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-foreground">Subject</label>
+        <Input
+          placeholder="Project inquiry, collaboration, etc."
+          className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-foreground">Message</label>
+        <Textarea
+          placeholder="Tell me about your project or idea..."
+          className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all min-h-[120px] resize-none"
+          value={message}
+          onChange={(e) => setMessage((e.target as HTMLTextAreaElement).value)}
+          required
+        />
+      </div>
+
+      <Button type="submit" variant="hero" size="lg" className="w-full group">
+        <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+        Send Message
+      </Button>
+    </form>
+  );
+};
 
 const ContactSection = () => {
   const contactInfo = [
@@ -68,46 +146,7 @@ const ContactSection = () => {
                 Send Me a Message
               </h3>
               
-              <form className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Name</label>
-                    <Input 
-                      placeholder="Your name" 
-                      className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Email</label>
-                    <Input 
-                      type="email" 
-                      placeholder="your.email@example.com" 
-                      className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
-                    />
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Subject</label>
-                  <Input 
-                    placeholder="Project inquiry, collaboration, etc." 
-                    className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Message</label>
-                  <Textarea 
-                    placeholder="Tell me about your project or idea..." 
-                    className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all min-h-[120px] resize-none"
-                  />
-                </div>
-                
-                <Button variant="hero" size="lg" className="w-full group">
-                  <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  Send Message
-                </Button>
-              </form>
+              <ContactForm />
             </div>
           </div>
 
