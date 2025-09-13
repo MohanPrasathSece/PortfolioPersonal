@@ -1,21 +1,8 @@
 import { Camera, Heart, Eye } from "lucide-react";
 
 const PhotographySection = () => {
-  // Placeholder for top 10 photographs
-  const photographyGrid = Array.from({ length: 10 }, (_, index) => ({
-    id: index + 1,
-    caption: `Photograph ${index + 1}`,
-    category: index % 3 === 0 ? "Nature" : index % 3 === 1 ? "Portrait" : "Architecture"
-  }));
-
-  const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-      "Nature": "bg-green-500/20 text-green-400",
-      "Portrait": "bg-blue-500/20 text-blue-400",
-      "Architecture": "bg-purple-500/20 text-purple-400"
-    };
-    return colors[category] || "bg-primary/20 text-primary";
-  };
+  // Minimal: three featured placeholders
+  const featured = Array.from({ length: 9 }, (_, i) => ({ id: i + 1, title: `Shot ${i + 1}` }));
 
   return (
     <section className="py-12 px-6 bg-secondary/10">
@@ -34,62 +21,30 @@ const PhotographySection = () => {
           </p>
         </div>
 
-        {/* Photography Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-          {[
-            { icon: <Eye className="h-6 w-6" />, stat: "1000+", label: "Photos Captured" },
-            { icon: <Heart className="h-6 w-6" />, stat: "5", label: "Years Experience" },
-            { icon: <Camera className="h-6 w-6" />, stat: "3", label: "Photography Styles" }
-          ].map((item, index) => (
-            <div
-              key={item.label}
-              className="card-gradient card-shadow rounded-xl p-4 text-center hover-glow"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="text-primary mb-3 flex justify-center">{item.icon}</div>
-              <div className="text-2xl font-bold text-primary mb-1.5">{item.stat}</div>
-              <div className="text-gray-text">{item.label}</div>
+        {/* Photography Stats removed per request */}
+
+        {/* Minimal – 3 vertical sections (rows), each with 3 images = 9 total */}
+        <div className="space-y-10">
+          {[0, 1, 2].map((row) => (
+            <div key={row} className="flex justify-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {featured.slice(row * 3, row * 3 + 3).map((item) => (
+                  <div key={item.id} className="group relative rounded-2xl p-3 hover-glow transition-smooth">
+                    <div className="w-[220px] sm:w-[240px] rounded-xl overflow-hidden">
+                      <div className="w-full aspect-[4/5] bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
+                        <div className="text-center">
+                          <Camera className="h-6 w-6 text-primary/60 mx-auto mb-2" />
+                          <p className="text-sm text-muted-foreground">{item.title}</p>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Subtle glow border on hover */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-2xl ring-1 ring-primary/30"></div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
-        </div>
-
-        {/* Photography Gallery - Horizontal Scroll */}
-        <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
-          <div className="flex gap-3 snap-x snap-mandatory">
-            {photographyGrid.map((photo, index) => (
-              <div
-                key={photo.id}
-                className="group relative aspect-[4/5] bg-muted rounded-xl hover-glow cursor-pointer snap-start min-w-[160px] md:min-w-[180px]"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-              {/* Inner wrapper keeps rounded corners and clipping */}
-              <div className="w-full h-full rounded-xl overflow-hidden">
-                {/* Placeholder for actual photo */}
-                <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
-                  <div className="text-center">
-                    <Camera className="h-6 w-6 text-primary/60 mx-auto mb-2" />
-                    <p className="text-xs text-muted-foreground">Photo {photo.id}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
-                <div className="p-3 w-full">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-white font-medium text-xs">{photo.caption}</h4>
-                    <span className={`px-2 py-1 rounded-full text-xs ${getCategoryColor(photo.category)}`}>
-                      {photo.category}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Orange Glow Effect on Hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-xl border-2 border-primary glow-orange"></div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>
