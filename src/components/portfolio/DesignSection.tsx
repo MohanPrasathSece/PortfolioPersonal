@@ -55,11 +55,15 @@ const DesignSection = () => {
           </div>
 
         {/* Minimal layout – no intro card */}
+        <div className="text-center mb-6">
+          <h3 className="text-2xl font-bold text-primary">Melodia</h3>
+          <p className="text-sm text-gray-text">Minimal preview of the core Melodia screens — scroll sideways to explore the UI flow.</p>
+        </div>
 
         {/* Melodia Horizontal Scroll Gallery (images only) */}
         <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
           <div className="flex gap-6 snap-x snap-mandatory">
-            {melodiaScreens.map((screen) => (
+            {melodiaScreens.map((screen, idx) => (
               <div key={screen.id} className="snap-start min-w-[260px] sm:min-w-[300px]">
                 <div className="rounded-2xl p-3 transition-smooth">
                   <div className="bg-black aspect-[9/16] mx-auto w-[220px] md:w-[240px] rounded-[1.6rem] p-3 shadow-xl">
@@ -74,6 +78,14 @@ const DesignSection = () => {
                       }}
                     />
                   </div>
+                  <div className={`mt-3 text-center text-sm ${[
+                    'text-violet-400',   // Profile
+                    'text-cyan-400',     // Search
+                    'text-emerald-400',  // Playlists
+                    'text-amber-400',    // Explore
+                    'text-blue-400',     // Home
+                    'text-rose-400'      // Now Playing
+                  ][idx % 6]}`}>{screen.title}</div>
                 </div>
               </div>
             ))}

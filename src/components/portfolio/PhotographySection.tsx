@@ -59,14 +59,17 @@ const PhotographySection = () => {
             {photographyGrid.map((photo, index) => (
               <div
                 key={photo.id}
-                className="group relative aspect-[4/5] bg-muted rounded-xl overflow-hidden hover-lift cursor-pointer snap-start min-w-[160px] md:min-w-[180px]"
+                className="group relative aspect-[4/5] bg-muted rounded-xl hover-glow cursor-pointer snap-start min-w-[160px] md:min-w-[180px]"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-              {/* Placeholder for actual photo */}
-              <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
-                <div className="text-center">
-                  <Camera className="h-6 w-6 text-primary/60 mx-auto mb-2" />
-                  <p className="text-xs text-muted-foreground">Photo {photo.id}</p>
+              {/* Inner wrapper keeps rounded corners and clipping */}
+              <div className="w-full h-full rounded-xl overflow-hidden">
+                {/* Placeholder for actual photo */}
+                <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
+                  <div className="text-center">
+                    <Camera className="h-6 w-6 text-primary/60 mx-auto mb-2" />
+                    <p className="text-xs text-muted-foreground">Photo {photo.id}</p>
+                  </div>
                 </div>
               </div>
 
@@ -82,8 +85,8 @@ const PhotographySection = () => {
                 </div>
               </div>
 
-                {/* Orange Glow Effect on Hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-xl border-2 border-primary glow-orange"></div>
+              {/* Orange Glow Effect on Hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-xl border-2 border-primary glow-orange"></div>
               </div>
             ))}
           </div>
