@@ -159,16 +159,16 @@ const CertificationsSection = () => {
             .map((cert, index) => (
             <div
               key={cert.title}
-              className="card-gradient card-shadow rounded-xl p-5 hover-lift group"
+              className="card-gradient card-shadow rounded-xl p-4 hover-lift group"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Certificate Image */}
-              <div className="aspect-[4/3] bg-secondary border-2 border-dashed border-primary/30 rounded-lg mb-4 flex items-center justify-center overflow-hidden group-hover:border-primary transition-smooth">
+              <div className="aspect-[4/3] bg-secondary border border-border/30 rounded-lg mb-3 flex items-center justify-center overflow-hidden transition-smooth">
                 {cert.image ? (
                   <img
                     src={cert.image}
                     alt={`${cert.title} - ${cert.provider}`}
-                    className="w-full h-full object-contain p-3"
+                    className="w-full h-full object-contain p-1"
                     onError={(e) => {
                       const target = e.currentTarget as HTMLImageElement;
                       if (target.src.endsWith("/placeholder.svg")) return;
@@ -184,7 +184,7 @@ const CertificationsSection = () => {
               </div>
 
               {/* Header */}
-              <div className="flex items-start justify-between mb-3">
+              <div className="flex items-start justify-between mb-2">
                 <div className="text-primary group-hover:text-primary-glow transition-smooth">
                   <Award className="h-6 w-6" />
                 </div>
@@ -196,12 +196,12 @@ const CertificationsSection = () => {
               </div>
 
               {/* Content */}
-              <div className="mb-3">
+              <div className="mb-2">
                 <h3 className="text-sm font-bold mb-1 group-hover:text-primary transition-smooth line-clamp-2">
                   {cert.title}
                 </h3>
                 <p className="text-primary font-medium text-xs mb-1">{cert.provider}</p>
-                <p className="text-gray-text text-xs leading-relaxed mb-2 line-clamp-2">
+                <p className="text-gray-text text-xs leading-relaxed mb-1 line-clamp-2">
                   {cert.description}
                 </p>
               </div>
