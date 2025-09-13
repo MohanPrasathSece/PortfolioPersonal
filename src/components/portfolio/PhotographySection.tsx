@@ -23,26 +23,16 @@ const PhotographySection = () => {
 
         {/* Photography Stats removed per request */}
 
-        {/* Minimal – 3 vertical sections (rows), each with 3 images = 9 total */}
-        <div className="space-y-10">
-          {[0, 1, 2].map((row) => (
-            <div key={row} className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {featured.slice(row * 3, row * 3 + 3).map((item) => (
-                  <div key={item.id} className="group relative rounded-2xl p-3 hover-glow transition-smooth">
-                    <div className="w-[220px] sm:w-[240px] rounded-xl overflow-hidden">
-                      <div className="w-full aspect-[4/5] bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
-                        <div className="text-center">
-                          <Camera className="h-6 w-6 text-primary/60 mx-auto mb-2" />
-                          <p className="text-sm text-muted-foreground">{item.title}</p>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Subtle glow border on hover */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-2xl ring-1 ring-primary/30"></div>
-                  </div>
-                ))}
+        {/* Minimal 3x3 Grid (no hover effects) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+          {featured.map((item) => (
+            <div key={item.id} className="w-[220px] sm:w-[240px]">
+              <div className="aspect-[4/5] rounded-xl overflow-hidden bg-black">
+                <div className="w-full h-full flex items-center justify-center">
+                  <Camera className="h-7 w-7 text-primary/60" />
+                </div>
               </div>
+              {/* Caption removed per request */}
             </div>
           ))}
         </div>

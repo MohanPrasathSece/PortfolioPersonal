@@ -51,7 +51,12 @@ const ProjectsSection = () => {
       techStack: ["MongoDB", "Express.js", "React.js", "Node.js"],
       image: "/placeholder-project.jpg",
       github: "#",
-      demo: "#"
+      demo: "#",
+      gallery: [
+        "/placeholder-project.jpg",
+        "/placeholder-project.jpg",
+        "/placeholder-project.jpg"
+      ]
     },
     {
       title: "MediSmart-AI",
@@ -67,7 +72,12 @@ const ProjectsSection = () => {
       techStack: ["MERN", "Hugging Face", "Tesseract.js", "Socket.io"],
       image: "/placeholder-project.jpg",
       github: "#",
-      demo: "#"
+      demo: "#",
+      gallery: [
+        "/placeholder-project.jpg",
+        "/placeholder-project.jpg",
+        "/placeholder-project.jpg"
+      ]
     },
     {
       title: "NammaCity",
@@ -145,15 +155,55 @@ const ProjectsSection = () => {
                       </div>
                     )}
                     <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl">
-                      {/* Project Image */}
+                      {/* Project Image / Gallery */}
                       <div className="bg-muted flex items-center justify-center h-[220px] md:h-[260px] lg:h-[320px]">
-                        <div className="text-center">
-                          <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <ExternalLink className="h-8 w-8 text-primary" />
+                        {Array.isArray((project as any).gallery) && (project as any).gallery.length > 0 ? (
+                          <div className="w-full h-full overflow-x-auto no-scrollbar px-4">
+                            <div className="flex gap-4 h-full items-center">
+                              {(project as any).gallery.map((src: string, gi: number) => (
+                                <div key={gi} className="min-w-[240px] md:min-w-[320px] lg:min-w-[420px] h-[80%] rounded-xl overflow-hidden border border-border bg-background">
+                                  <img
+                                    src={src}
+                                    alt={`${project.title} screenshot ${gi + 1}`}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      const target = e.currentTarget as HTMLImageElement;
+                                      if (target.src.endsWith('/placeholder.svg')) return;
+                                      target.src = '/placeholder.svg';
+                                    }}
+                                  />
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                          <p className="text-muted-foreground">Project Screenshot</p>
-                          <p className="text-sm text-gray-text mt-1">Image placeholder - insert project screenshot</p>
-                        </div>
+                        ) : project.title === "MediSmart-AI" ? (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <div className="w-[92%] h-[82%] rounded-2xl overflow-hidden shadow-inner" style={{background: 'linear-gradient(180deg,#16a34a 0%, #0f8a3b 100%)'}}>
+                              <div className="h-full w-full flex flex-col items-center justify-center text-white text-center px-4">
+                                <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold mb-2">Your Health, Delivered.</h3>
+                                <p className="text-xs md:text-sm text-white/90 max-w-md mb-4">
+                                  Compare medicine prices, upload prescriptions, and get your medications delivered to your doorstep.
+                                </p>
+                                <div className="flex gap-3 flex-wrap justify-center">
+                                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-white text-emerald-700 text-xs md:text-sm shadow hover:shadow-md transition-smooth">
+                                    Search Medicines
+                                  </button>
+                                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-transparent border border-white/70 text-white text-xs md:text-sm hover:bg-white/10 transition-smooth">
+                                    Upload Prescription
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="text-center">
+                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <ExternalLink className="h-8 w-8 text-primary" />
+                            </div>
+                            <p className="text-muted-foreground">Project Screenshot</p>
+                            <p className="text-sm text-gray-text mt-1">Image placeholder - insert project screenshot</p>
+                          </div>
+                        )}
                       </div>
 
                       {/* Project Details */}
