@@ -150,18 +150,69 @@ const CertificationsSection = () => {
   };
 
   return (
-    <section className="py-20 px-6">
+    <section className="py-16 px-5">
       <div className="container max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
             <span className="orange-gradient bg-clip-text text-transparent">Certifications</span> & Learning
           </h2>
-          <p className="text-lg text-gray-text max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-gray-text max-w-2xl mx-auto">
             Continuous learning through recognized certifications and professional development programs
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+        {/* Mobile: horizontal scroll row */}
+        <div className="md:hidden overflow-x-auto no-scrollbar -mx-4 px-4">
+          <div className="flex gap-4 snap-x snap-mandatory">
+            {[...certifications]
+              .sort((a, b) => Number(b.year) - Number(a.year))
+              .filter((c) => !!c.image)
+              .map((cert, index) => (
+                <div key={cert.title} className="snap-start min-w-[260px]">
+                  <div className="card-gradient card-shadow rounded-xl p-3 hover-lift group">
+                    {/* Certificate Image */}
+                    <div className="aspect-[4/3] bg-secondary border border-border/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden transition-smooth">
+                      {cert.image ? (
+                        <img
+                          src={cert.image}
+                          alt={`${cert.title} - ${cert.provider}`}
+                          className="w-full h-full object-contain p-1"
+                          loading="lazy"
+                          decoding="async"
+                          onError={(e) => {
+                            const target = e.currentTarget as HTMLImageElement;
+                            if (target.src.endsWith("/placeholder.svg")) return;
+                            target.src = "/placeholder.svg";
+                          }}
+                        />
+                      ) : (
+                        <div className="text-center">
+                          <Award className="h-8 w-8 text-primary mx-auto mb-1 opacity-50 group-hover:opacity-100 transition-smooth" />
+                          <p className="text-xs text-gray-text">Certificate Image</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Content (condensed) */}
+                    <h3 className="text-sm font-bold mb-1 line-clamp-2">{cert.title}</h3>
+                    <p className="text-primary font-medium text-xs mb-1">{cert.provider}</p>
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center text-gray-text">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {cert.year}
+                      </div>
+                      <div className={`px-2 py-0.5 rounded-full text-[10px] font-medium border ${getCategoryColor(cert.category)}`}>
+                        {cert.category}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
           {[...certifications]
             .sort((a, b) => Number(b.year) - Number(a.year))
             .filter((c) => !!c.image)
@@ -169,7 +220,6 @@ const CertificationsSection = () => {
             <div
               key={cert.title}
               className="card-gradient card-shadow rounded-xl p-4 hover-lift group"
-              style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Certificate Image */}
               <div className="aspect-[4/3] bg-secondary border border-border/30 rounded-lg mb-3 flex items-center justify-center overflow-hidden transition-smooth">
@@ -178,6 +228,8 @@ const CertificationsSection = () => {
                     src={cert.image}
                     alt={`${cert.title} - ${cert.provider}`}
                     className="w-full h-full object-contain p-1"
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       const target = e.currentTarget as HTMLImageElement;
                       if (target.src.endsWith("/placeholder.svg")) return;
@@ -252,10 +304,10 @@ const CertificationsSection = () => {
         {/* Call to Action */}
         <div className="text-center mt-12">
           <div className="card-gradient card-shadow rounded-xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">
+            <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
               Committed to <span className="text-primary">Continuous Learning</span>
             </h3>
-            <p className="text-gray-text leading-relaxed">
+            <p className="text-gray-text leading-relaxed text-sm md:text-base">
               Always expanding my skill set through industry-recognized certifications, 
               hands-on projects, and staying current with the latest technologies in software development.
             </p>

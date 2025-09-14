@@ -1,16 +1,19 @@
+import { Suspense, lazy } from "react";
 import HeroSection from "@/components/portfolio/HeroSection";
 import SkillsSection from "@/components/portfolio/SkillsSection";
 import DSASection from "@/components/portfolio/DSASection";
 import ProjectsSection from "@/components/portfolio/ProjectsSection";
-import AchievementsSection from "@/components/portfolio/AchievementsSection";
-import CertificationsSection from "@/components/portfolio/CertificationsSection";
-import DesignSection from "@/components/portfolio/DesignSection";
-import PhotographySection from "@/components/portfolio/PhotographySection";
 import ContactSection from "@/components/portfolio/ContactSection";
+
+// Lazy-load lower-priority sections to reduce initial JS for mobile
+const AchievementsSection = lazy(() => import("@/components/portfolio/AchievementsSection"));
+const CertificationsSection = lazy(() => import("@/components/portfolio/CertificationsSection"));
+const DesignSection = lazy(() => import("@/components/portfolio/DesignSection"));
+const PhotographySection = lazy(() => import("@/components/portfolio/PhotographySection"));
 
 const Index = () => {
   return (
-    <main className="bg-background text-foreground relative">
+    <main className="bg-background text-foreground relative text-[10px] md:text-base">
       {/* Hero Section */}
       <HeroSection />
       
@@ -24,16 +27,24 @@ const Index = () => {
       <DSASection />
       
       {/* Achievements Section */}
-      <AchievementsSection />
+      <Suspense fallback={<div className="py-10 text-center text-sm text-gray-text">Loading achievements…</div>}>
+        <AchievementsSection />
+      </Suspense>
       
       {/* Certifications Section */}
-      <CertificationsSection />
+      <Suspense fallback={<div className="py-10 text-center text-sm text-gray-text">Loading certifications…</div>}>
+        <CertificationsSection />
+      </Suspense>
       
       {/* Design Section */}
-      <DesignSection />
+      <Suspense fallback={<div className="py-10 text-center text-sm text-gray-text">Loading design showcase…</div>}>
+        <DesignSection />
+      </Suspense>
       
       {/* Photography Section */}
-      <PhotographySection />
+      <Suspense fallback={<div className="py-10 text-center text-sm text-gray-text">Loading photography…</div>}>
+        <PhotographySection />
+      </Suspense>
 
       {/* Contact Section */}
       <ContactSection />

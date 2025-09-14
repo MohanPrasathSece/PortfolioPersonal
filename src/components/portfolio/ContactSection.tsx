@@ -26,24 +26,24 @@ const ContactForm = () => {
   };
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
-      <div className="grid md:grid-cols-2 gap-4">
+    <form className="space-y-3 md:space-y-5" onSubmit={handleSubmit}>
+      <div className="grid md:grid-cols-2 gap-2.5 md:gap-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">Name</label>
+          <label className="text-xs md:text-sm font-medium text-foreground">Name</label>
           <Input
             placeholder="Your name"
-            className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
+            className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all h-8 md:h-10 text-xs md:text-sm"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">Email</label>
+          <label className="text-xs md:text-sm font-medium text-foreground">Email</label>
           <Input
             type="email"
             placeholder="your.email@example.com"
-            className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
+            className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all h-8 md:h-10 text-xs md:text-sm"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -52,10 +52,10 @@ const ContactForm = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">Subject</label>
+        <label className="text-xs md:text-sm font-medium text-foreground">Subject</label>
         <Input
           placeholder="Project inquiry, collaboration, etc."
-          className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all"
+          className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all h-8 md:h-10 text-xs md:text-sm"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           required
@@ -63,18 +63,18 @@ const ContactForm = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">Message</label>
+        <label className="text-xs md:text-sm font-medium text-foreground">Message</label>
         <Textarea
           placeholder="Tell me about your project or idea..."
-          className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all min-h-[120px] resize-none"
+          className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-all min-h-[84px] md:min-h-[120px] resize-none text-xs md:text-sm"
           value={message}
           onChange={(e) => setMessage((e.target as HTMLTextAreaElement).value)}
           required
         />
       </div>
 
-      <Button type="submit" variant="hero" size="lg" className="w-full group">
-        <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+      <Button type="submit" variant="hero" size="sm" className="w-full group">
+        <Send className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
         Send Message
       </Button>
     </form>
@@ -140,24 +140,24 @@ const ContactSection = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-secondary/20">
+    <section className="py-14 md:py-20 px-5 md:px-6 bg-secondary/20">
       <div className="container max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
             Let's <span className="orange-gradient bg-clip-text text-transparent">Connect</span>
           </h2>
-          <p className="text-lg text-gray-text max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-gray-text max-w-2xl mx-auto">
             Ready to start your next project? Let's discuss how I can help bring your ideas to life 
             with modern, efficient solutions.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 md:gap-12">
           {/* Contact Form */}
-          <div className="space-y-6">
-            <div className="card-gradient card-shadow rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-6 flex items-center">
-                <Send className="mr-3 h-6 w-6 text-primary" />
+          <div className="space-y-4 col-span-2 lg:col-span-1">
+            <div className="card-gradient card-shadow rounded-2xl p-4 md:p-8">
+              <h3 className="text-base md:text-2xl font-bold mb-3 md:mb-6 flex items-center">
+                <Send className="mr-3 h-5 w-5 md:h-6 md:w-6 text-primary" />
                 Send Me a Message
               </h3>
               
@@ -166,23 +166,23 @@ const ContactSection = () => {
           </div>
 
           {/* Contact Info & Social Links */}
-          <div className="space-y-6">
+          <div className="space-y-4 col-span-2 lg:col-span-1">
             {/* Contact Information */}
-            <div className="card-gradient card-shadow rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-6 text-primary">Get in Touch</h3>
+            <div className="card-gradient card-shadow rounded-2xl p-4 md:p-8">
+              <h3 className="text-base md:text-2xl font-bold mb-3 md:mb-6 text-primary">Get in Touch</h3>
               <div className="space-y-4">
                 {contactInfo.map((contact) => (
                   <a
                     key={contact.label}
                     href={contact.href}
-                    className="flex items-center p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-lift group"
+                    className="flex items-center p-2.5 md:p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-lift group"
                   >
-                    <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
+                    <div className="text-primary group-hover:text-primary-glow transition-smooth mr-3 md:mr-4">
                       {contact.icon}
                     </div>
                     <div>
-                      <div className="font-medium">{contact.label}</div>
-                      <div className="text-gray-text text-sm">{contact.value}</div>
+                      <div className="font-medium text-[11px] md:text-base">{contact.label}</div>
+                      <div className="text-gray-text text-[10px] md:text-sm">{contact.value}</div>
                     </div>
                   </a>
                 ))}
@@ -190,8 +190,8 @@ const ContactSection = () => {
             </div>
 
             {/* Social Links */}
-            <div className="card-gradient card-shadow rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-6 text-primary">Follow My Work</h3>
+            <div className="card-gradient card-shadow rounded-2xl p-4 md:p-8">
+              <h3 className="text-base md:text-2xl font-bold mb-3 md:mb-6 text-primary">Follow My Work</h3>
               <div className="space-y-4">
                 {socialLinks.map((social) => (
                   <a
@@ -199,15 +199,15 @@ const ContactSection = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-lift group"
+                    className="flex items-center justify-between p-2.5 md:p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all hover-lift group"
                   >
                     <div className="flex items-center">
-                      <div className="text-primary group-hover:text-primary-glow transition-smooth mr-4">
+                      <div className="text-primary group-hover:text-primary-glow transition-smooth mr-3 md:mr-4">
                         {social.icon}
                       </div>
                       <div>
-                        <div className="font-medium">{social.label}</div>
-                        <div className="text-gray-text text-sm">{social.username}</div>
+                        <div className="font-medium text-[11px] md:text-base">{social.label}</div>
+                        <div className="text-gray-text text-[10px] md:text-sm">{social.username}</div>
                       </div>
                     </div>
                     <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">
@@ -219,12 +219,12 @@ const ContactSection = () => {
             </div>
 
             {/* Availability Status */}
-            <div className="card-gradient card-shadow rounded-2xl p-8 text-center">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-green-500/20 text-green-400 mb-4">
+            <div className="card-gradient card-shadow rounded-2xl p-4 md:p-8 text-center">
+              <div className="inline-flex items-center px-2.5 md:px-4 py-1 md:py-2 rounded-full bg-green-500/20 text-green-400 mb-2.5 md:mb-4 text-xs md:text-base">
                 <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
                 Available for Freelance Projects
               </div>
-              <p className="text-gray-text text-sm">
+              <p className="text-gray-text text-[11px] md:text-sm">
                 Currently accepting new projects and collaborations. 
                 Let's build something amazing together!
               </p>

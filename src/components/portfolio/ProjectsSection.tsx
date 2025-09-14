@@ -260,7 +260,7 @@ const ProjectsSection = () => {
               const currentIdx = getIndex(index, gallery.length);
               const isFeatured = featuredTitles.has(project.title);
               return (
-                <div key={index} className="snap-start min-w-[300px] sm:min-w-[520px] lg:min-w-[860px]">
+                <div key={index} className="snap-start min-w-[260px] sm:min-w-[520px] lg:min-w-[860px]">
                   <div className={`card-gradient card-shadow rounded-2xl hover-glow h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
                     <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl items-stretch">
                       {/* Project Image / Gallery */}
@@ -276,6 +276,9 @@ const ProjectsSection = () => {
                                   <img
                                     src={src}
                                     alt={`${project.title} screenshot ${idx + 1}`}
+                                    loading="lazy"
+                                    decoding="async"
+                                    sizes="(max-width: 640px) 320px, (max-width: 1024px) 560px, 900px"
                                     className="object-contain w-full h-auto max-h-56 sm:max-h-64 md:max-h-72 lg:max-h-80"
                                     onError={(e) => {
                                       const target = e.currentTarget as HTMLImageElement;
@@ -347,34 +350,34 @@ const ProjectsSection = () => {
                       </div>
 
                       {/* Project Details */}
-                      <div className="p-5">
-                        <div className="mb-4">
-                          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                          <p className="text-primary font-medium mb-3">{project.tagline}</p>
-                          <p className="text-gray-text leading-relaxed text-sm">{project.description}</p>
+                      <div className="p-3 md:p-5">
+                        <div className="mb-2.5 md:mb-4">
+                          <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2 leading-snug">{project.title}</h3>
+                          <p className="text-primary font-medium text-[11px] md:text-base mb-1.5 md:mb-3">{project.tagline}</p>
+                          <p className="text-gray-text leading-relaxed text-[11px] md:text-sm">{project.description}</p>
                         </div>
 
                       {/* Features */}
-                      <div className="mb-3">
-                        <h4 className="font-semibold mb-2 text-primary">Key Features:</h4>
-                        <ul className="space-y-1.5">
+                      <div className="mb-2 md:mb-3">
+                        <h4 className="font-semibold mb-1 md:mb-2 text-primary text-[11px] md:text-base">Key Features:</h4>
+                        <ul className="space-y-1">
                           {project.features.map((feature, idx) => (
                             <li key={idx} className="flex items-start">
-                              <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                              <span className="text-gray-text text-sm">{feature}</span>
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 mr-2.5 flex-shrink-0" />
+                              <span className="text-gray-text text-[11px] md:text-sm">{feature}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
 
                       {/* Tech Stack */}
-                      <div className="mb-3">
-                        <h4 className="font-semibold mb-2 text-primary">Tech Stack:</h4>
-                        <div className="flex flex-wrap gap-2">
+                      <div className="mb-2 md:mb-3">
+                        <h4 className="font-semibold mb-1 md:mb-2 text-primary text-[11px] md:text-base">Tech Stack:</h4>
+                        <div className="flex flex-wrap gap-1 md:gap-2">
                           {project.techStack.map((tech) => (
                             <span
                               key={tech}
-                              className={`px-3 py-1 rounded-full text-xs font-medium ${getTechBadgeColor(tech)}`}
+                              className={`px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[9px] md:text-xs font-medium ${getTechBadgeColor(tech)}`}
                             >
                               {tech}
                             </span>
@@ -383,15 +386,15 @@ const ProjectsSection = () => {
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex gap-3">
+                      <div className="flex gap-2 md:gap-3">
                         <a href={(project as any).github} target="_blank" rel="noopener noreferrer" className="flex-1">
-                          <Button variant="hero" size="sm" className="w-full">
+                          <Button variant="outline-orange" size="sm" className="w-full text-[11px]">
                             <Github className="mr-2 h-4 w-4" />
                             View Code
                           </Button>
                         </a>
                         <a href={(project as any).demo} target="_blank" rel="noopener noreferrer" className="flex-1">
-                          <Button variant="outline-orange" size="sm" className="w-full">
+                          <Button variant="outline-orange" size="sm" className="w-full text-[11px]">
                             <ExternalLink className="mr-2 h-4 w-4" />
                             Live Demo
                           </Button>
@@ -405,71 +408,69 @@ const ProjectsSection = () => {
           })}
         </div>
       </div>
-
-      {/* Lightbox Modal */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" onClick={closeLightbox}>
-          <div className="relative w-full max-w-6xl max-h-[92vh] bg-background rounded-xl shadow-2xl ring-1 ring-border overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
-            {/* Header */}
-            <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-border/60 bg-muted/40">
-              <div className="text-sm sm:text-base font-semibold truncate pr-2">{lightboxTitle}</div>
-              <div className="flex items-center gap-2">
-                {lightboxImages.length > 0 && (
-                  <span className="text-xs text-gray-text">{lightboxIndex + 1} / {lightboxImages.length}</span>
-                )}
-                <button
-                  aria-label="Close"
-                  className="px-2 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm"
-                  onClick={closeLightbox}
-                >
-                  Back
-                </button>
-              </div>
-            </div>
-            {/* Content */}
-            <div className="relative flex-1 min-h-0 flex items-center justify-center bg-black">
-              <div className="w-full h-full flex items-center justify-center p-3 sm:p-4">
-                <img
-                  src={lightboxImages[lightboxIndex]}
-                  alt={`Screenshot ${lightboxIndex + 1}`}
-                  onLoad={(e) => {
-                    const img = e.currentTarget;
-                    setLightboxIsLandscape(img.naturalWidth >= img.naturalHeight);
-                  }}
-                  className={
-                    `object-contain ${
-                      lightboxIsLandscape === null
-                        ? 'max-h-[85vh] max-w-[92vw]'
-                        : lightboxIsLandscape
-                          ? 'h-auto max-h-[75vh] w-auto max-w-[70vw]'
-                          : 'w-full max-w-[88%] h-auto max-h-[85vh]'
-                    }`
-                  }
-                />
-              </div>
-              {lightboxImages.length > 1 && (
-                <>
-                  <button
-                    aria-label="Previous"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
-                    onClick={() => lightboxStep(-1)}
-                  >
-                    <ChevronLeft className="h-6 w-6" />
-                  </button>
-                  <button
-                    aria-label="Next"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
-                    onClick={() => lightboxStep(1)}
-                  >
-                    <ChevronRight className="h-6 w-6" />
-                  </button>
-                </>
+    </div>
+    {lightboxOpen && (
+      <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" onClick={closeLightbox}>
+        <div className="relative w-full max-w-6xl max-h-[92vh] bg-background rounded-xl shadow-2xl ring-1 ring-border overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
+          {/* Header */}
+          <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-border/60 bg-muted/40">
+            <div className="text-sm sm:text-base font-semibold truncate pr-2">{lightboxTitle}</div>
+            <div className="flex items-center gap-2">
+              {lightboxImages.length > 0 && (
+                <span className="text-xs text-gray-text">{lightboxIndex + 1} / {lightboxImages.length}</span>
               )}
+              <button
+                aria-label="Close"
+                className="px-2 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm"
+                onClick={closeLightbox}
+              >
+                Back
+              </button>
             </div>
           </div>
+          {/* Content */}
+          <div className="relative flex-1 min-h-0 flex items-center justify-center bg-black">
+            <div className="w-full h-full flex items-center justify-center p-3 sm:p-4">
+              <img
+                src={lightboxImages[lightboxIndex]}
+                alt={`Screenshot ${lightboxIndex + 1}`}
+                onLoad={(e) => {
+                  const img = e.currentTarget;
+                  setLightboxIsLandscape(img.naturalWidth >= img.naturalHeight);
+                }}
+                className={
+                  `object-contain ${
+                    lightboxIsLandscape === null
+                      ? 'max-h-[85vh] max-w-[92vw]'
+                      : lightboxIsLandscape
+                        ? 'h-auto max-h-[75vh] w-auto max-w-[70vw]'
+                        : 'w-full max-w-[88%] h-auto max-h-[85vh]'
+                  }`
+                }
+              />
+            </div>
+            {lightboxImages.length > 1 && (
+              <>
+                <button
+                  aria-label="Previous"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
+                  onClick={() => lightboxStep(-1)}
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                  aria-label="Next"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
+                  onClick={() => lightboxStep(1)}
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </>
+            )}
+          </div>
         </div>
-      )}
-    </div>
+      </div>
+    )}
   </section>
 );
 };
