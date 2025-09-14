@@ -5,7 +5,7 @@ import OrbBot from "@/components/OrbBot";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center px-5 md:px-6 py-12 md:py-20 relative">
+    <section id="home" className="min-h-screen flex items-center justify-center px-5 md:px-6 py-12 md:py-20 relative">
       <div className="container max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Profile Image */

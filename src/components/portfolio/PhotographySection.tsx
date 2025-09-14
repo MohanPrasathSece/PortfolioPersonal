@@ -68,7 +68,7 @@ const PhotographySection = () => {
   // Lightbox removed per request; keeping component lightweight and non-interactive
 
   return (
-    <section className="py-8 md:py-12 px-6 bg-secondary/10">
+    <section id="photography" className="py-8 md:py-12 px-6 bg-secondary/10">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-8 md:mb-10">
           <h2 className="typ-h-section mb-4">

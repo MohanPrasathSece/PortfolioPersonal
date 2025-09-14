@@ -150,7 +150,7 @@ const CertificationsSection = () => {
   };
 
   return (
-    <section className="py-16 px-5">
+    <section id="certifications" className="py-16 px-5">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="typ-h-section mb-2">

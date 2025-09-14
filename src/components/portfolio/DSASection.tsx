@@ -21,7 +21,7 @@ const DSASection = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-secondary/30">
+    <section id="dsa" className="py-20 px-6 bg-secondary/30">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="typ-h-section mb-2">

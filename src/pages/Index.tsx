@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import Navbar from "@/components/portfolio/Navbar";
 import HeroSection from "@/components/portfolio/HeroSection";
 import SkillsSection from "@/components/portfolio/SkillsSection";
 import DSASection from "@/components/portfolio/DSASection";
@@ -13,7 +14,8 @@ const PhotographySection = lazy(() => import("@/components/portfolio/Photography
 
 const Index = () => {
   return (
-    <main className="bg-background text-foreground relative text-[10px] md:text-base">
+    <main className="bg-background text-foreground relative text-[10px] md:text-base pt-8 md:pt-12">
+      <Navbar />
       {/* Hero Section */}
       <HeroSection />
       

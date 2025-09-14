@@ -33,7 +33,7 @@ const AchievementsSection = () => {
   ];
 
   return (
-    <section className="py-8 md:py-20 px-5 md:px-6 bg-secondary/20">
+    <section id="achievements" className="py-8 md:py-20 px-5 md:px-6 bg-secondary/20">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-8 md:mb-16">
           <h2 className="typ-h-section mb-3 md:mb-4">

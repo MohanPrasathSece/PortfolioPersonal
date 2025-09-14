@@ -26,7 +26,7 @@ const DesignSection = () => {
   // Minimal, no state needed
 
   return (
-    <section className="py-10 md:py-20 px-6 bg-black">
+    <section id="design" className="py-10 md:py-20 px-6 bg-black">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-8 md:mb-16">
           <h2 className="typ-h-section mb-4">

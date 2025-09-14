@@ -229,7 +229,7 @@ const ProjectsSection = () => {
   };
 
   return (
-    <section className="py-8 md:py-14 px-0 md:px-6">
+    <section id="projects" className="py-8 md:py-14 px-0 md:px-6">
       <div className="container px-0 md:px-4 max-w-none md:max-w-7xl mx-auto">
         <div className="mb-8 md:mb-16">
           <div className="flex flex-col items-center gap-2 md:gap-3 text-center">
