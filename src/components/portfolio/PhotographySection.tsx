@@ -1,4 +1,4 @@
-import { Camera, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
+import { Camera } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 // Load all images from assets/photography using a static glob (required by Vite)
@@ -12,7 +12,7 @@ const photos: string[] = Object.entries(photoModules)
   .map(([, src]) => src);
 
 // Lightweight lazy image component
-const LazyPhoto = ({ src, alt, priority = false, onClick }: { src: string; alt: string; priority?: boolean; onClick?: () => void }) => {
+const LazyPhoto = ({ src, alt, priority = false }: { src: string; alt: string; priority?: boolean }) => {
   const ref = useRef<HTMLImageElement | null>(null);
   const [shown, setShown] = useState(priority);
   const [loaded, setLoaded] = useState(false);
@@ -33,7 +33,7 @@ const LazyPhoto = ({ src, alt, priority = false, onClick }: { src: string; alt: 
   }, [priority, shown]);
 
   return (
-    <button type="button" className="group relative block w-full h-full cursor-zoom-in" onClick={onClick}>
+    <div className="relative block w-full h-full">
       {/* Blur-up placeholder */}
       <div className={`absolute inset-0 bg-gradient-to-br from-gray-800/40 to-gray-900/40 ${loaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`} />
       <img
@@ -55,12 +55,7 @@ const LazyPhoto = ({ src, alt, priority = false, onClick }: { src: string; alt: 
           }
         }}
       />
-      {/* Enlarge hint */}
-      <div className="absolute bottom-2 right-2 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/60 text-white text-[10px] md:text-xs shadow ring-1 ring-white/10 md:opacity-0 md:group-hover:opacity-100 transition-opacity pointer-events-none">
-        <Maximize2 className="h-3.5 w-3.5" />
-        <span className="hidden sm:inline">Enlarge</span>
-      </div>
-    </button>
+    </div>
   );
 };
 
@@ -70,36 +65,7 @@ const PhotographySection = () => {
   const [visibleCount, setVisibleCount] = useState(Math.min(BATCH, photos.length));
   const visiblePhotos = hasPhotos ? photos.slice(0, visibleCount) : [];
 
-  // Lightbox state
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-  const openLightbox = (index: number) => {
-    setLightboxIndex(index);
-    setLightboxOpen(true);
-  };
-  const closeLightbox = () => setLightboxOpen(false);
-  const step = (d: number) => setLightboxIndex((prev) => {
-    const len = visiblePhotos.length;
-    if (len === 0) return 0;
-    let next = (prev + d) % len;
-    if (next < 0) next += len;
-    return next;
-  });
-  useEffect(() => {
-    if (!lightboxOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') step(-1);
-      if (e.key === 'ArrowRight') step(1);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener('keydown', onKey);
-    };
-  }, [lightboxOpen]);
+  // Lightbox removed per request; keeping component lightweight and non-interactive
 
   return (
     <section className="py-12 px-6 bg-secondary/10">
@@ -124,7 +90,7 @@ const PhotographySection = () => {
             {visiblePhotos.map((src, idx) => (
               <div key={idx} className="w-full">
                 <div className="aspect-[4/5] rounded-xl overflow-hidden bg-black/80">
-                  <LazyPhoto src={src} alt={`Photo ${idx + 1}`} priority={idx < 4} onClick={() => openLightbox(idx)} />
+                  <LazyPhoto src={src} alt={`Photo ${idx + 1}`} priority={idx < 4} />
                 </div>
               </div>
             ))}
@@ -155,34 +121,7 @@ const PhotographySection = () => {
         )}
       </div>
 
-      {/* Lightbox */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4">
-          <button
-            className="absolute top-4 right-4 text-white text-2xl"
-            onClick={closeLightbox}
-          >
-            <ChevronRight className="rotate-180" />
-          </button>
-          <img
-            src={visiblePhotos[lightboxIndex]}
-            alt={`Photo ${lightboxIndex + 1}`}
-            className="max-w-4xl max-h-screen object-contain"
-          />
-          <button
-            className="absolute top-1/2 left-4 -translate-y-1/2 text-white text-2xl"
-            onClick={() => step(-1)}
-          >
-            <ChevronLeft />
-          </button>
-          <button
-            className="absolute top-1/2 right-4 -translate-y-1/2 text-white text-2xl"
-            onClick={() => step(1)}
-          >
-            <ChevronRight />
-          </button>
-        </div>
-      )}
+      {/* Enlarge modal removed per request */}
     </section>
   );
 };
