@@ -1,4 +1,5 @@
 import { Trophy, Target, Brain, BarChart3 } from "lucide-react";
+import LeetCodeStats from "./LeetCodeStats";
 
 
 // Brand logo URLs (Simple Icons SVG CDN / site favicon)
@@ -43,16 +44,7 @@ const DSASection = () => {
                 <Trophy className="h-12 w-12 text-primary animate-pulse-orange" />
               </div>
               
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">1508</div>
-                  <div className="text-gray-text">Contest Rating</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">300</div>
-                  <div className="text-gray-text">Problems Solved</div>
-                </div>
-              </div>
+              <LeetCodeStats username="MohanPrasathSece" />
 
               {/* LeetCode Profile Link (moved here) */}
               <a
