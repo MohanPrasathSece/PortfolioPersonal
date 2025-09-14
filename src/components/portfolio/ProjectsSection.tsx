@@ -288,7 +288,7 @@ const ProjectsSection = () => {
                       {/* Project Image / Gallery */}
                       <div className="bg-muted flex items-center justify-center min-h-[84px] sm:min-h-[110px] md:min-h-[140px] lg:min-h-[160px] h-full">
                         {gallery.length > 0 ? (
-                          <div className="relative w-full h-full px-3 sm:px-4 cursor-zoom-in group" onClick={() => openLightbox(gallery, currentIdx, project.title)}>
+                          <div className="relative w-full h-full px-0 md:px-4 cursor-zoom-in group" onClick={() => openLightbox(gallery, currentIdx, project.title)}>
                             <div className="w-full h-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
                               {(() => {
                                 const imgs = gallery as string[];
@@ -378,19 +378,6 @@ const ProjectsSection = () => {
                           <p className="text-primary font-medium text-sm md:text-base mb-1.5 md:mb-3">{project.tagline}</p>
                           <p className="text-sm md:text-base text-gray-text leading-relaxed">{project.description}</p>
                         </div>
-
-                      {/* Features */}
-                      <div className="mb-2 md:mb-3">
-                        <h4 className="text-sm md:text-base text-primary font-semibold mb-1 md:mb-2">Key Features:</h4>
-                        <ul className="space-y-1">
-                          {project.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-start">
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 mr-2.5 flex-shrink-0" />
-                              <span className="text-sm md:text-base text-gray-text">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
 
                       {/* Tech Stack */}
                       <div className="mb-2 md:mb-3">

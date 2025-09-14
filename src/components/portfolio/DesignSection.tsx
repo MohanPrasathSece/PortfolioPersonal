@@ -27,12 +27,12 @@ const DesignSection = () => {
   // Minimal, no state needed
 
   return (
-    <section id="design" className="relative py-10 md:py-20 px-6 bg-black">
+    <section id="design" className="relative py-10 md:py-20 px-0 md:px-6 bg-black">
       {/* Tiny stars background for black section */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <TinyStars densityScale={1.35} />
       </div>
-      <div className="container max-w-6xl mx-auto relative z-10">
+      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-8 md:mb-16">
           <h2 className="typ-h-section mb-4">
             Design <span className="orange-gradient bg-clip-text text-transparent">Portfolio</span>
@@ -66,7 +66,7 @@ const DesignSection = () => {
         </div>
 
         {/* Melodia Horizontal Scroll Gallery (images only) */}
-        <div className="relative overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
+        <div className="relative overflow-x-auto no-scrollbar pl-3 pr-0 md:-mx-4 md:px-4 pb-2">
           {/* Icon-only scroll hint near images */}
           <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10">
             <div className="h-7 w-7 rounded-full bg-white/8 border border-white/10 backdrop-blur flex items-center justify-center text-gray-200">

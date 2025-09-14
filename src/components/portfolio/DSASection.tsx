@@ -4,9 +4,9 @@ import LeetCodeStats from "./LeetCodeStats";
 
 // Brand logo URLs (Simple Icons SVG CDN / site favicon)
 const ICONS = {
-  leetcode: "https://cdn.simpleicons.org/leetcode/ffffff",
-  hackerrank: "https://cdn.simpleicons.org/hackerrank/ffffff",
-  codechef: "https://cdn.simpleicons.org/codechef/ffffff",
+  leetcode: "https://cdn.simpleicons.org/leetcode/FFA116",
+  hackerrank: "https://cdn.simpleicons.org/hackerrank/00EA64",
+  codechef: "https://cdn.simpleicons.org/codechef/5B4638",
   skillrack: "https://skillrack.com/favicon.ico",
 };
 

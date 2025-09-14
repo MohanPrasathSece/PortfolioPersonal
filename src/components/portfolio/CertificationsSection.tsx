@@ -151,12 +151,12 @@ const CertificationsSection = () => {
   };
 
   return (
-    <section id="certifications" className="relative py-16 px-5">
+    <section id="certifications" className="relative py-8 md:py-16 px-0 md:px-6">
       {/* Tiny stars background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <TinyStars densityScale={1.2} />
       </div>
-      <div className="container max-w-6xl mx-auto relative z-10">
+      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-12">
           <h2 className="typ-h-section mb-2">
             <span className="orange-gradient bg-clip-text text-transparent">Certifications</span> & Learning
@@ -167,7 +167,7 @@ const CertificationsSection = () => {
         </div>
 
         {/* Mobile: horizontal scroll row */}
-        <div className="md:hidden overflow-x-auto no-scrollbar -mx-4 px-4">
+        <div className="md:hidden overflow-x-auto no-scrollbar pl-3 pr-0 md:-mx-4 md:px-4">
           <div className="flex gap-4 snap-x snap-mandatory">
             {[...certifications]
               .sort((a, b) => Number(b.year) - Number(a.year))
