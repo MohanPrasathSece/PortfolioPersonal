@@ -1,6 +1,6 @@
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, Github, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ProjectsSection = () => {
   // Horizontal scroll variant – no active state needed
@@ -18,13 +18,9 @@ const ProjectsSection = () => {
       ],
       techStack: ["Java", "Spring Boot", "MySQL"],
       image: "/placeholder-project.jpg",
-      github: "#",
+      github: "https://github.com/MohanPrasathSece/Crowdfunding-Springboot.git",
       demo: "https://crowdfunding-frontend-woad.vercel.app/login",
-      gallery: [
-        "/placeholder-project.jpg",
-        "/placeholder-project.jpg",
-        "/placeholder-project.jpg"
-      ]
+      assetsDir: "crowdfunding-platform"
     },
     {
       title: "CampusLink Portal",
@@ -39,13 +35,9 @@ const ProjectsSection = () => {
       ],
       techStack: ["Vite", "TypeScript", "React", "Tailwind CSS", "shadcn-ui"],
       image: "/placeholder-project.jpg",
-      github: "#",
+      github: "https://github.com/MohanPrasathSece/FinalCampusLink.git",
       demo: "https://frontend-campus-connect.vercel.app",
-      gallery: [
-        "/placeholder-project.jpg",
-        "/placeholder-project.jpg",
-        "/placeholder-project.jpg"
-      ]
+      assetsDir: "campuslink-portal"
     },
     // 'Task Manager' project removed per request
     {
@@ -61,8 +53,9 @@ const ProjectsSection = () => {
       ],
       techStack: ["MongoDB", "Express.js", "React.js", "Node.js"],
       image: "/placeholder-project.jpg",
-      github: "#",
-      demo: "https://foodrescuefrontend.vercel.app"
+      github: "https://github.com/MohanPrasathSece/FoodRescueNetwork.git",
+      demo: "https://foodrescuefrontend.vercel.app",
+      assetsDir: "food-rescue-network"
     },
     {
       title: "MediSmart-AI",
@@ -77,13 +70,9 @@ const ProjectsSection = () => {
       ],
       techStack: ["MERN", "Hugging Face", "Tesseract.js", "Socket.io"],
       image: "/placeholder-project.jpg",
-      github: "#",
-      demo: "#",
-      gallery: [
-        "/placeholder-project.jpg",
-        "/placeholder-project.jpg",
-        "/placeholder-project.jpg"
-      ]
+      github: "https://github.com/MohanPrasathSece/MediSmart-Ai.git",
+      demo: "https://medi-smart-frontend.vercel.app",
+      assetsDir: "medismart-ai"
     },
     {
       title: "NammaCity",
@@ -97,13 +86,9 @@ const ProjectsSection = () => {
       ],
       techStack: ["HTML", "CSS", "JavaScript"],
       image: "/placeholder-project.jpg",
-      github: "#",
+      github: "https://github.com/MohanPrasathSece/NammaCity.git",
       demo: "#",
-      gallery: [
-        "/placeholder-project.jpg",
-        "/placeholder-project.jpg",
-        "/placeholder-project.jpg"
-      ]
+      assetsDir: "namma-city"
     }
   ];
 
@@ -154,8 +139,97 @@ const ProjectsSection = () => {
     });
   };
 
+  // Lightbox state for enlarged view
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxTitle, setLightboxTitle] = useState<string>("");
+  const [lightboxIsLandscape, setLightboxIsLandscape] = useState<boolean | null>(null);
+  const openLightbox = (imgs: string[], index: number, title: string) => {
+    if (!imgs || imgs.length === 0) return;
+    setLightboxImages(imgs);
+    setLightboxIndex(Math.max(0, Math.min(index, imgs.length - 1)));
+    setLightboxTitle(title);
+    setLightboxIsLandscape(null);
+    setLightboxOpen(true);
+  };
+  const closeLightbox = () => setLightboxOpen(false);
+  const lightboxStep = (delta: number) => {
+    setLightboxIndex((prev) => {
+      const len = lightboxImages.length;
+      if (len === 0) return 0;
+      let next = (prev + delta) % len;
+      if (next < 0) next += len;
+      return next;
+    });
+  };
+
+  // Lightbox UX enhancements: lock scroll and enable keyboard navigation
+  useEffect(() => {
+    if (lightboxOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') lightboxStep(-1);
+        if (e.key === 'ArrowRight') lightboxStep(1);
+      };
+      window.addEventListener('keydown', onKey);
+      return () => {
+        document.body.style.overflow = prev;
+        window.removeEventListener('keydown', onKey);
+      };
+    }
+  }, [lightboxOpen]);
+
+  // Load images from assets/projects/<dir>.
+  // Ordering rules:
+  // 1) files named one..ten (prefix) come first in that order
+  // 2) then files with numeric prefixes (1,2,3,...) in ascending order
+  // 3) otherwise alphabetical
+  const loadProjectImages = (dir?: string) => {
+    if (!dir) return [] as string[];
+    // Vite's import.meta.glob requires a static string. We glob all project images and filter by dir.
+    const modules = import.meta.glob('/src/assets/projects/**/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,avif,AVIF}', { eager: true, import: 'default' }) as Record<string, string>;
+    const order = ["one","two","three","four","five","six","seven","eight","nine","ten"]; // enforced order by filename (prefix)
+    const items = Object.entries(modules)
+      .filter(([path]) => path.includes(`/src/assets/projects/${dir}/`))
+      .map(([path, src]) => {
+        const file = path.split('/').pop() || "";
+        const name = file.split('.').slice(0, -1).join('.').toLowerCase();
+        // Word-based index (one..ten)
+        const wordIdx = order.findIndex(key => name.startsWith(key));
+        // Numeric index from prefix like 1-, 02_, etc.
+        const numMatch = name.match(/^(\d{1,3})/);
+        const numIdx = numMatch ? parseInt(numMatch[1], 10) : NaN;
+        // Compute composite sort keys
+        const hasWord = wordIdx !== -1;
+        const hasNum = Number.isFinite(numIdx);
+        return { name, src, wordIdx, numIdx: hasNum ? numIdx : Number.POSITIVE_INFINITY, hasWord, hasNum };
+      });
+    const anyWord = items.some(i => i.hasWord);
+    const anyNum = items.some(i => i.hasNum);
+    items.sort((a, b) => {
+      // Word order first if present
+      if (anyWord) {
+        if (a.hasWord && b.hasWord) return (a.wordIdx - b.wordIdx) || a.name.localeCompare(b.name);
+        if (a.hasWord) return -1;
+        if (b.hasWord) return 1;
+      }
+      // Then numeric prefixes
+      if (anyNum) {
+        if (a.hasNum && b.hasNum) return (a.numIdx - b.numIdx) || a.name.localeCompare(b.name);
+        if (a.hasNum) return -1;
+        if (b.hasNum) return 1;
+      }
+      // Fallback alpha
+      return a.name.localeCompare(b.name);
+    });
+    return items.map(i => i.src).filter(Boolean);
+  };
+
   return (
-    <section className="py-20 px-6">
+    <section className="py-14 px-6">
       <div className="container max-w-7xl mx-auto">
         <div className="mb-16">
           <div className="flex items-center justify-between gap-3 flex-wrap">
@@ -182,9 +256,11 @@ const ProjectsSection = () => {
         <div ref={outerScrollRef} className="overflow-x-auto overflow-y-visible no-scrollbar -mx-4 px-4 pb-2">
           <div className="flex gap-6 snap-x snap-mandatory">
             {orderedProjects.map((project, index) => {
+              const gallery = loadProjectImages((project as any).assetsDir);
+              const currentIdx = getIndex(index, gallery.length);
               const isFeatured = featuredTitles.has(project.title);
               return (
-                <div key={index} className="snap-start min-w-[320px] sm:min-w-[560px] lg:min-w-[900px]">
+                <div key={index} className="snap-start min-w-[300px] sm:min-w-[520px] lg:min-w-[860px]">
                   <div className={`card-gradient card-shadow rounded-2xl hover-glow h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
                     {isFeatured && (
                       <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground shadow-md">
@@ -193,19 +269,19 @@ const ProjectsSection = () => {
                     )}
                     <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl items-stretch">
                       {/* Project Image / Gallery */}
-                      <div className="bg-muted flex items-center justify-center min-h-[160px] sm:min-h-[180px] md:min-h-[220px] lg:min-h-[260px] h-full">
-                        {Array.isArray((project as any).gallery) && (project as any).gallery.length > 0 ? (
-                          <div className="relative w-full h-full px-3 sm:px-4">
+                      <div className="bg-muted flex items-center justify-center min-h-[120px] sm:min-h-[150px] md:min-h-[180px] lg:min-h-[220px] h-full">
+                        {gallery.length > 0 ? (
+                          <div className="relative w-full h-full px-3 sm:px-4 cursor-zoom-in group" onClick={() => openLightbox(gallery, currentIdx, project.title)}>
                             <div className="w-full h-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
                               {(() => {
-                                const imgs = (project as any).gallery as string[];
+                                const imgs = gallery as string[];
                                 const idx = getIndex(index, imgs.length);
                                 const src = imgs[idx];
                                 return (
                                   <img
                                     src={src}
                                     alt={`${project.title} screenshot ${idx + 1}`}
-                                    className="max-h-full max-w-full object-contain"
+                                    className="object-contain w-full h-auto max-h-56 sm:max-h-64 md:max-h-72 lg:max-h-80"
                                     onError={(e) => {
                                       const target = e.currentTarget as HTMLImageElement;
                                       if (target.src.endsWith('/placeholder.svg')) return;
@@ -216,22 +292,34 @@ const ProjectsSection = () => {
                               })()}
                             </div>
                             {/* Nav buttons */}
+                            {gallery.length > 1 && (
                             <button
                               type="button"
                               aria-label="Previous image"
-                              className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white shadow"
-                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); step(index, (project as any).gallery.length, -1); }}
+                              className="absolute left-2 top-2 p-1.5 text-white/90 hover:text-white z-10 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); step(index, gallery.length, -1); }}
                             >
-                              <ChevronLeft className="h-5 w-5" />
+                              <ChevronLeft className="h-6 w-6 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
                             </button>
+                            )}
+                            {gallery.length > 1 && (
                             <button
                               type="button"
                               aria-label="Next image"
-                              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white shadow"
-                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); step(index, (project as any).gallery.length, 1); }}
+                              className="absolute right-2 top-2 p-1.5 text-white/90 hover:text-white z-10 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); step(index, gallery.length, 1); }}
                             >
-                              <ChevronRight className="h-5 w-5" />
+                              <ChevronRight className="h-6 w-6 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
                             </button>
+                            )}
+                            {/* Enlarge hint */}
+                            <div
+                              className="absolute bottom-2 right-2 flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/90 text-black text-xs shadow ring-1 ring-black/10 pointer-events-none md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                              aria-hidden="true"
+                            >
+                              <Maximize2 className="h-3.5 w-3.5" />
+                              <span className="hidden sm:inline">Enlarge</span>
+                            </div>
                           </div>
                         ) : project.title === "MediSmart-AI" ? (
                           <div className="w-full h-full flex items-center justify-center">
@@ -264,16 +352,16 @@ const ProjectsSection = () => {
                       </div>
 
                       {/* Project Details */}
-                      <div className="p-6">
+                      <div className="p-5">
                         <div className="mb-4">
-                          <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                          <p className="text-primary font-medium mb-4">{project.tagline}</p>
-                          <p className="text-gray-text leading-relaxed">{project.description}</p>
+                          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                          <p className="text-primary font-medium mb-3">{project.tagline}</p>
+                          <p className="text-gray-text leading-relaxed text-sm">{project.description}</p>
                         </div>
 
                       {/* Features */}
-                      <div className="mb-4">
-                        <h4 className="font-semibold mb-3 text-primary">Key Features:</h4>
+                      <div className="mb-3">
+                        <h4 className="font-semibold mb-2 text-primary">Key Features:</h4>
                         <ul className="space-y-1.5">
                           {project.features.map((feature, idx) => (
                             <li key={idx} className="flex items-start">
@@ -285,8 +373,8 @@ const ProjectsSection = () => {
                       </div>
 
                       {/* Tech Stack */}
-                      <div className="mb-4">
-                        <h4 className="font-semibold mb-3 text-primary">Tech Stack:</h4>
+                      <div className="mb-3">
+                        <h4 className="font-semibold mb-2 text-primary">Tech Stack:</h4>
                         <div className="flex flex-wrap gap-2">
                           {project.techStack.map((tech) => (
                             <span
@@ -316,17 +404,79 @@ const ProjectsSection = () => {
                       </div>
                     </div>
                   </div>
-                  </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && (
+        <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-3 sm:p-4" onClick={closeLightbox}>
+          <div className="relative w-full max-w-6xl max-h-[92vh] bg-background rounded-xl shadow-2xl ring-1 ring-border overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-border/60 bg-muted/40">
+              <div className="text-sm sm:text-base font-semibold truncate pr-2">{lightboxTitle}</div>
+              <div className="flex items-center gap-2">
+                {lightboxImages.length > 0 && (
+                  <span className="text-xs text-gray-text">{lightboxIndex + 1} / {lightboxImages.length}</span>
+                )}
+                <button
+                  aria-label="Close"
+                  className="px-2 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm"
+                  onClick={closeLightbox}
+                >
+                  Back
+                </button>
+              </div>
+            </div>
+            {/* Content */}
+            <div className="relative flex-1 min-h-0 flex items-center justify-center bg-black">
+              <div className="w-full h-full flex items-center justify-center p-3 sm:p-4">
+                <img
+                  src={lightboxImages[lightboxIndex]}
+                  alt={`Screenshot ${lightboxIndex + 1}`}
+                  onLoad={(e) => {
+                    const img = e.currentTarget;
+                    setLightboxIsLandscape(img.naturalWidth >= img.naturalHeight);
+                  }}
+                  className={
+                    `object-contain ${
+                      lightboxIsLandscape === null
+                        ? 'max-h-[85vh] max-w-[92vw]'
+                        : lightboxIsLandscape
+                          ? 'h-auto max-h-[75vh] w-auto max-w-[70vw]'
+                          : 'w-full max-w-[88%] h-auto max-h-[85vh]'
+                    }`
+                  }
+                />
+              </div>
+              {lightboxImages.length > 1 && (
+                <>
+                  <button
+                    aria-label="Previous"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
+                    onClick={() => lightboxStep(-1)}
+                  >
+                    <ChevronLeft className="h-6 w-6" />
+                  </button>
+                  <button
+                    aria-label="Next"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
+                    onClick={() => lightboxStep(1)}
+                  >
+                    <ChevronRight className="h-6 w-6" />
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Indicators removed in scrollable variant */}
-      </div>
-    </section>
-  );
+      )}
+    </div>
+  </section>
+);
 };
 
 export default ProjectsSection;
