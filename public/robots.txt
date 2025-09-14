@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://mohanprasath.dev/sitemap.xml
+Sitemap: https://mohanprasath.com/sitemap.xml
