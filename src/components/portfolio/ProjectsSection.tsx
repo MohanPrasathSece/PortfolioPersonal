@@ -288,7 +288,7 @@ const ProjectsSection = () => {
                       {/* Project Image / Gallery */}
                       <div className="bg-muted flex items-center justify-center min-h-[84px] sm:min-h-[110px] md:min-h-[140px] lg:min-h-[160px] h-full">
                         {gallery.length > 0 ? (
-                          <div className="relative w-full h-full px-0 md:px-4 cursor-zoom-in group" onClick={() => openLightbox(gallery, currentIdx, project.title)}>
+                          <div className="relative w-full h-full px-3 sm:px-4 cursor-zoom-in group" onClick={() => openLightbox(gallery, currentIdx, project.title)}>
                             <div className="w-full h-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
                               {(() => {
                                 const imgs = gallery as string[];

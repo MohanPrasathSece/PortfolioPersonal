@@ -4,9 +4,9 @@ import LeetCodeStats from "./LeetCodeStats";
 
 // Brand logo URLs (Simple Icons SVG CDN / site favicon)
 const ICONS = {
-  leetcode: "https://cdn.simpleicons.org/leetcode/FFA116",
-  hackerrank: "https://cdn.simpleicons.org/hackerrank/00EA64",
-  codechef: "https://cdn.simpleicons.org/codechef/5B4638",
+  leetcode: "https://cdn.simpleicons.org/leetcode/ffffff",
+  hackerrank: "https://cdn.simpleicons.org/hackerrank/ffffff",
+  codechef: "https://cdn.simpleicons.org/codechef/ffffff",
   skillrack: "https://skillrack.com/favicon.ico",
 };
 
@@ -21,8 +21,8 @@ const DSASection = () => {
   ];
 
   return (
-    <section id="dsa" className="py-16 md:py-20 px-0 md:px-6 bg-secondary/30">
-      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl mx-auto">
+    <section id="dsa" className="py-20 px-6 bg-secondary/30">
+      <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="typ-h-section mb-2">
             DSA & <span className="orange-gradient bg-clip-text text-transparent">Competitive Programming</span>

@@ -140,8 +140,8 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contact" className="py-14 md:py-20 px-0 md:px-6 bg-secondary/20">
-      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl mx-auto">
+    <section id="contact" className="py-14 md:py-20 px-5 md:px-6 bg-secondary/20">
+      <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="typ-h-section mb-3 md:mb-4">
             Let's <span className="orange-gradient bg-clip-text text-transparent">Connect</span>

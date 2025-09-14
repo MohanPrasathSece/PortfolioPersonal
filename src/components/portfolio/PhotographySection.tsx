@@ -69,12 +69,12 @@ const PhotographySection = () => {
   // Lightbox removed per request; keeping component lightweight and non-interactive
 
   return (
-    <section id="photography" className="relative py-8 md:py-12 px-0 md:px-6 bg-secondary/10">
+    <section id="photography" className="relative py-8 md:py-12 px-6 bg-secondary/10">
       {/* Tiny stars background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <TinyStars densityScale={1.3} />
       </div>
-      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl mx-auto relative z-10">
+      <div className="container max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-8 md:mb-10">
           <h2 className="typ-h-section mb-4">
             Beyond Code: My Lens as a{" "}

@@ -35,8 +35,8 @@ const SkillsSection = () => {
   ];
 
   return (
-    <section id="skills" className="py-8 md:py-16 px-0 md:px-5">
-      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl mx-auto">
+    <section id="skills" className="py-8 md:py-16 px-4 md:px-5">
+      <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-6 md:mb-12">
           <h2 className="typ-h-section mb-2 md:mb-3">
             Technical <span className="orange-gradient bg-clip-text text-transparent">Skills</span>
@@ -47,7 +47,7 @@ const SkillsSection = () => {
         </div>
 
         {/* Mobile: horizontal scroll to avoid overflow */}
-        <div className="md:hidden overflow-x-auto no-scrollbar pl-3 pr-0 md:-mx-4 md:px-4">
+        <div className="md:hidden overflow-x-auto no-scrollbar -mx-4 px-4">
           <div className="flex gap-3 snap-x snap-mandatory">
             {skills.map((skill, index) => (
               <div key={skill.category} className="snap-start min-w-[200px]">
