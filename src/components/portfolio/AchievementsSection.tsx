@@ -34,12 +34,12 @@ const AchievementsSection = () => {
   ];
 
   return (
-    <section id="achievements" className="relative py-8 md:py-20 px-5 md:px-6 bg-secondary/20">
+    <section id="achievements" className="relative py-8 md:py-20 px-0 md:px-6 bg-secondary/20">
       {/* Tiny stars background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <TinyStars densityScale={1.2} />
       </div>
-      <div className="container max-w-6xl mx-auto relative z-10">
+      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-8 md:mb-16">
           <h2 className="typ-h-section mb-3 md:mb-4">
             Key <span className="orange-gradient bg-clip-text text-transparent">Achievements</span>

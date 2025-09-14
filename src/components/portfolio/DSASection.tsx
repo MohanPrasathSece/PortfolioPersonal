@@ -21,8 +21,8 @@ const DSASection = () => {
   ];
 
   return (
-    <section id="dsa" className="py-20 px-6 bg-secondary/30">
-      <div className="container max-w-6xl mx-auto">
+    <section id="dsa" className="py-16 md:py-20 px-0 md:px-6 bg-secondary/30">
+      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="typ-h-section mb-2">
             DSA & <span className="orange-gradient bg-clip-text text-transparent">Competitive Programming</span>

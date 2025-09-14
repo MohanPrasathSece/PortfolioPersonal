@@ -6,12 +6,12 @@ import TinyStars from "@/components/portfolio/TinyStars";
 
 const HeroSection = () => {
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center px-5 md:px-6 py-12 md:py-20 relative">
+    <section id="home" className="min-h-screen flex items-center justify-center px-0 md:px-6 py-12 md:py-20 relative">
       {/* Subtle tiny stars background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <TinyStars densityScale={1.2} cometEnabled cometEveryMs={5000} cometTrailFadeMs={5000} />
       </div>
-      <div className="container max-w-6xl relative z-10">
+      <div className="container px-0 md:px-4 max-w-none md:max-w-6xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Profile Image */
           }
@@ -38,7 +38,7 @@ const HeroSection = () => {
             <div className="mb-4 md:mb-6">
               <h1 className="typ-h-hero mb-2 md:mb-4 animate-fade-in-up">
                 Hi, I'm{" "}
-                <span className="orange-gradient bg-clip-text text-transparent whitespace-nowrap">
+                <span className="orange-gradient bg-clip-text text-transparent whitespace-normal md:whitespace-nowrap">
                   Mohan Prasath
                 </span>
               </h1>
