@@ -229,23 +229,40 @@ const ProjectsSection = () => {
   };
 
   return (
-    <section className="py-14 px-6">
-      <div className="container max-w-7xl mx-auto">
-        <div className="mb-16">
-          <div className="flex items-center justify-between gap-3 flex-wrap">
-            <h2 className="text-4xl lg:text-5xl font-bold">
+    <section className="py-8 md:py-14 px-0 md:px-6">
+      <div className="container px-0 md:px-4 max-w-none md:max-w-7xl mx-auto">
+        <div className="mb-8 md:mb-16">
+          <div className="flex flex-col items-center gap-2 md:gap-3 text-center">
+            <h2 className="typ-h-section">
               Featured <span className="orange-gradient bg-clip-text text-transparent">Projects</span>
             </h2>
-            <a
-              href="https://github.com/MohanPrasathSece"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline-orange" size="sm">
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-              </Button>
-            </a>
+            {/* Mobile: icon-only below heading, aligned a bit to the right */}
+            <div className="w-full flex md:hidden mt-1 justify-end pr-3">
+              <a
+                href="https://github.com/MohanPrasathSece"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                title="GitHub"
+              >
+                <Button variant="outline-orange" size="sm" className="p-2 h-10 w-10 !px-2">
+                  <Github className="h-5 w-5" />
+                </Button>
+              </a>
+            </div>
+            {/* Desktop: full button centered below heading */}
+            <div className="hidden md:block">
+              <a
+                href="https://github.com/MohanPrasathSece"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="outline-orange" size="sm">
+                  <Github className="mr-2 h-4 w-4" />
+                  GitHub
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -253,18 +270,18 @@ const ProjectsSection = () => {
         <div className="text-center mb-6 text-sm text-gray-text">Scroll to view more projects →</div>
 
         {/* Project List - Horizontal Scroll */}
-        <div ref={outerScrollRef} className="overflow-x-auto overflow-y-visible no-scrollbar -mx-4 px-4 pb-2">
+        <div ref={outerScrollRef} className="overflow-x-auto overflow-y-visible no-scrollbar px-0 md:-mx-4 md:px-4 pb-2">
           <div className="flex gap-6 snap-x snap-mandatory">
             {orderedProjects.map((project, index) => {
               const gallery = loadProjectImages((project as any).assetsDir);
               const currentIdx = getIndex(index, gallery.length);
               const isFeatured = featuredTitles.has(project.title);
               return (
-                <div key={index} className="snap-start min-w-[260px] sm:min-w-[520px] lg:min-w-[860px]">
+                <div key={index} className="snap-start min-w-[360px] sm:min-w-[720px] lg:min-w-[1200px]">
                   <div className={`card-gradient card-shadow rounded-2xl hover-glow h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
                     <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl items-stretch">
                       {/* Project Image / Gallery */}
-                      <div className="bg-muted flex items-center justify-center min-h-[120px] sm:min-h-[150px] md:min-h-[180px] lg:min-h-[220px] h-full">
+                      <div className="bg-muted flex items-center justify-center min-h-[84px] sm:min-h-[110px] md:min-h-[140px] lg:min-h-[160px] h-full">
                         {gallery.length > 0 ? (
                           <div className="relative w-full h-full px-3 sm:px-4 cursor-zoom-in group" onClick={() => openLightbox(gallery, currentIdx, project.title)}>
                             <div className="w-full h-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
@@ -279,7 +296,7 @@ const ProjectsSection = () => {
                                     loading="lazy"
                                     decoding="async"
                                     sizes="(max-width: 640px) 320px, (max-width: 1024px) 560px, 900px"
-                                    className="object-contain w-full h-auto max-h-56 sm:max-h-64 md:max-h-72 lg:max-h-80"
+                                    className="object-contain w-full h-auto max-h-36 sm:max-h-48 md:max-h-56 lg:max-h-64 mt-2 sm:mt-3 md:mt-4"
                                     onError={(e) => {
                                       const target = e.currentTarget as HTMLImageElement;
                                       if (target.src.endsWith('/placeholder.svg')) return;
@@ -324,14 +341,14 @@ const ProjectsSection = () => {
                             <div className="w-[92%] h-[85%] rounded-2xl overflow-hidden shadow-inner bg-gradient-to-b from-emerald-600 to-emerald-700">
                               <div className="h-full w-full flex flex-col items-center justify-center text-white text-center px-4">
                                 <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold mb-2">Your Health, Delivered.</h3>
-                                <p className="text-xs md:text-sm text-white/90 max-w-md mb-4">
+                                <p className="text-sm md:text-base text-white/90 max-w-md mb-4">
                                   Compare medicine prices, upload prescriptions, and get your medications delivered to your doorstep.
                                 </p>
                                 <div className="flex gap-3 flex-wrap justify-center">
-                                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-white text-emerald-700 text-xs md:text-sm shadow hover:shadow-md transition-smooth">
+                                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-white text-emerald-700 text-sm md:text-base shadow hover:shadow-md transition-smooth">
                                     Search Medicines
                                   </button>
-                                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-transparent border border-white/70 text-white text-xs md:text-sm hover:bg-white/10 transition-smooth">
+                                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-transparent border border-white/70 text-white text-sm md:text-base hover:bg-white/10 transition-smooth">
                                     Upload Prescription
                                   </button>
                                 </div>
@@ -340,31 +357,31 @@ const ProjectsSection = () => {
                           </div>
                         ) : (
                           <div className="text-center">
-                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
                               <ExternalLink className="h-8 w-8 text-primary" />
                             </div>
-                            <p className="text-muted-foreground">Project Screenshot</p>
-                            <p className="text-sm text-gray-text mt-1">Image placeholder - insert project screenshot</p>
+                            <p className="typ-body">Project Screenshot</p>
+                            <p className="typ-small mt-1">Image placeholder - insert project screenshot</p>
                           </div>
                         )}
                       </div>
 
                       {/* Project Details */}
                       <div className="p-3 md:p-5">
-                        <div className="mb-2.5 md:mb-4">
+                        <div className="mb-2 md:mb-3">
                           <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2 leading-snug">{project.title}</h3>
-                          <p className="text-primary font-medium text-[11px] md:text-base mb-1.5 md:mb-3">{project.tagline}</p>
-                          <p className="text-gray-text leading-relaxed text-[11px] md:text-sm">{project.description}</p>
+                          <p className="text-primary font-medium text-sm md:text-base mb-1.5 md:mb-3">{project.tagline}</p>
+                          <p className="text-sm md:text-base text-gray-text leading-relaxed">{project.description}</p>
                         </div>
 
                       {/* Features */}
                       <div className="mb-2 md:mb-3">
-                        <h4 className="font-semibold mb-1 md:mb-2 text-primary text-[11px] md:text-base">Key Features:</h4>
+                        <h4 className="text-sm md:text-base text-primary font-semibold mb-1 md:mb-2">Key Features:</h4>
                         <ul className="space-y-1">
                           {project.features.map((feature, idx) => (
                             <li key={idx} className="flex items-start">
                               <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 mr-2.5 flex-shrink-0" />
-                              <span className="text-gray-text text-[11px] md:text-sm">{feature}</span>
+                              <span className="text-sm md:text-base text-gray-text">{feature}</span>
                             </li>
                           ))}
                         </ul>
@@ -372,12 +389,12 @@ const ProjectsSection = () => {
 
                       {/* Tech Stack */}
                       <div className="mb-2 md:mb-3">
-                        <h4 className="font-semibold mb-1 md:mb-2 text-primary text-[11px] md:text-base">Tech Stack:</h4>
+                        <h4 className="text-sm md:text-base text-primary font-semibold mb-1 md:mb-2">Tech Stack:</h4>
                         <div className="flex flex-wrap gap-1 md:gap-2">
                           {project.techStack.map((tech) => (
                             <span
                               key={tech}
-                              className={`px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[9px] md:text-xs font-medium ${getTechBadgeColor(tech)}`}
+                              className={`px-2 md:px-3 py-0.5 md:py-1 rounded-full typ-badge ${getTechBadgeColor(tech)}`}
                             >
                               {tech}
                             </span>
@@ -388,13 +405,13 @@ const ProjectsSection = () => {
                       {/* Action Buttons */}
                       <div className="flex gap-2 md:gap-3">
                         <a href={(project as any).github} target="_blank" rel="noopener noreferrer" className="flex-1">
-                          <Button variant="outline-orange" size="sm" className="w-full text-[11px]">
+                          <Button variant="outline-orange" size="sm" className="w-full text-sm">
                             <Github className="mr-2 h-4 w-4" />
                             View Code
                           </Button>
                         </a>
                         <a href={(project as any).demo} target="_blank" rel="noopener noreferrer" className="flex-1">
-                          <Button variant="outline-orange" size="sm" className="w-full text-[11px]">
+                          <Button variant="outline-orange" size="sm" className="w-full text-sm">
                             <ExternalLink className="mr-2 h-4 w-4" />
                             Live Demo
                           </Button>

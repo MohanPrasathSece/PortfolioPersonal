@@ -26,29 +26,29 @@ const DesignSection = () => {
   // Minimal, no state needed
 
   return (
-    <section className="py-20 px-6 bg-black">
+    <section className="py-10 md:py-20 px-6 bg-black">
       <div className="container max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center mb-4">
-            <Palette className="h-12 w-12 text-primary mr-4" />
-            <h2 className="text-4xl lg:text-5xl font-bold">
-              Design <span className="orange-gradient bg-clip-text text-transparent">Portfolio</span>
-            </h2>
-          </div>
-          <p className="text-lg text-gray-text max-w-2xl mx-auto">Melodia — spotlight the core flows with a focused preview and quick screen switcher.</p>
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="typ-h-section mb-4">
+            Design <span className="orange-gradient bg-clip-text text-transparent">Portfolio</span>
+          </h2>
+          <p className="typ-body max-w-2xl mx-auto">Melodia — spotlight the core flows with a focused preview and quick screen switcher.</p>
         </div>
 
         {/* Design Tools (minimal) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10 md:mb-12">
           {designTools.map((tool, index) => (
             <div
               key={tool.name}
-              className="card-gradient card-shadow rounded-xl p-4 text-center"
+              className="card-gradient card-shadow rounded-xl p-3 md:p-4 text-center"
             >
               <div className="text-primary mb-2 flex justify-center">
-                {tool.icon}
+                {/** Smaller icons on mobile */}
+                {tool.icon && (
+                  <div className="[&_*]:h-5 [&_*]:w-5 md:[&_*]:h-6 md:[&_*]:w-6">{tool.icon}</div>
+                )}
               </div>
-              <h3 className="font-semibold mb-2">{tool.name}</h3>
+              <h3 className="text-sm md:text-base font-semibold mb-2">{tool.name}</h3>
               {/* Proficiency removed as requested */}
               </div>
             ))}
@@ -56,8 +56,8 @@ const DesignSection = () => {
 
         {/* Minimal layout – no intro card */}
         <div className="text-center mb-6">
-          <h3 className="text-3xl lg:text-4xl font-bold text-primary">Melodia</h3>
-          <p className="text-sm text-gray-text">Minimal preview of the core Melodia screens — scroll sideways to explore the UI flow.</p>
+          <h3 className="typ-h-sub text-primary">Melodia</h3>
+          <p className="typ-small">Minimal preview of the core Melodia screens — scroll sideways to explore the UI flow.</p>
         </div>
 
         {/* Melodia Horizontal Scroll Gallery (images only) */}
@@ -65,8 +65,8 @@ const DesignSection = () => {
           <div className="flex gap-6 snap-x snap-mandatory">
             {melodiaScreens.map((screen) => (
               <div key={screen.id} className="snap-start min-w-[260px] sm:min-w-[300px]">
-                <div className="rounded-2xl p-3 transition-smooth">
-                  <div className="bg-black aspect-[9/16] mx-auto w-[220px] md:w-[240px] rounded-[1.6rem] p-3 shadow-xl">
+                <div className="rounded-2xl p-3 transition-smooth flex flex-col h-full">
+                  <div className="bg-black aspect-[9/16] mx-auto w-[220px] md:w-[240px] rounded-[1.6rem] p-3 shadow-xl flex-1">
                     <img
                       src={screen.image}
                       alt={`Melodia ${screen.title}`}
@@ -79,7 +79,7 @@ const DesignSection = () => {
                     />
                   </div>
                   <div className="mt-3 text-center">
-                    <span className="inline-block text-sm font-medium text-violet-300 bg-violet-500/15 ring-1 ring-violet-500/20 rounded-full px-3 py-1">
+                    <span className="inline-block typ-small font-medium text-violet-300 bg-violet-500/15 ring-1 ring-violet-500/20 rounded-full px-3 py-1">
                       {screen.title}
                     </span>
                   </div>

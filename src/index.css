@@ -103,6 +103,29 @@
     background: var(--gradient-hero);
   }
   
+  /* Typography utilities */
+  .typ-h-section {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+  .typ-h-hero {
+    @apply text-3xl md:text-5xl lg:text-6xl font-bold;
+  }
+  .typ-h-sub {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+  .typ-h-card {
+    @apply text-lg md:text-xl font-bold;
+  }
+  .typ-body {
+    @apply text-sm md:text-base text-gray-text;
+  }
+  .typ-small {
+    @apply text-xs md:text-sm text-gray-text;
+  }
+  .typ-badge {
+    @apply text-xs md:text-sm font-medium;
+  }
+  
   .card-gradient {
     background: var(--gradient-card);
   }

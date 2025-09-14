@@ -24,10 +24,10 @@ const DSASection = () => {
     <section className="py-20 px-6 bg-secondary/30">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="typ-h-section mb-2">
             DSA & <span className="orange-gradient bg-clip-text text-transparent">Competitive Programming</span>
           </h2>
-          <p className="text-lg text-gray-text max-w-2xl mx-auto">
+          <p className="typ-body max-w-2xl mx-auto">
             Strong foundation in data structures and algorithms with consistent competitive programming practice
           </p>
         </div>
@@ -38,13 +38,13 @@ const DSASection = () => {
             <div className="card-gradient card-shadow rounded-xl p-8 hover-glow">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-primary">LeetCode Stats</h3>
-                  <p className="text-gray-text">Competitive Programming Journey</p>
+                  <h3 className="typ-h-card text-primary">LeetCode Stats</h3>
+                  <p className="typ-body">Competitive Programming Journey</p>
                 </div>
                 <Trophy className="h-12 w-12 text-primary animate-pulse-orange" />
               </div>
               
-              <LeetCodeStats username="MohanPrasathSece" overrideRating={1490} />
+              <LeetCodeStats username="MohanPrasathSece" overrideRating={1490} overrideSolvedDisplay="309" />
 
               {/* LeetCode Profile Link (moved here) */}
               <a
@@ -58,8 +58,8 @@ const DSASection = () => {
                     <img src={ICONS.leetcode} alt="LeetCode" className="h-5 w-5" />
                   </div>
                   <div>
-                    <div className="font-medium">LeetCode</div>
-                    <div className="text-gray-text text-sm">MohanPrasathSece - LeetCode Profile</div>
+                    <div className="text-base md:text-lg font-semibold">LeetCode</div>
+                    <div className="typ-small">MohanPrasathSece - LeetCode Profile</div>
                   </div>
                 </div>
                 <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">→</div>
@@ -67,7 +67,7 @@ const DSASection = () => {
             </div>
 
             <div className="card-gradient card-shadow rounded-xl p-6">
-              <h4 className="text-lg font-semibold mb-4 flex items-center">
+              <h4 className="typ-h-card mb-4 flex items-center">
                 <Brain className="mr-2 h-5 w-5 text-primary" />
                 Other Platforms
               </h4>
@@ -83,8 +83,8 @@ const DSASection = () => {
                       <img src={ICONS.hackerrank} alt="HackerRank" className="h-5 w-5" />
                     </div>
                     <div>
-                      <div className="font-medium">HackerRank</div>
-                      <div className="text-gray-text text-sm">Silver Badge (C, Java, Python)</div>
+                      <div className="text-base md:text-lg font-semibold">HackerRank</div>
+                      <div className="typ-small">Silver Badge (C, Java, Python)</div>
                     </div>
                   </div>
                   <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">→</div>
@@ -100,8 +100,8 @@ const DSASection = () => {
                       <img src={ICONS.skillrack} alt="Skillrack" className="h-5 w-5 rounded-sm" />
                     </div>
                     <div>
-                      <div className="font-medium">Skillrack</div>
-                      <div className="text-gray-text text-sm">700+ Problems Solved</div>
+                      <div className="text-base md:text-lg font-semibold">Skillrack</div>
+                      <div className="typ-small">700+ Problems Solved</div>
                     </div>
                   </div>
                   <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">→</div>
@@ -117,8 +117,8 @@ const DSASection = () => {
                       <img src={ICONS.codechef} alt="CodeChef" className="h-5 w-5" />
                     </div>
                     <div>
-                      <div className="font-medium">CodeChef</div>
-                      <div className="text-gray-text text-sm">156 Problems Solved</div>
+                      <div className="text-base md:text-lg font-semibold">CodeChef</div>
+                      <div className="typ-small">156 Problems Solved</div>
                     </div>
                   </div>
                   <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">→</div>

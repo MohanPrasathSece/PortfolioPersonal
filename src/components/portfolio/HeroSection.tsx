@@ -31,18 +31,18 @@ const HeroSection = () => {
           {/* Hero Content */}
           <div className="text-center lg:text-left lg:order-1">
             <div className="mb-4 md:mb-6">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 animate-fade-in-up">
+              <h1 className="typ-h-hero mb-2 md:mb-4 animate-fade-in-up">
                 Hi, I'm{" "}
                 <span className="orange-gradient bg-clip-text text-transparent whitespace-nowrap">
                   Mohan Prasath
                 </span>
               </h1>
-              <p className="text-lg md:text-2xl lg:text-3xl text-gray-text mb-1 md:mb-2">
+              <p className="typ-h-sub text-gray-text mb-1 md:mb-2">
                 Full Stack Developer & Problem Solver
               </p>
             </div>
             
-            <p className="text-sm md:text-lg text-gray-text mb-5 md:mb-8 max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <p className="typ-body mb-5 md:mb-8 max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               Passionate full-stack developer with expertise in modern web technologies, 
               competitive programming, and UI/UX design. Ready to bring your 
               ideas to life with clean, efficient code.

@@ -17,13 +17,14 @@ interface ProblemsInfo {
 interface Props {
   username: string;
   overrideRating?: number;
+  overrideSolvedDisplay?: string;
 }
 
 // Free community API (no key needed): https://github.com/alfaarghya/alfa-leetcode-api
 // Endpoints used:
 // - GET https://alfa-leetcode-api.onrender.com/userProfile/{username}
 // - GET https://alfa-leetcode-api.onrender.com/userContestRankingInfo/{username}
-export default function LeetCodeStats({ username, overrideRating }: Props) {
+export default function LeetCodeStats({ username, overrideRating, overrideSolvedDisplay }: Props) {
   const [contest, setContest] = useState<ContestInfo | null>(null);
   const [problems, setProblems] = useState<ProblemsInfo | null>(null);
   const [loading, setLoading] = useState(true);
@@ -31,6 +32,61 @@ export default function LeetCodeStats({ username, overrideRating }: Props) {
 
   useEffect(() => {
     let cancelled = false;
+    // simple localStorage cache with TTL to avoid rate limits
+    const TTL_MS = 1000 * 60 * 60 * 6; // 6 hours
+    const now = Date.now();
+    const readCache = (key: string) => {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return null;
+        const obj = JSON.parse(raw);
+        if (typeof obj?.ts !== 'number' || (now - obj.ts) > TTL_MS) return null;
+        return obj.data;
+      } catch { return null; }
+    };
+    const writeCache = (key: string, data: any) => {
+      try { localStorage.setItem(key, JSON.stringify({ ts: now, data })); } catch {}
+    };
+
+    const sleep = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+    const COOLDOWN_MS = 1000 * 60 * 10; // 10 minutes
+    async function getJsonWithCache(cacheKey: string, url: string) {
+      const cached = readCache(cacheKey);
+      // global cooldown: if we recently hit 429, avoid network entirely
+      try {
+        const cdRaw = localStorage.getItem('lc_api_cooldown');
+        const cd = cdRaw ? Number(cdRaw) : 0;
+        if (cd && now < cd) {
+          if (cached) return { json: cached, fromCache: true } as const;
+          throw new Error('Rate limited (cooldown active)');
+        }
+      } catch {}
+      if (cached) return { json: cached, fromCache: true } as const;
+      // minimal retry/backoff
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const res = await fetch(url, { headers: { Accept: 'application/json' } });
+        if (res.ok) {
+          const json = await res.json();
+          writeCache(cacheKey, json);
+          return { json, fromCache: false } as const;
+        }
+        // 429 or transient error: small backoff
+        if (res.status === 429) {
+          // set cooldown to avoid spamming logs and requests
+          try { localStorage.setItem('lc_api_cooldown', String(now + COOLDOWN_MS)); } catch {}
+          await sleep(500 + attempt * 750);
+          continue;
+        } else {
+          // non-retryable error
+          break;
+        }
+      }
+      // fall back to cache if available
+      if (cached) return { json: cached, fromCache: true } as const;
+      throw new Error('Rate limited or failed to fetch');
+    }
+
     async function load() {
       setLoading(true);
       setError(null);
@@ -38,17 +94,10 @@ export default function LeetCodeStats({ username, overrideRating }: Props) {
         const profileUrl = `https://alfa-leetcode-api.onrender.com/userProfile/${encodeURIComponent(username)}`;
         const contestUrl = `https://alfa-leetcode-api.onrender.com/userContestRankingInfo/${encodeURIComponent(username)}`;
 
-        const [profileRes, contestRes] = await Promise.all([
-          fetch(profileUrl, { headers: { "Accept": "application/json" } }),
-          fetch(contestUrl, { headers: { "Accept": "application/json" } }),
+        const [{ json: profileJson }, { json: contestJson }] = await Promise.all([
+          getJsonWithCache(`lc_profile_${username}`, profileUrl),
+          getJsonWithCache(`lc_contest_${username}`, contestUrl),
         ]);
-
-        if (!profileRes.ok || !contestRes.ok) {
-          throw new Error("Failed to fetch from LeetCode API");
-        }
-
-        const profileJson = await profileRes.json();
-        const contestJson = await contestRes.json();
 
         if (cancelled) return;
 
@@ -80,7 +129,42 @@ export default function LeetCodeStats({ username, overrideRating }: Props) {
         setProblems(probs);
         setContest(cinfo);
       } catch (e: any) {
-        if (!cancelled) setError(e?.message || "Unable to load LeetCode stats");
+        if (!cancelled) {
+          // Last-ditch cache read (even if stale)
+          try {
+            const staleP = localStorage.getItem(`lc_profile_${username}`);
+            const staleC = localStorage.getItem(`lc_contest_${username}`);
+            if (staleP || staleC) {
+              const p = staleP ? JSON.parse(staleP)?.data : null;
+              const c = staleC ? JSON.parse(staleC)?.data : null;
+              if (p) {
+                setProblems({
+                  totalSolved: p?.totalSolved ?? p?.matchedUser?.submitStats?.acSubmissionNum?.[0]?.count,
+                  easySolved: p?.easySolved,
+                  mediumSolved: p?.mediumSolved,
+                  hardSolved: p?.hardSolved,
+                });
+              }
+              if (c) {
+                setContest({
+                  rating: c?.userContestRanking?.rating ?? null,
+                  topPercentage: c?.userContestRanking?.topPercentage ?? null,
+                  historyRating: (() => {
+                    const hist = c?.userContestRankingHistory;
+                    if (Array.isArray(hist) && hist.length > 0) {
+                      for (let i = hist.length - 1; i >= 0; i--) {
+                        const r = hist[i]?.rating;
+                        if (typeof r === 'number' && !Number.isNaN(r)) return r;
+                      }
+                    }
+                    return null;
+                  })(),
+                });
+              }
+            }
+          } catch {}
+          setError(e?.message || 'Unable to load LeetCode stats');
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -92,6 +176,7 @@ export default function LeetCodeStats({ username, overrideRating }: Props) {
   }, [username]);
 
   const totalSolved = useMemo(() => problems?.totalSolved ?? 0, [problems]);
+  const solvedDisplay = overrideSolvedDisplay ?? String(totalSolved);
   const rating = useMemo(() => {
     if (typeof overrideRating === 'number') {
       return Math.round(overrideRating);
@@ -137,18 +222,18 @@ export default function LeetCodeStats({ username, overrideRating }: Props) {
   return (
     <div className="grid grid-cols-2 gap-6">
       <div className="text-center">
-        <div className="flex items-center justify-center gap-2 text-3xl font-bold text-primary mb-2">
-          <Trophy className="h-6 w-6" />
+        <div className="flex items-center justify-center gap-2 text-[26px] md:text-3xl font-bold text-primary mb-2">
+          <Trophy className="h-5 w-5 md:h-6 md:w-6" />
           <span>{rating ?? "—"}</span>
         </div>
-        <div className="text-gray-text">Latest Contest Rating</div>
+        <div className="typ-small">Latest Contest Rating</div>
       </div>
       <div className="text-center">
-        <div className="flex items-center justify-center gap-2 text-3xl font-bold text-primary mb-2">
-          <CheckCircle2 className="h-6 w-6" />
-          <span>{totalSolved}</span>
+        <div className="flex items-center justify-center gap-2 text-[26px] md:text-3xl font-bold text-primary mb-2">
+          <CheckCircle2 className="h-5 w-5 md:h-6 md:w-6" />
+          <span>{solvedDisplay}</span>
         </div>
-        <div className="text-gray-text">Problems Solved</div>
+        <div className="typ-small">Problems Solved</div>
       </div>
     </div>
   );

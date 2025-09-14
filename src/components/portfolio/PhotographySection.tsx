@@ -42,7 +42,7 @@ const LazyPhoto = ({ src, alt, priority = false }: { src: string; alt: string; p
         alt={alt}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
-        fetchPriority={priority ? "high" : "low"}
+        {...({ fetchpriority: priority ? "high" : "low" } as any)}
         sizes="(max-width: 640px) 200px, (max-width: 768px) 240px, 260px"
         className={`w-full h-full object-cover transition-all duration-500 ${loaded ? 'blur-0 scale-100' : 'blur-md scale-105'}`}
         onLoad={() => setLoaded(true)}
@@ -68,17 +68,14 @@ const PhotographySection = () => {
   // Lightbox removed per request; keeping component lightweight and non-interactive
 
   return (
-    <section className="py-12 px-6 bg-secondary/10">
+    <section className="py-8 md:py-12 px-6 bg-secondary/10">
       <div className="container max-w-6xl mx-auto">
-        <div className="text-center mb-10">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Camera className="h-10 w-10 text-primary animate-float" />
-            <h2 className="text-3xl lg:text-4xl font-bold">
-              Beyond Code: My Lens as a{" "}
-              <span className="orange-gradient bg-clip-text text-transparent">Photographer</span>
-            </h2>
-          </div>
-          <p className="text-base text-gray-text max-w-3xl mx-auto">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="typ-h-section mb-4">
+            Beyond Code: My Lens as a{" "}
+            <span className="orange-gradient bg-clip-text text-transparent">Photographer</span>
+          </h2>
+          <p className="typ-body max-w-3xl mx-auto">
             When I'm not coding, I capture the world through my camera. Photography teaches me composition, 
             attention to detail, and creative problem-solving – skills that enhance my development work.
           </p>

@@ -143,10 +143,10 @@ const ContactSection = () => {
     <section className="py-14 md:py-20 px-5 md:px-6 bg-secondary/20">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
+          <h2 className="typ-h-section mb-3 md:mb-4">
             Let's <span className="orange-gradient bg-clip-text text-transparent">Connect</span>
           </h2>
-          <p className="text-base md:text-lg text-gray-text max-w-2xl mx-auto">
+          <p className="typ-body max-w-2xl mx-auto">
             Ready to start your next project? Let's discuss how I can help bring your ideas to life 
             with modern, efficient solutions.
           </p>
@@ -156,7 +156,7 @@ const ContactSection = () => {
           {/* Contact Form */}
           <div className="space-y-4 col-span-2 lg:col-span-1">
             <div className="card-gradient card-shadow rounded-2xl p-4 md:p-8">
-              <h3 className="text-base md:text-2xl font-bold mb-3 md:mb-6 flex items-center">
+              <h3 className="typ-h-card mb-3 md:mb-6 flex items-center">
                 <Send className="mr-3 h-5 w-5 md:h-6 md:w-6 text-primary" />
                 Send Me a Message
               </h3>
@@ -169,7 +169,7 @@ const ContactSection = () => {
           <div className="space-y-4 col-span-2 lg:col-span-1">
             {/* Contact Information */}
             <div className="card-gradient card-shadow rounded-2xl p-4 md:p-8">
-              <h3 className="text-base md:text-2xl font-bold mb-3 md:mb-6 text-primary">Get in Touch</h3>
+              <h3 className="typ-h-card mb-3 md:mb-6 text-primary">Get in Touch</h3>
               <div className="space-y-4">
                 {contactInfo.map((contact) => (
                   <a
@@ -181,8 +181,8 @@ const ContactSection = () => {
                       {contact.icon}
                     </div>
                     <div>
-                      <div className="font-medium text-[11px] md:text-base">{contact.label}</div>
-                      <div className="text-gray-text text-[10px] md:text-sm">{contact.value}</div>
+                      <div className="font-medium typ-small md:text-base">{contact.label}</div>
+                      <div className="typ-small">{contact.value}</div>
                     </div>
                   </a>
                 ))}
@@ -191,7 +191,7 @@ const ContactSection = () => {
 
             {/* Social Links */}
             <div className="card-gradient card-shadow rounded-2xl p-4 md:p-8">
-              <h3 className="text-base md:text-2xl font-bold mb-3 md:mb-6 text-primary">Follow My Work</h3>
+              <h3 className="typ-h-card mb-3 md:mb-6 text-primary">Follow My Work</h3>
               <div className="space-y-4">
                 {socialLinks.map((social) => (
                   <a
@@ -206,8 +206,8 @@ const ContactSection = () => {
                         {social.icon}
                       </div>
                       <div>
-                        <div className="font-medium text-[11px] md:text-base">{social.label}</div>
-                        <div className="text-gray-text text-[10px] md:text-sm">{social.username}</div>
+                        <div className="font-medium typ-small md:text-base">{social.label}</div>
+                        <div className="typ-small">{social.username}</div>
                       </div>
                     </div>
                     <div className="text-primary opacity-0 group-hover:opacity-100 transition-all">
@@ -220,11 +220,11 @@ const ContactSection = () => {
 
             {/* Availability Status */}
             <div className="card-gradient card-shadow rounded-2xl p-4 md:p-8 text-center">
-              <div className="inline-flex items-center px-2.5 md:px-4 py-1 md:py-2 rounded-full bg-green-500/20 text-green-400 mb-2.5 md:mb-4 text-xs md:text-base">
+              <div className="inline-flex items-center px-2.5 md:px-4 py-1 md:py-2 rounded-full bg-green-500/20 text-green-400 mb-2.5 md:mb-4 typ-badge">
                 <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
                 Available for Freelance Projects
               </div>
-              <p className="text-gray-text text-[11px] md:text-sm">
+              <p className="typ-body">
                 Currently accepting new projects and collaborations. 
                 Let's build something amazing together!
               </p>

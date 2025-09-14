@@ -153,10 +153,10 @@ const CertificationsSection = () => {
     <section className="py-16 px-5">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
+          <h2 className="typ-h-section mb-2">
             <span className="orange-gradient bg-clip-text text-transparent">Certifications</span> & Learning
           </h2>
-          <p className="text-base md:text-lg text-gray-text max-w-2xl mx-auto">
+          <p className="typ-body max-w-2xl mx-auto">
             Continuous learning through recognized certifications and professional development programs
           </p>
         </div>
@@ -194,14 +194,14 @@ const CertificationsSection = () => {
                     </div>
 
                     {/* Content (condensed) */}
-                    <h3 className="text-sm font-bold mb-1 line-clamp-2">{cert.title}</h3>
-                    <p className="text-primary font-medium text-xs mb-1">{cert.provider}</p>
-                    <div className="flex items-center justify-between text-xs">
+                    <h3 className="typ-h-card mb-1 line-clamp-2">{cert.title}</h3>
+                    <p className="text-primary font-medium typ-small mb-1">{cert.provider}</p>
+                    <div className="flex items-center justify-between typ-small">
                       <div className="flex items-center text-gray-text">
                         <Calendar className="h-3 w-3 mr-1" />
                         {cert.year}
                       </div>
-                      <div className={`px-2 py-0.5 rounded-full text-[10px] font-medium border ${getCategoryColor(cert.category)}`}>
+                      <div className={`px-2 py-0.5 rounded-full typ-badge border ${getCategoryColor(cert.category)}`}>
                         {cert.category}
                       </div>
                     </div>
@@ -258,22 +258,22 @@ const CertificationsSection = () => {
 
               {/* Content */}
               <div className="mb-2">
-                <h3 className="text-sm font-bold mb-1 group-hover:text-primary transition-smooth line-clamp-2">
+                <h3 className="typ-h-card mb-1 group-hover:text-primary transition-smooth line-clamp-2">
                   {cert.title}
                 </h3>
-                <p className="text-primary font-medium text-xs mb-1">{cert.provider}</p>
-                <p className="text-gray-text text-xs leading-relaxed mb-1 line-clamp-2">
+                <p className="text-primary font-medium typ-small mb-1">{cert.provider}</p>
+                <p className="typ-body leading-relaxed mb-1 line-clamp-2">
                   {cert.description}
                 </p>
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center justify-between typ-small">
                 <div className="flex items-center text-gray-text">
                   <Calendar className="h-3 w-3 mr-1" />
                   {cert.year}
                 </div>
-                <div className={`px-2 py-1 rounded-full text-xs font-medium border ${getCategoryColor(cert.category)}`}>
+                <div className={`px-2 py-1 rounded-full typ-badge border ${getCategoryColor(cert.category)}`}>
                   {cert.category}
                 </div>
               </div>
@@ -285,13 +285,13 @@ const CertificationsSection = () => {
                     href={cert.image}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center text-primary text-xs hover:text-primary-glow"
+                    className="flex items-center text-primary typ-small hover:text-primary-glow"
                   >
                     <ExternalLink className="h-3 w-3 mr-1" />
                     View
                   </a>
                 ) : (
-                  <div className="flex items-center text-primary text-xs hover:text-primary-glow cursor-default">
+                  <div className="flex items-center text-primary typ-small hover:text-primary-glow cursor-default">
                     <ExternalLink className="h-3 w-3 mr-1" />
                     View
                   </div>

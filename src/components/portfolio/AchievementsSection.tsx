@@ -33,13 +33,13 @@ const AchievementsSection = () => {
   ];
 
   return (
-    <section className="py-16 md:py-20 px-5 md:px-6 bg-secondary/20">
+    <section className="py-8 md:py-20 px-5 md:px-6 bg-secondary/20">
       <div className="container max-w-6xl mx-auto">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="typ-h-section mb-3 md:mb-4">
             Key <span className="orange-gradient bg-clip-text text-transparent">Achievements</span>
           </h2>
-          <p className="text-base md:text-lg text-gray-text max-w-2xl mx-auto">
+          <p className="typ-body max-w-2xl mx-auto">
             Recognition and awards earned through competitive programming, hackathons, and technical competitions
           </p>
         </div>
@@ -47,7 +47,7 @@ const AchievementsSection = () => {
         {/* Timeline Layout */}
         <div className="relative">
           {/* Timeline Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-primary/30 h-full"></div>
+          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-1 bg-primary/30 h-full"></div>
 
           <div className="space-y-12">
             {[...achievements]
@@ -81,19 +81,19 @@ const AchievementsSection = () => {
                         {achievement.icon}
                       </div>
                       <div>
-                        <h3 className="text-lg md:text-xl font-bold">{achievement.title}</h3>
-                        <span className="text-primary text-xs md:text-sm font-medium">{achievement.category}</span>
+                        <h3 className="typ-h-card">{achievement.title}</h3>
+                        <span className="text-primary typ-small font-medium">{achievement.category}</span>
                       </div>
                     </div>
-                    <p className="text-gray-text leading-relaxed text-sm md:text-base mb-3 md:mb-4">
+                    <p className="typ-body leading-relaxed mb-3 md:mb-4">
                       {achievement.description}
                     </p>
                     <div className="text-primary text-sm md:text-base font-semibold">{achievement.year}</div>
                   </div>
                 </div>
 
-                {/* Timeline Dot */}
-                <div className="relative flex items-center justify-center w-3.5 h-3.5 md:w-4 md:h-4 lg:w-6 lg:h-6 order-first lg:order-none">
+                {/* Timeline Dot (hidden on mobile) */}
+                <div className="hidden lg:flex relative items-center justify-center w-3.5 h-3.5 md:w-4 md:h-4 lg:w-6 lg:h-6 order-first lg:order-none" aria-hidden="true">
                   <div className="w-3.5 h-3.5 md:w-4 md:h-4 lg:w-6 lg:h-6 bg-primary rounded-full border-4 border-background animate-pulse-orange"></div>
                 </div>
 
