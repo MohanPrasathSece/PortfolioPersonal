@@ -43,7 +43,7 @@ const HeroSection = () => {
                 </span>
               </h1>
               <p className="typ-h-sub text-gray-text mb-1 md:mb-2">
-                Full Stack Developer & Problem Solver
+                Full Stack Developer
               </p>
             </div>
             
@@ -80,7 +80,7 @@ const HeroSection = () => {
       </div>
       {/* OrbBot in the top-right corner */}
       <div className="pointer-events-none absolute right-3 top-3 md:right-8 md:top-8 hidden md:block">
-        <OrbBot size={72} />
+        <OrbBot size={120} />
       </div>
     </section>
   );

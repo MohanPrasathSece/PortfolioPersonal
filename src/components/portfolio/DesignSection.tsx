@@ -1,4 +1,4 @@
-import { Palette, Figma, Layers, PenTool, Zap } from "lucide-react";
+import { Palette, Figma, Layers, PenTool, Zap, ChevronRight } from "lucide-react";
 import melProfile from "@/assets/profile.png";
 import melSearch from "@/assets/search.png";
 import melLibrary from "@/assets/library.png";
@@ -66,7 +66,13 @@ const DesignSection = () => {
         </div>
 
         {/* Melodia Horizontal Scroll Gallery (images only) */}
-        <div className="overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
+        <div className="relative overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
+          {/* Icon-only scroll hint near images */}
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10">
+            <div className="h-7 w-7 rounded-full bg-white/8 border border-white/10 backdrop-blur flex items-center justify-center text-gray-200">
+              <ChevronRight className="h-4 w-4" />
+            </div>
+          </div>
           <div className="flex gap-6 snap-x snap-mandatory">
             {melodiaScreens.map((screen) => (
               <div key={screen.id} className="snap-start min-w-[260px] sm:min-w-[300px]">

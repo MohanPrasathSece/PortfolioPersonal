@@ -13,6 +13,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://mohanprasath.dev" />
     <meta property="og:image" content="/hero-profile.jpg" />
+    <meta property="og:site_name" content="Mohan Prasath S" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Mohan Prasath S - Full Stack Developer & Photographer" />
@@ -20,6 +21,11 @@
     <meta name="twitter:image" content="/hero-profile.jpg" />
 
     <link rel="canonical" href="https://mohanprasath.dev" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="robots" content="index, follow" />
+    <meta name="application-name" content="Mohan Prasath S" />
+    <meta name="apple-mobile-web-app-title" content="Mohan Prasath S" />
 
     <!-- Person JSON-LD -->
     <script type="application/ld+json">
@@ -33,8 +39,24 @@
         "image": "/hero-profile.jpg",
         "sameAs": [
           "https://www.linkedin.com/in/mohan-prasath-s-fullstackdeveloper",
-          "https://leetcode.com/u/MohanPrasathSece"
+          "https://leetcode.com/u/MohanPrasathSece",
+          "https://github.com/MohanPrasathSece"
         ]
+      }
+    </script>
+
+    <!-- WebSite JSON-LD to help with name indexing and site discovery -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Mohan Prasath S",
+        "url": "https://mohanprasath.dev",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://mohanprasath.dev/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
       }
     </script>
   </head>
