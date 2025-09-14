@@ -4,6 +4,7 @@ import { Trophy, CheckCircle2 } from "lucide-react";
 interface ContestInfo {
   rating?: number | null;
   topPercentage?: number | null;
+  historyRating?: number | null;
 }
 
 interface ProblemsInfo {
@@ -15,13 +16,14 @@ interface ProblemsInfo {
 
 interface Props {
   username: string;
+  overrideRating?: number;
 }
 
 // Free community API (no key needed): https://github.com/alfaarghya/alfa-leetcode-api
 // Endpoints used:
 // - GET https://alfa-leetcode-api.onrender.com/userProfile/{username}
 // - GET https://alfa-leetcode-api.onrender.com/userContestRankingInfo/{username}
-export default function LeetCodeStats({ username }: Props) {
+export default function LeetCodeStats({ username, overrideRating }: Props) {
   const [contest, setContest] = useState<ContestInfo | null>(null);
   const [problems, setProblems] = useState<ProblemsInfo | null>(null);
   const [loading, setLoading] = useState(true);
@@ -58,10 +60,21 @@ export default function LeetCodeStats({ username }: Props) {
           hardSolved: profileJson?.hardSolved,
         };
 
-        // Contest response: userContestRanking.rating
+        // Contest response: userContestRanking.rating; fallback to the latest non-null rating from history
         const cinfo: ContestInfo = {
           rating: contestJson?.userContestRanking?.rating ?? null,
           topPercentage: contestJson?.userContestRanking?.topPercentage ?? null,
+          historyRating: (() => {
+            const hist = contestJson?.userContestRankingHistory;
+            if (Array.isArray(hist) && hist.length > 0) {
+              // Find the last entry that has a rating
+              for (let i = hist.length - 1; i >= 0; i--) {
+                const r = hist[i]?.rating;
+                if (typeof r === 'number' && !Number.isNaN(r)) return r;
+              }
+            }
+            return null;
+          })(),
         };
 
         setProblems(probs);
@@ -79,7 +92,16 @@ export default function LeetCodeStats({ username }: Props) {
   }, [username]);
 
   const totalSolved = useMemo(() => problems?.totalSolved ?? 0, [problems]);
-  const rating = useMemo(() => (contest?.rating ? Math.round(contest.rating) : null), [contest]);
+  const rating = useMemo(() => {
+    if (typeof overrideRating === 'number') {
+      return Math.round(overrideRating);
+    }
+    if (!contest) return null;
+    const latest = contest.historyRating; // prefer latest from history
+    const fallback = contest.rating;      // fallback to overall rating
+    const chosen = typeof latest === 'number' ? latest : (typeof fallback === 'number' ? fallback : null);
+    return chosen != null ? Math.round(chosen) : null;
+  }, [contest, overrideRating]);
 
   if (loading) {
     return (
@@ -119,7 +141,7 @@ export default function LeetCodeStats({ username }: Props) {
           <Trophy className="h-6 w-6" />
           <span>{rating ?? "—"}</span>
         </div>
-        <div className="text-gray-text">Contest Rating</div>
+        <div className="text-gray-text">Latest Contest Rating</div>
       </div>
       <div className="text-center">
         <div className="flex items-center justify-center gap-2 text-3xl font-bold text-primary mb-2">

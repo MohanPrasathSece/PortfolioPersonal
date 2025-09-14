@@ -19,7 +19,7 @@ const ProjectsSection = () => {
       techStack: ["Java", "Spring Boot", "MySQL"],
       image: "/placeholder-project.jpg",
       github: "#",
-      demo: "#",
+      demo: "https://crowdfunding-frontend-woad.vercel.app/login",
       gallery: [
         "/placeholder-project.jpg",
         "/placeholder-project.jpg",
@@ -27,7 +27,7 @@ const ProjectsSection = () => {
       ]
     },
     {
-      title: "Campus Link",
+      title: "CampusLink Portal",
       tagline: "Modern Campus Web Application",
       description: "A campus-focused web app built with modern React ecosystem, featuring deployment options via Lovable and custom domain support.",
       features: [
@@ -40,7 +40,7 @@ const ProjectsSection = () => {
       techStack: ["Vite", "TypeScript", "React", "Tailwind CSS", "shadcn-ui"],
       image: "/placeholder-project.jpg",
       github: "#",
-      demo: "#",
+      demo: "https://frontend-campus-connect.vercel.app",
       gallery: [
         "/placeholder-project.jpg",
         "/placeholder-project.jpg",
@@ -62,7 +62,7 @@ const ProjectsSection = () => {
       techStack: ["MongoDB", "Express.js", "React.js", "Node.js"],
       image: "/placeholder-project.jpg",
       github: "#",
-      demo: "#"
+      demo: "https://foodrescuefrontend.vercel.app"
     },
     {
       title: "MediSmart-AI",
@@ -157,13 +157,22 @@ const ProjectsSection = () => {
   return (
     <section className="py-20 px-6">
       <div className="container max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            Featured <span className="orange-gradient bg-clip-text text-transparent">Projects</span>
-          </h2>
-          <p className="text-lg text-gray-text max-w-2xl mx-auto">
-            A showcase of full-stack applications, AI-powered solutions, and innovative web platforms
-          </p>
+        <div className="mb-16">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <h2 className="text-4xl lg:text-5xl font-bold">
+              Featured <span className="orange-gradient bg-clip-text text-transparent">Projects</span>
+            </h2>
+            <a
+              href="https://github.com/MohanPrasathSece"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline-orange" size="sm">
+                <Github className="mr-2 h-4 w-4" />
+                GitHub
+              </Button>
+            </a>
+          </div>
         </div>
 
         {/* Horizontal Scroll Controls (scroll with trackpad/mouse) */}
@@ -292,14 +301,18 @@ const ProjectsSection = () => {
 
                       {/* Action Buttons */}
                       <div className="flex gap-3">
-                        <Button variant="hero" size="sm" className="flex-1">
-                          <Github className="mr-2 h-4 w-4" />
-                          View Code
-                        </Button>
-                        <Button variant="outline-orange" size="sm" className="flex-1">
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          Live Demo
-                        </Button>
+                        <a href={(project as any).github} target="_blank" rel="noopener noreferrer" className="flex-1">
+                          <Button variant="hero" size="sm" className="w-full">
+                            <Github className="mr-2 h-4 w-4" />
+                            View Code
+                          </Button>
+                        </a>
+                        <a href={(project as any).demo} target="_blank" rel="noopener noreferrer" className="flex-1">
+                          <Button variant="outline-orange" size="sm" className="w-full">
+                            <ExternalLink className="mr-2 h-4 w-4" />
+                            Live Demo
+                          </Button>
+                        </a>
                       </div>
                     </div>
                   </div>

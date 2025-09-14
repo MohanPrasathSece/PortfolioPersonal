@@ -20,7 +20,7 @@ const SkillsSection = () => {
     {
       category: "Database & Tools",
       icon: <Database className="h-8 w-8" />,
-      items: ["MongoDB", "MySQL", "Git", "Postman"],
+      items: ["MongoDB", "MySQL", "Firebase", "Git", "Postman", "Linux"],
     },
     {
       category: "Game Development",

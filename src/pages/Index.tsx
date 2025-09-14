@@ -17,11 +17,11 @@ const Index = () => {
       {/* Skills Section */}
       <SkillsSection />
       
-      {/* DSA & LeetCode Section */}
-      <DSASection />
-      
       {/* Projects Section */}
       <ProjectsSection />
+
+      {/* DSA & LeetCode Section */}
+      <DSASection />
       
       {/* Achievements Section */}
       <AchievementsSection />

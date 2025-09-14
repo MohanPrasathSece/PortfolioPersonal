@@ -44,7 +44,7 @@ const DSASection = () => {
                 <Trophy className="h-12 w-12 text-primary animate-pulse-orange" />
               </div>
               
-              <LeetCodeStats username="MohanPrasathSece" />
+              <LeetCodeStats username="MohanPrasathSece" overrideRating={1490} />
 
               {/* LeetCode Profile Link (moved here) */}
               <a
