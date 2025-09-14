@@ -262,11 +262,6 @@ const ProjectsSection = () => {
               return (
                 <div key={index} className="snap-start min-w-[300px] sm:min-w-[520px] lg:min-w-[860px]">
                   <div className={`card-gradient card-shadow rounded-2xl hover-glow h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
-                    {isFeatured && (
-                      <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground shadow-md">
-                        Featured
-                      </div>
-                    )}
                     <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl items-stretch">
                       {/* Project Image / Gallery */}
                       <div className="bg-muted flex items-center justify-center min-h-[120px] sm:min-h-[150px] md:min-h-[180px] lg:min-h-[220px] h-full">
@@ -314,7 +309,7 @@ const ProjectsSection = () => {
                             )}
                             {/* Enlarge hint */}
                             <div
-                              className="absolute bottom-2 right-2 flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/90 text-black text-xs shadow ring-1 ring-black/10 pointer-events-none md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                              className="absolute bottom-2 right-2 flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/70 text-white text-xs shadow ring-1 ring-white/15 pointer-events-none md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                               aria-hidden="true"
                             >
                               <Maximize2 className="h-3.5 w-3.5" />
@@ -323,7 +318,7 @@ const ProjectsSection = () => {
                           </div>
                         ) : project.title === "MediSmart-AI" ? (
                           <div className="w-full h-full flex items-center justify-center">
-                            <div className="w-[92%] h-[85%] rounded-2xl overflow-hidden shadow-inner" style={{background: 'linear-gradient(180deg,#16a34a 0%, #0f8a3b 100%)'}}>
+                            <div className="w-[92%] h-[85%] rounded-2xl overflow-hidden shadow-inner bg-gradient-to-b from-emerald-600 to-emerald-700">
                               <div className="h-full w-full flex flex-col items-center justify-center text-white text-center px-4">
                                 <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold mb-2">Your Health, Delivered.</h3>
                                 <p className="text-xs md:text-sm text-white/90 max-w-md mb-4">
@@ -413,7 +408,7 @@ const ProjectsSection = () => {
 
       {/* Lightbox Modal */}
       {lightboxOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-3 sm:p-4" onClick={closeLightbox}>
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" onClick={closeLightbox}>
           <div className="relative w-full max-w-6xl max-h-[92vh] bg-background rounded-xl shadow-2xl ring-1 ring-border overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
             {/* Header */}
             <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-border/60 bg-muted/40">
