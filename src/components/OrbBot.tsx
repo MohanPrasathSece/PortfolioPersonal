@@ -175,8 +175,6 @@ const OrbBot = ({ size = 180 }: Props) => {
           </g>
         </g>
 
-        {/* Bottom glow */}
-        <ellipse cx={W / 2} cy={H * 0.68} rx={W * 0.22} ry={H * 0.08} fill="rgba(255,255,255,0.3)" filter="url(#glow)" />
       </svg>
       {/* Soft drop shadow below the orb for depth */}
       <div

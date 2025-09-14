@@ -15,7 +15,7 @@ const HeroSection = () => {
               <div className="animated-border w-80 h-80">
                 <img
                   src={profileImg}
-                  alt="Profile picture"
+                  alt="Mohan Prasath S — Profile Picture"
                   className="w-full h-full object-cover object-[50%_10%] rounded-full transform scale-85 sm:scale-90 lg:scale-95 xl:scale-100"
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement;
@@ -75,7 +75,7 @@ const HeroSection = () => {
       </div>
       {/* OrbBot in the top-right corner */}
       <div className="pointer-events-none absolute right-4 top-4 md:right-8 md:top-8">
-        <OrbBot size={160} />
+        <OrbBot size={120} />
       </div>
     </section>
   );

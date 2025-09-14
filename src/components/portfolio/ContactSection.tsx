@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, Github, Linkedin, Code, Send, MapPin } from "lucide-react";
+import { Mail, Phone, Github, Linkedin, Code, Send, MapPin, MessageCircle } from "lucide-react";
 import { useState } from "react";
 
 const ContactForm = () => {
@@ -82,18 +82,33 @@ const ContactForm = () => {
 };
 
 const ContactSection = () => {
+  // Prefilled texts for quick contact
+  const emailSubject = encodeURIComponent("Portfolio Inquiry");
+  const emailBody = encodeURIComponent(
+    "Hello Mohan,\n\nI saw your portfolio and would like to discuss a project.\n\nThanks,\n"
+  );
+  const whatsappText = encodeURIComponent(
+    "Hello Mohan, I saw your portfolio and would like to discuss a project."
+  );
+
   const contactInfo = [
     {
       icon: <Mail className="h-6 w-6" />,
       label: "Email",
       value: "mohanprasath563@gmail.com",
-      href: "mailto:mohanprasath563@gmail.com"
+      href: `mailto:mohanprasath563@gmail.com?subject=${emailSubject}&body=${emailBody}`
     },
     {
       icon: <Phone className="h-6 w-6" />,
       label: "Phone",
       value: "+91 90254 21149",
       href: "tel:+919025421149"
+    },
+    {
+      icon: <MessageCircle className="h-6 w-6" />,
+      label: "WhatsApp",
+      value: "+91 90254 21149",
+      href: `https://wa.me/919025421149?text=${whatsappText}`
     },
     {
       icon: <MapPin className="h-6 w-6" />,

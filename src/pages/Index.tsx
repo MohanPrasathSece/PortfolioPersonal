@@ -34,7 +34,7 @@ const Index = () => {
       
       {/* Photography Section */}
       <PhotographySection />
-      
+
       {/* Contact Section */}
       <ContactSection />
 

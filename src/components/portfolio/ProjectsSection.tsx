@@ -1,5 +1,6 @@
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRef, useState } from "react";
 
 const ProjectsSection = () => {
   // Horizontal scroll variant – no active state needed
@@ -136,6 +137,23 @@ const ProjectsSection = () => {
     return colors[tech] || "bg-primary/20 text-primary";
   };
 
+  const outerScrollRef = useRef<HTMLDivElement | null>(null);
+  const [galleryIndex, setGalleryIndex] = useState<{ [k: number]: number }>({});
+  const getIndex = (i: number, len: number) => {
+    const idx = galleryIndex[i] ?? 0;
+    if (idx < 0) return 0;
+    if (idx >= len) return len - 1;
+    return idx;
+  };
+  const step = (i: number, len: number, delta: number) => {
+    setGalleryIndex((prev) => {
+      const curr = prev[i] ?? 0;
+      let next = (curr + delta) % len;
+      if (next < 0) next += len;
+      return { ...prev, [i]: next };
+    });
+  };
+
   return (
     <section className="py-20 px-6">
       <div className="container max-w-7xl mx-auto">
@@ -152,7 +170,7 @@ const ProjectsSection = () => {
         <div className="text-center mb-6 text-sm text-gray-text">Scroll to view more projects →</div>
 
         {/* Project List - Horizontal Scroll */}
-        <div className="overflow-x-auto overflow-y-visible no-scrollbar -mx-4 px-4 pb-2">
+        <div ref={outerScrollRef} className="overflow-x-auto overflow-y-visible no-scrollbar -mx-4 px-4 pb-2">
           <div className="flex gap-6 snap-x snap-mandatory">
             {orderedProjects.map((project, index) => {
               const isFeatured = featuredTitles.has(project.title);
@@ -168,25 +186,43 @@ const ProjectsSection = () => {
                       {/* Project Image / Gallery */}
                       <div className="bg-muted flex items-center justify-center min-h-[160px] sm:min-h-[180px] md:min-h-[220px] lg:min-h-[260px] h-full">
                         {Array.isArray((project as any).gallery) && (project as any).gallery.length > 0 ? (
-                          <div className="w-full h-full overflow-x-auto no-scrollbar px-3 sm:px-4 snap-x snap-mandatory">
-                            <div className="flex gap-3 sm:gap-4 h-full items-center">
-                              {(project as any).gallery.map((src: string, gi: number) => (
-                                <div key={gi} className="snap-start min-w-[200px] sm:min-w-[260px] md:min-w-[320px] lg:min-w-[420px] h-full rounded-xl overflow-hidden bg-black">
-                                  <div className="w-full h-full flex items-center justify-center">
-                                    <img
-                                      src={src}
-                                      alt={`${project.title} screenshot ${gi + 1}`}
-                                      className="w-full h-full object-contain"
-                                      onError={(e) => {
-                                        const target = e.currentTarget as HTMLImageElement;
-                                        if (target.src.endsWith('/placeholder.svg')) return;
-                                        target.src = '/placeholder.svg';
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                              ))}
+                          <div className="relative w-full h-full px-3 sm:px-4">
+                            <div className="w-full h-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
+                              {(() => {
+                                const imgs = (project as any).gallery as string[];
+                                const idx = getIndex(index, imgs.length);
+                                const src = imgs[idx];
+                                return (
+                                  <img
+                                    src={src}
+                                    alt={`${project.title} screenshot ${idx + 1}`}
+                                    className="max-h-full max-w-full object-contain"
+                                    onError={(e) => {
+                                      const target = e.currentTarget as HTMLImageElement;
+                                      if (target.src.endsWith('/placeholder.svg')) return;
+                                      target.src = '/placeholder.svg';
+                                    }}
+                                  />
+                                );
+                              })()}
                             </div>
+                            {/* Nav buttons */}
+                            <button
+                              type="button"
+                              aria-label="Previous image"
+                              className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white shadow"
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); step(index, (project as any).gallery.length, -1); }}
+                            >
+                              <ChevronLeft className="h-5 w-5" />
+                            </button>
+                            <button
+                              type="button"
+                              aria-label="Next image"
+                              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white shadow"
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); step(index, (project as any).gallery.length, 1); }}
+                            >
+                              <ChevronRight className="h-5 w-5" />
+                            </button>
                           </div>
                         ) : project.title === "MediSmart-AI" ? (
                           <div className="w-full h-full flex items-center justify-center">
