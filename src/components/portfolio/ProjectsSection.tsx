@@ -231,7 +231,7 @@ const ProjectsSection = () => {
   return (
     <section id="projects" className="py-8 md:py-14 px-0 md:px-6">
       <div className="container px-0 md:px-4 max-w-none md:max-w-7xl mx-auto">
-        <div className="mb-8 md:mb-16">
+        <div className="mb-4 md:mb-8">
           <div className="flex flex-col items-center gap-2 md:gap-3 text-center">
             <h2 className="typ-h-section">
               Featured <span className="orange-gradient bg-clip-text text-transparent">Projects</span>
@@ -270,14 +270,14 @@ const ProjectsSection = () => {
         <div className="text-center mb-6 text-sm text-gray-text">Scroll to view more projects →</div>
 
         {/* Project List - Horizontal Scroll */}
-        <div ref={outerScrollRef} className="overflow-x-auto overflow-y-visible no-scrollbar px-0 md:-mx-4 md:px-4 pb-2">
+        <div ref={outerScrollRef} className="overflow-x-auto overflow-y-visible no-scrollbar pl-3 pr-0 md:-mx-4 md:px-4 pb-2">
           <div className="flex gap-6 snap-x snap-mandatory">
             {orderedProjects.map((project, index) => {
               const gallery = loadProjectImages((project as any).assetsDir);
               const currentIdx = getIndex(index, gallery.length);
               const isFeatured = featuredTitles.has(project.title);
               return (
-                <div key={index} className="snap-start min-w-[360px] sm:min-w-[720px] lg:min-w-[1200px]">
+                <div key={index} className="snap-start min-w-[360px] sm:min-w-[720px] lg:min-w-[1200px] first:ml-1.5 md:first:ml-0">
                   <div className={`card-gradient card-shadow rounded-2xl hover-glow h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
                     <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl items-stretch">
                       {/* Project Image / Gallery */}

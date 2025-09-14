@@ -5,6 +5,7 @@ import melLibrary from "@/assets/library.png";
 import melExplore from "@/assets/explore.png";
 import melHome from "@/assets/home.png";
 import melSong from "@/assets/song.png";
+import TinyStars from "@/components/portfolio/TinyStars";
 
 const DesignSection = () => {
   const melodiaScreens = [
@@ -26,8 +27,12 @@ const DesignSection = () => {
   // Minimal, no state needed
 
   return (
-    <section id="design" className="py-10 md:py-20 px-6 bg-black">
-      <div className="container max-w-6xl mx-auto">
+    <section id="design" className="relative py-10 md:py-20 px-6 bg-black">
+      {/* Tiny stars background for black section */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <TinyStars densityScale={1.35} />
+      </div>
+      <div className="container max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-8 md:mb-16">
           <h2 className="typ-h-section mb-4">
             Design <span className="orange-gradient bg-clip-text text-transparent">Portfolio</span>

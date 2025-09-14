@@ -12,8 +12,22 @@ const prefersReducedMotion = () =>
   window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const queryOverride = () => {
+  try {
+    const usp = new URLSearchParams(window.location.search);
+    const val = usp.get("intro");
+    if (val === "1") return { forcePlay: true } as const;
+    if (val === "0") return { forceSkip: true } as const;
+  } catch {}
+  return {} as const;
+};
+
 const shouldSkipIntro = () => {
-  if (prefersReducedMotion()) return true;
+  // Show the intro on mobile the same as desktop by not skipping due to reduced-motion.
+  // Keep the once-per-session behavior controlled only by sessionStorage.
+  const ov = queryOverride();
+  if ((ov as any).forcePlay) return false;
+  if ((ov as any).forceSkip) return true;
   try {
     return sessionStorage.getItem("spaceIntroPlayed") === "1";
   } catch {
@@ -44,12 +58,23 @@ const SpaceIntro = () => {
     const ctx = canvas?.getContext("2d", { alpha: true });
     if (!canvas || !ctx) return;
 
-    let w = (canvas.width = window.innerWidth);
-    let h = (canvas.height = window.innerHeight);
+    // Handle high-DPI (retina) displays for mobile clarity
+    let w = window.innerWidth;  // CSS pixels
+    let h = window.innerHeight; // CSS pixels
+    const setupCanvas = () => {
+      const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    setupCanvas();
 
     const onResize = () => {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
+      setupCanvas();
     };
     window.addEventListener("resize", onResize);
 
@@ -184,7 +209,7 @@ const SpaceIntro = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className="fixed inset-0 z-[120] pointer-events-none"
+        className="fixed inset-0 z-[9999] pointer-events-none"
       >
         {/* Space backdrop gradient */}
         <div

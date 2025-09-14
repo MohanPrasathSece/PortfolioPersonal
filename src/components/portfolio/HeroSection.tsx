@@ -2,11 +2,16 @@ import { Button } from "@/components/ui/button";
 import { Download, Mail } from "lucide-react";
 import profileImg from "@/assets/hero-profile.jpg";
 import OrbBot from "@/components/OrbBot";
+import TinyStars from "@/components/portfolio/TinyStars";
 
 const HeroSection = () => {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center px-5 md:px-6 py-12 md:py-20 relative">
-      <div className="container max-w-6xl">
+      {/* Subtle tiny stars background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <TinyStars densityScale={1.2} />
+      </div>
+      <div className="container max-w-6xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Profile Image */
           }
