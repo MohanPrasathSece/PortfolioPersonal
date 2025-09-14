@@ -7,6 +7,7 @@ import postmanImg from "@/assets/certificates/postman.png";
 import pythonImg from "@/assets/certificates/python.png";
 import reactImg from "@/assets/certificates/react.png";
 import udemyImg from "@/assets/certificates/udemy.png";
+import TinyStars from "@/components/portfolio/TinyStars";
 
 const CertificationsSection = () => {
   const certifications = [
@@ -150,8 +151,12 @@ const CertificationsSection = () => {
   };
 
   return (
-    <section id="certifications" className="py-16 px-5">
-      <div className="container max-w-6xl mx-auto">
+    <section id="certifications" className="relative py-16 px-5">
+      {/* Tiny stars background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <TinyStars densityScale={1.2} />
+      </div>
+      <div className="container max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-12">
           <h2 className="typ-h-section mb-2">
             <span className="orange-gradient bg-clip-text text-transparent">Certifications</span> & Learning

@@ -1,4 +1,5 @@
 import { Trophy, Award, Medal, Star } from "lucide-react";
+import TinyStars from "@/components/portfolio/TinyStars";
 
 const AchievementsSection = () => {
   const achievements = [
@@ -33,8 +34,12 @@ const AchievementsSection = () => {
   ];
 
   return (
-    <section id="achievements" className="py-8 md:py-20 px-5 md:px-6 bg-secondary/20">
-      <div className="container max-w-6xl mx-auto">
+    <section id="achievements" className="relative py-8 md:py-20 px-5 md:px-6 bg-secondary/20">
+      {/* Tiny stars background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <TinyStars densityScale={1.2} />
+      </div>
+      <div className="container max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-8 md:mb-16">
           <h2 className="typ-h-section mb-3 md:mb-4">
             Key <span className="orange-gradient bg-clip-text text-transparent">Achievements</span>

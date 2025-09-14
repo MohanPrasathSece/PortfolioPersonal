@@ -1,6 +1,7 @@
 import { ExternalLink, Github, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
+import TinyStars from "@/components/portfolio/TinyStars";
 
 const ProjectsSection = () => {
   // Horizontal scroll variant – no active state needed
@@ -229,8 +230,12 @@ const ProjectsSection = () => {
   };
 
   return (
-    <section id="projects" className="py-8 md:py-14 px-0 md:px-6">
-      <div className="container px-0 md:px-4 max-w-none md:max-w-7xl mx-auto">
+    <section id="projects" className="relative py-8 md:py-14 px-0 md:px-6">
+      {/* Tiny stars background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <TinyStars densityScale={1.25} />
+      </div>
+      <div className="container px-0 md:px-4 max-w-none md:max-w-7xl mx-auto relative z-10">
         <div className="mb-4 md:mb-8">
           <div className="flex flex-col items-center gap-2 md:gap-3 text-center">
             <h2 className="typ-h-section">

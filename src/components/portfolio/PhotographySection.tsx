@@ -1,5 +1,6 @@
 import { Camera } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import TinyStars from "@/components/portfolio/TinyStars";
 
 // Load all images from assets/photography using a static glob (required by Vite)
 const photoModules = import.meta.glob(
@@ -68,8 +69,12 @@ const PhotographySection = () => {
   // Lightbox removed per request; keeping component lightweight and non-interactive
 
   return (
-    <section id="photography" className="py-8 md:py-12 px-6 bg-secondary/10">
-      <div className="container max-w-6xl mx-auto">
+    <section id="photography" className="relative py-8 md:py-12 px-6 bg-secondary/10">
+      {/* Tiny stars background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <TinyStars densityScale={1.3} />
+      </div>
+      <div className="container max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-8 md:mb-10">
           <h2 className="typ-h-section mb-4">
             Beyond Code: My Lens as a{" "}

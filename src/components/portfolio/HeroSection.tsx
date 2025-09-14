@@ -9,7 +9,7 @@ const HeroSection = () => {
     <section id="home" className="min-h-screen flex items-center justify-center px-5 md:px-6 py-12 md:py-20 relative">
       {/* Subtle tiny stars background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <TinyStars densityScale={1.2} />
+        <TinyStars densityScale={1.2} cometEnabled cometEveryMs={5000} cometTrailFadeMs={5000} />
       </div>
       <div className="container max-w-6xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
