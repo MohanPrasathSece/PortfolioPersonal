@@ -36,41 +36,41 @@ const HeroSection = () => {
           {/* Hero Content */}
           <div className="text-center lg:text-left lg:order-1">
             <div className="mb-4 md:mb-6">
-              <h1 className="typ-h-hero mb-2 md:mb-4 animate-fade-in-up">
+              <h1 className="typ-h-hero mb-2 md:mb-4 animate-fade-in-up text-4xl md:text-6xl">
                 Hi, I'm{" "}
                 <span className="orange-gradient bg-clip-text text-transparent whitespace-nowrap">
                   Mohan Prasath
                 </span>
               </h1>
-              <p className="typ-h-sub text-gray-text mb-1 md:mb-2">
+              <p className="typ-h-sub text-gray-text mb-1 md:mb-2 text-xl md:text-2xl">
                 Full Stack Developer
               </p>
             </div>
             
-            <p className="typ-body mb-5 md:mb-8 max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <p className="typ-body mb-5 md:mb-8 max-w-2xl animate-fade-in-up text-base md:text-lg" style={{ animationDelay: '0.3s' }}>
               Passionate full-stack developer with expertise in modern web technologies, 
               competitive programming, and UI/UX design. Ready to bring your 
               ideas to life with clean, efficient code.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-              <Button variant="hero" size="sm" className="group md:size-default" asChild>
+              <Button variant="hero" size="lg" className="group" asChild>
                 <a
                   href="https://drive.google.com/file/d/1EfxjW0Mb-YFUGMi7cL4tBNEbGeMkePKh/view?usp=drivesdk"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Download className="mr-2 h-4 w-4 md:h-5 md:w-5 group-hover:animate-bounce" />
+                  <Download className="mr-2 h-5 w-5 md:h-6 md:w-6 group-hover:animate-bounce" />
                   Download Resume
                 </a>
               </Button>
-              <Button variant="outline-orange" size="sm" className="group md:size-default" asChild>
+              <Button variant="outline-orange" size="lg" className="group" asChild>
                 <a
                   href="https://mail.google.com/mail/?view=cm&fs=1&to=mohanprasath563@gmail.com&su=Freelance%20Project%20Inquiry&body=Hi%20Mohan%2C%0A%0AI'd%20like%20to%20discuss%20a%20project.%20Here%20are%20some%20details%3A%0A-%20Scope%3A%20%0A-%20Timeline%3A%20%0A-%20Budget%3A%20%0A%0AThanks!"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Mail className="mr-2 h-4 w-4 md:h-5 md:w-5 group-hover:animate-pulse" />
+                  <Mail className="mr-2 h-5 w-5 md:h-6 md:w-6 group-hover:animate-pulse" />
                   Hire Me for Freelance
                 </a>
               </Button>

@@ -5,6 +5,7 @@ const SECTIONS: { id: string; label: string }[] = [
   { id: "home", label: "Home" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
+  { id: "zyra-digitals", label: "Zyra Digitals" },
   { id: "dsa", label: "DSA" },
   { id: "achievements", label: "Achievements" },
   { id: "certifications", label: "Certifications" },

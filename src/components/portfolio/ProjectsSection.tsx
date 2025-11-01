@@ -1,22 +1,21 @@
-import { ExternalLink, Github, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import TinyStars from "@/components/portfolio/TinyStars";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const ProjectsSection = () => {
-  // Horizontal scroll variant – no active state needed
-
   const projects = [
     {
       title: "Crowdfunding Platform",
-      tagline: "Campaign Creation & Contribution System",
-      description: "A comprehensive platform for creating and supporting crowdfunding campaigns with secure user registration and contribution workflows.",
-      features: [
-        "Campaign creation & management",
-        "Secure user registration",
-        "Contribution workflow (donations)",
-        "Campaign progress tracking"
-      ],
+      category: "Full-Stack",
+      description: "Campaign Creation & Contribution System",
+      fullDescription: "A comprehensive platform for creating and supporting crowdfunding campaigns with secure user registration and contribution workflows.",
       techStack: ["Java", "Spring Boot", "MySQL"],
       image: "/placeholder-project.jpg",
       github: "https://github.com/MohanPrasathSece/Crowdfunding-Springboot.git",
@@ -25,33 +24,20 @@ const ProjectsSection = () => {
     },
     {
       title: "CampusLink Portal",
-      tagline: "Modern Campus Web Application",
-      description: "A campus-focused web app built with modern React ecosystem, featuring deployment options via Lovable and custom domain support.",
-      features: [
-        "User-friendly React interface",
-        "Backend server integration with Node.js",
-        "Local development with Vite & npm",
-        "Supports custom domain linking",
-        "Deploy/edit options via Lovable"
-      ],
+      category: "Web Application",
+      description: "Modern Campus Web Application",
+      fullDescription: "A campus-focused web app built with modern React ecosystem, featuring deployment options via Lovable and custom domain support.",
       techStack: ["Vite", "TypeScript", "React", "Tailwind CSS", "shadcn-ui"],
       image: "/placeholder-project.jpg",
       github: "https://github.com/MohanPrasathSece/FinalCampusLink.git",
       demo: "https://frontend-campus-connect.vercel.app",
       assetsDir: "campuslink-portal"
     },
-    // 'Task Manager' project removed per request
     {
       title: "Food Rescue Network",
-      tagline: "Real-time Food Donation Platform",
-      description: "MERN stack application connecting donors and volunteers to reduce food waste with real-time tracking and secure authentication.",
-      features: [
-        "Real-time food donation tracking",
-        "JWT authentication for security",
-        "Role-based dashboards (donor, volunteer, admin)",
-        "MongoDB donation record storage",
-        "Responsive React UI deployed on Vercel"
-      ],
+      category: "MERN Stack",
+      description: "Real-time Food Donation Platform",
+      fullDescription: "MERN stack application connecting donors and volunteers to reduce food waste with real-time tracking and secure authentication.",
       techStack: ["MongoDB", "Express.js", "React.js", "Node.js"],
       image: "/placeholder-project.jpg",
       github: "https://github.com/MohanPrasathSece/FoodRescueNetwork.git",
@@ -60,15 +46,9 @@ const ProjectsSection = () => {
     },
     {
       title: "MediSmart-AI",
-      tagline: "AI-Powered Prescription Analysis",
-      description: "AI-powered prescription analysis and pharmacy order management system using OCR/NER technology and real-time updates.",
-      features: [
-        "OCR/NER to extract medicines from prescriptions",
-        "Pharmacy dashboard with inventory management",
-        "Role-based access (patient, pharmacy, delivery partner)",
-        "Real-time updates using Socket.io",
-        "Deployed prototype with secure authentication"
-      ],
+      category: "AI/ML",
+      description: "AI-Powered Prescription Analysis",
+      fullDescription: "AI-powered prescription analysis and pharmacy order management system using OCR/NER technology and real-time updates.",
       techStack: ["MERN", "Hugging Face", "Tesseract.js", "Socket.io"],
       image: "/placeholder-project.jpg",
       github: "https://github.com/MohanPrasathSece/MediSmart-Ai.git",
@@ -77,14 +57,9 @@ const ProjectsSection = () => {
     },
     {
       title: "NammaCity",
-      tagline: "City-Focused Web Application",
-      description: "A city-focused web application currently in development with future scope for events, services, and interactive maps.",
-      features: [
-        "Frontend & backend infrastructure",
-        "UI designed for city-based data access",
-        "Future scope: events, services, and maps",
-        "Scalable architecture for city services"
-      ],
+      category: "Web Development",
+      description: "City-Focused Web Application",
+      fullDescription: "A city-focused web application currently in development with future scope for events, services, and interactive maps.",
       techStack: ["HTML", "CSS", "JavaScript"],
       image: "/placeholder-project.jpg",
       github: "https://github.com/MohanPrasathSece/NammaCity.git",
@@ -93,395 +68,269 @@ const ProjectsSection = () => {
     }
   ];
 
-  // Sort projects from newest to oldest if a year field is provided on any item
-  const hasYears = projects.some((p: any) => typeof (p as any).year === 'number');
-  const sortedProjects = hasYears
-    ? [...projects].sort((a: any, b: any) => (b.year ?? -Infinity) - (a.year ?? -Infinity))
-    : projects;
-  const visibleProjects = sortedProjects.filter((p) => p.title !== "Task Manager");
-  // Bring MediSmart-AI to the front
-  const orderedProjects = [
-    ...visibleProjects.filter((p) => p.title === "MediSmart-AI"),
-    ...visibleProjects.filter((p) => p.title === "Food Rescue Network"),
-    ...visibleProjects.filter((p) => p.title !== "MediSmart-AI" && p.title !== "Food Rescue Network"),
-  ];
-  const featuredTitles = new Set(["MediSmart-AI", "Food Rescue Network"]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [modalImageIndex, setModalImageIndex] = useState(0);
 
-  // Navigation state removed in scroll variant
+  const nextProject = () => {
+    setCurrentIndex((prev) => (prev + 1) % projects.length);
+  };
+
+  const prevProject = () => {
+    setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
+  };
+
+  const openProjectDialog = (project: typeof projects[0]) => {
+    setSelectedProject(project);
+    setIsDialogOpen(true);
+    setModalImageIndex(0);
+  };
 
   const getTechBadgeColor = (tech: string) => {
     const colors: { [key: string]: string } = {
-      "Java": "bg-red-500/20 text-red-400",
-      "Spring Boot": "bg-green-500/20 text-green-400",
-      "React": "bg-blue-500/20 text-blue-400",
-      "Node.js": "bg-green-600/20 text-green-300",
-      "MongoDB": "bg-green-500/20 text-green-400",
-      "TypeScript": "bg-blue-600/20 text-blue-300",
-      "Vite": "bg-purple-500/20 text-purple-400",
-      "Tailwind CSS": "bg-cyan-500/20 text-cyan-400"
+      "React": "bg-blue-500/20 text-blue-400 border-blue-500/30",
+      "Node.js": "bg-green-600/20 text-green-300 border-green-600/30",
+      "MongoDB": "bg-green-500/20 text-green-400 border-green-500/30",
+      "TypeScript": "bg-blue-600/20 text-blue-300 border-blue-600/30",
+      "Stripe": "bg-purple-500/20 text-purple-400 border-purple-500/30",
+      "Tailwind CSS": "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+      "OpenAI": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+      "Framer Motion": "bg-pink-500/20 text-pink-400 border-pink-500/30"
     };
-    return colors[tech] || "bg-primary/20 text-primary";
+    return colors[tech] || "bg-primary/20 text-primary border-primary/30";
   };
 
-  const outerScrollRef = useRef<HTMLDivElement | null>(null);
-  const [galleryIndex, setGalleryIndex] = useState<{ [k: number]: number }>({});
-  const getIndex = (i: number, len: number) => {
-    const idx = galleryIndex[i] ?? 0;
-    if (idx < 0) return 0;
-    if (idx >= len) return len - 1;
-    return idx;
-  };
-  const step = (i: number, len: number, delta: number) => {
-    setGalleryIndex((prev) => {
-      const curr = prev[i] ?? 0;
-      let next = (curr + delta) % len;
-      if (next < 0) next += len;
-      return { ...prev, [i]: next };
-    });
-  };
-
-  // Lightbox state for enlarged view
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lightboxTitle, setLightboxTitle] = useState<string>("");
-  const [lightboxIsLandscape, setLightboxIsLandscape] = useState<boolean | null>(null);
-  const openLightbox = (imgs: string[], index: number, title: string) => {
-    if (!imgs || imgs.length === 0) return;
-    setLightboxImages(imgs);
-    setLightboxIndex(Math.max(0, Math.min(index, imgs.length - 1)));
-    setLightboxTitle(title);
-    setLightboxIsLandscape(null);
-    setLightboxOpen(true);
-  };
-  const closeLightbox = () => setLightboxOpen(false);
-  const lightboxStep = (delta: number) => {
-    setLightboxIndex((prev) => {
-      const len = lightboxImages.length;
-      if (len === 0) return 0;
-      let next = (prev + delta) % len;
-      if (next < 0) next += len;
-      return next;
-    });
-  };
-
-  // Lightbox UX enhancements: lock scroll and enable keyboard navigation
-  useEffect(() => {
-    if (lightboxOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      const onKey = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') lightboxStep(-1);
-        if (e.key === 'ArrowRight') lightboxStep(1);
-      };
-      window.addEventListener('keydown', onKey);
-      return () => {
-        document.body.style.overflow = prev;
-        window.removeEventListener('keydown', onKey);
-      };
-    }
-  }, [lightboxOpen]);
-
-  // Load images from assets/projects/<dir>.
-  // Ordering rules:
-  // 1) files named one..ten (prefix) come first in that order
-  // 2) then files with numeric prefixes (1,2,3,...) in ascending order
-  // 3) otherwise alphabetical
   const loadProjectImages = (dir?: string) => {
     if (!dir) return [] as string[];
-    // Vite's import.meta.glob requires a static string. We glob all project images and filter by dir.
     const modules = import.meta.glob('/src/assets/projects/**/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,avif,AVIF}', { eager: true, import: 'default' }) as Record<string, string>;
-    const order = ["one","two","three","four","five","six","seven","eight","nine","ten"]; // enforced order by filename (prefix)
     const items = Object.entries(modules)
       .filter(([path]) => path.includes(`/src/assets/projects/${dir}/`))
-      .map(([path, src]) => {
-        const file = path.split('/').pop() || "";
-        const name = file.split('.').slice(0, -1).join('.').toLowerCase();
-        // Word-based index (one..ten)
-        const wordIdx = order.findIndex(key => name.startsWith(key));
-        // Numeric index from prefix like 1-, 02_, etc.
-        const numMatch = name.match(/^(\d{1,3})/);
-        const numIdx = numMatch ? parseInt(numMatch[1], 10) : NaN;
-        // Compute composite sort keys
-        const hasWord = wordIdx !== -1;
-        const hasNum = Number.isFinite(numIdx);
-        return { name, src, wordIdx, numIdx: hasNum ? numIdx : Number.POSITIVE_INFINITY, hasWord, hasNum };
-      });
-    const anyWord = items.some(i => i.hasWord);
-    const anyNum = items.some(i => i.hasNum);
-    items.sort((a, b) => {
-      // Word order first if present
-      if (anyWord) {
-        if (a.hasWord && b.hasWord) return (a.wordIdx - b.wordIdx) || a.name.localeCompare(b.name);
-        if (a.hasWord) return -1;
-        if (b.hasWord) return 1;
-      }
-      // Then numeric prefixes
-      if (anyNum) {
-        if (a.hasNum && b.hasNum) return (a.numIdx - b.numIdx) || a.name.localeCompare(b.name);
-        if (a.hasNum) return -1;
-        if (b.hasNum) return 1;
-      }
-      // Fallback alpha
-      return a.name.localeCompare(b.name);
-    });
+      .map(([path, src]) => ({ path, src }))
+      .sort((a, b) => a.path.localeCompare(b.path));
     return items.map(i => i.src).filter(Boolean);
   };
 
+  // Get visible projects for carousel
+  const visibleCount = 3;
+  const getVisibleProjects = () => {
+    const visible = [];
+    for (let i = 0; i < visibleCount; i++) {
+      const index = (currentIndex + i) % projects.length;
+      visible.push({ ...projects[index], originalIndex: index });
+    }
+    return visible;
+  };
+
   return (
-    <section id="projects" className="relative py-8 md:py-14 px-0 md:px-6">
+    <section id="projects" className="relative py-16 md:py-24 px-4 md:px-6 bg-gradient-to-b from-background via-background/95 to-background">
       {/* Tiny stars background */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
         <TinyStars densityScale={1.25} />
       </div>
-      <div className="container px-0 md:px-4 max-w-none md:max-w-7xl mx-auto relative z-10">
-        <div className="mb-4 md:mb-8">
-          <div className="flex flex-col items-center gap-2 md:gap-3 text-center">
-            <h2 className="typ-h-section">
-              Featured <span className="orange-gradient bg-clip-text text-transparent">Projects</span>
-            </h2>
-            {/* Mobile: icon-only below heading, aligned a bit to the right */}
-            <div className="w-full flex md:hidden mt-1 justify-end pr-3">
-              <a
-                href="https://github.com/MohanPrasathSece"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                title="GitHub"
-              >
-                <Button variant="outline-orange" size="sm" className="p-2 h-10 w-10 !px-2">
-                  <Github className="h-5 w-5" />
-                </Button>
-              </a>
-            </div>
-            {/* Desktop: full button centered below heading */}
-            <div className="hidden md:block">
-              <a
-                href="https://github.com/MohanPrasathSece"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button variant="outline-orange" size="sm">
-                  <Github className="mr-2 h-4 w-4" />
-                  GitHub
-                </Button>
-              </a>
-            </div>
-          </div>
+
+      <div className="container max-w-7xl mx-auto relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            My <span className="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">Projects</span>
+          </h2>
         </div>
 
-        {/* Horizontal Scroll Controls (scroll with trackpad/mouse) */}
-        <div className="text-center mb-6 text-sm text-gray-text">Scroll to view more projects →</div>
-
-        {/* Project List - Horizontal Scroll */}
-        <div ref={outerScrollRef} className="overflow-x-auto overflow-y-visible no-scrollbar pl-3 pr-0 md:-mx-4 md:px-4 pb-2">
-          <div className="flex gap-6 snap-x snap-mandatory">
-            {orderedProjects.map((project, index) => {
-              const gallery = loadProjectImages((project as any).assetsDir);
-              const currentIdx = getIndex(index, gallery.length);
-              const isFeatured = featuredTitles.has(project.title);
+        {/* Projects Carousel */}
+        <div className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {getVisibleProjects().map((project, idx) => {
+              const images = loadProjectImages(project.assetsDir);
+              const projectImage = images.length > 0 ? images[0] : project.image;
+              
               return (
-                <div key={index} className="snap-start min-w-[360px] sm:min-w-[720px] lg:min-w-[1200px] first:ml-1.5 md:first:ml-0">
-                  <div className={`card-gradient card-shadow rounded-2xl hover-glow h-full relative hover:z-10 ${isFeatured ? 'border border-primary/40' : ''}`}>
-                    <div className="grid lg:grid-cols-2 gap-0 overflow-hidden rounded-2xl items-stretch">
-                      {/* Project Image / Gallery */}
-                      <div className="bg-muted flex items-center justify-center min-h-[84px] sm:min-h-[110px] md:min-h-[140px] lg:min-h-[160px] h-full">
-                        {gallery.length > 0 ? (
-                          <div className="relative w-full h-full px-3 sm:px-4 cursor-zoom-in group" onClick={() => openLightbox(gallery, currentIdx, project.title)}>
-                            <div className="w-full h-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
-                              {(() => {
-                                const imgs = gallery as string[];
-                                const idx = getIndex(index, imgs.length);
-                                const src = imgs[idx];
-                                return (
-                                  <img
-                                    src={src}
-                                    alt={`${project.title} screenshot ${idx + 1}`}
-                                    loading="lazy"
-                                    decoding="async"
-                                    sizes="(max-width: 640px) 320px, (max-width: 1024px) 560px, 900px"
-                                    className="object-contain w-full h-auto max-h-36 sm:max-h-48 md:max-h-56 lg:max-h-64 mt-2 sm:mt-3 md:mt-4"
-                                    onError={(e) => {
-                                      const target = e.currentTarget as HTMLImageElement;
-                                      if (target.src.endsWith('/placeholder.svg')) return;
-                                      target.src = '/placeholder.svg';
-                                    }}
-                                  />
-                                );
-                              })()}
-                            </div>
-                            {/* Nav buttons */}
-                            {gallery.length > 1 && (
-                            <button
-                              type="button"
-                              aria-label="Previous image"
-                              className="absolute left-2 top-2 p-1.5 text-white/90 hover:text-white z-10 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
-                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); step(index, gallery.length, -1); }}
-                            >
-                              <ChevronLeft className="h-6 w-6 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
-                            </button>
-                            )}
-                            {gallery.length > 1 && (
-                            <button
-                              type="button"
-                              aria-label="Next image"
-                              className="absolute right-2 top-2 p-1.5 text-white/90 hover:text-white z-10 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
-                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); step(index, gallery.length, 1); }}
-                            >
-                              <ChevronRight className="h-6 w-6 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
-                            </button>
-                            )}
-                            {/* Enlarge hint */}
-                            <div
-                              className="absolute bottom-2 right-2 flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/70 text-white text-xs shadow ring-1 ring-white/15 pointer-events-none md:opacity-0 md:group-hover:opacity-100 transition-opacity"
-                              aria-hidden="true"
-                            >
-                              <Maximize2 className="h-3.5 w-3.5" />
-                              <span className="hidden sm:inline">Enlarge</span>
-                            </div>
-                          </div>
-                        ) : project.title === "MediSmart-AI" ? (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <div className="w-[92%] h-[85%] rounded-2xl overflow-hidden shadow-inner bg-gradient-to-b from-emerald-600 to-emerald-700">
-                              <div className="h-full w-full flex flex-col items-center justify-center text-white text-center px-4">
-                                <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold mb-2">Your Health, Delivered.</h3>
-                                <p className="text-sm md:text-base text-white/90 max-w-md mb-4">
-                                  Compare medicine prices, upload prescriptions, and get your medications delivered to your doorstep.
-                                </p>
-                                <div className="flex gap-3 flex-wrap justify-center">
-                                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-white text-emerald-700 text-sm md:text-base shadow hover:shadow-md transition-smooth">
-                                    Search Medicines
-                                  </button>
-                                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-transparent border border-white/70 text-white text-sm md:text-base hover:bg-white/10 transition-smooth">
-                                    Upload Prescription
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="text-center">
-                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                              <ExternalLink className="h-8 w-8 text-primary" />
-                            </div>
-                            <p className="typ-body">Project Screenshot</p>
-                            <p className="typ-small mt-1">Image placeholder - insert project screenshot</p>
-                          </div>
-                        )}
-                      </div>
+                <div
+                  key={`${project.title}-${idx}`}
+                  className="group relative bg-card/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2"
+                  onClick={() => openProjectDialog(project)}
+                >
+                  {/* Project Image */}
+                  <div className="relative h-64 bg-muted overflow-hidden">
+                    <img
+                      src={projectImage}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement;
+                        target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect width="400" height="300" fill="%23374151"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="18" fill="%239CA3AF"%3EProject Image%3C/text%3E%3C/svg%3E';
+                      }}
+                    />
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 text-xs font-medium bg-background/90 backdrop-blur-sm rounded-full border border-border">
+                        {project.category}
+                      </span>
+                    </div>
+                  </div>
 
-                      {/* Project Details */}
-                      <div className="p-3 md:p-5">
-                        <div className="mb-2 md:mb-3">
-                          <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2 leading-snug">{project.title}</h3>
-                          <p className="text-primary font-medium text-sm md:text-base mb-1.5 md:mb-3">{project.tagline}</p>
-                          <p className="text-sm md:text-base text-gray-text leading-relaxed">{project.description}</p>
-                        </div>
-
-                      {/* Tech Stack */}
-                      <div className="mb-2 md:mb-3">
-                        <h4 className="text-sm md:text-base text-primary font-semibold mb-1 md:mb-2">Tech Stack:</h4>
-                        <div className="flex flex-wrap gap-1 md:gap-2">
-                          {project.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className={`px-2 md:px-3 py-0.5 md:py-1 rounded-full typ-badge ${getTechBadgeColor(tech)}`}
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex gap-2 md:gap-3">
-                        <a href={(project as any).github} target="_blank" rel="noopener noreferrer" className="flex-1">
-                          <Button variant="outline-orange" size="sm" className="w-full text-sm">
-                            <Github className="mr-2 h-4 w-4" />
-                            View Code
-                          </Button>
+                  {/* Project Info */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {project.description}
+                    </p>
+                    {/* Quick Links */}
+                    <div className="mt-4 flex gap-2">
+                      {project.github && project.github !== '#' && (
+                        <a href={(project as any).github} target="_blank" rel="noopener noreferrer">
+                          <Button variant="outline" size="sm">Code</Button>
                         </a>
-                        <a href={(project as any).demo} target="_blank" rel="noopener noreferrer" className="flex-1">
-                          <Button variant="outline-orange" size="sm" className="w-full text-sm">
-                            <ExternalLink className="mr-2 h-4 w-4" />
-                            Live Demo
-                          </Button>
+                      )}
+                      {project.demo && project.demo !== '#' && (
+                        <a href={(project as any).demo} target="_blank" rel="noopener noreferrer">
+                          <Button variant="outline" size="sm">Live</Button>
                         </a>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="flex items-center justify-center gap-4">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={prevProject}
+              className="rounded-full w-12 h-12 border-2 hover:border-primary hover:bg-primary/10 transition-all"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={nextProject}
+              className="rounded-full w-12 h-12 border-2 hover:border-primary hover:bg-primary/10 transition-all"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
-    {lightboxOpen && (
-      <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" onClick={closeLightbox}>
-        <div className="relative w-full max-w-6xl max-h-[92vh] bg-background rounded-xl shadow-2xl ring-1 ring-border overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
-          {/* Header */}
-          <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-border/60 bg-muted/40">
-            <div className="text-sm sm:text-base font-semibold truncate pr-2">{lightboxTitle}</div>
-            <div className="flex items-center gap-2">
-              {lightboxImages.length > 0 && (
-                <span className="text-xs text-gray-text">{lightboxIndex + 1} / {lightboxImages.length}</span>
-              )}
+
+      {/* Project Details Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white dark:bg-background border-0 p-0">
+          {selectedProject && (
+            <div className="relative">
+              {/* Close Button */}
               <button
+                onClick={() => setIsDialogOpen(false)}
+                className="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/90 hover:bg-white border border-gray-300 transition-colors"
                 aria-label="Close"
-                className="px-2 py-1 rounded-md bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm"
-                onClick={closeLightbox}
               >
-                Back
+                <X className="h-4 w-4 text-gray-600" />
               </button>
+
+              {/* Header */}
+              <div className="p-6 pb-4">
+                <DialogTitle className="text-2xl font-bold mb-1 text-gray-900 dark:text-foreground">
+                  {selectedProject.title}
+                </DialogTitle>
+                <p className="text-sm text-orange-500 font-medium">
+                  {selectedProject.category}
+                </p>
+              </div>
+
+              <div className="px-6 pb-4">
+                <div className="relative h-80 bg-gray-100 dark:bg-muted rounded-lg overflow-hidden">
+                  {(() => {
+                    const images = loadProjectImages(selectedProject.assetsDir);
+                    const src = images[modalImageIndex] || images[0] || selectedProject.image;
+                    const hasMany = images.length > 1;
+                    return (
+                      <>
+                        <img
+                          src={src}
+                          alt={selectedProject.title}
+                          className="w-full h-full object-cover object-top"
+                          onError={(e) => {
+                            const target = e.currentTarget as HTMLImageElement;
+                            target.src = 'data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"800\" height=\"600\"%3E%3Crect width=\"800\" height=\"600\" fill=\"%23374151\"/%3E%3Ctext x=\"50%25\" y=\"50%25\" dominant-baseline=\"middle\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"24\" fill=\"%239CA3AF\"%3EProject Preview%3C/text%3E%3C/svg%3E';
+                          }}
+                        />
+                        {hasMany && (
+                          <>
+                            <button
+                              aria-label="Previous"
+                              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
+                              onClick={() => setModalImageIndex((i) => {
+                                const len = images.length; return (i - 1 + len) % len;
+                              })}
+                            >
+                              <ChevronLeft className="h-5 w-5" />
+                            </button>
+                            <button
+                              aria-label="Next"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
+                              onClick={() => setModalImageIndex((i) => {
+                                const len = images.length; return (i + 1) % len;
+                              })}
+                            >
+                              <ChevronRight className="h-5 w-5" />
+                            </button>
+                            <div className="absolute bottom-2 right-3 text-xs px-2 py-1 rounded bg-black/60 text-white">
+                              {modalImageIndex + 1} / {images.length}
+                            </div>
+                          </>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="px-6 pb-4">
+                <p className="text-gray-600 dark:text-muted-foreground leading-relaxed text-sm">
+                  {selectedProject.fullDescription}
+                </p>
+              </div>
+
+              {/* Technologies Used */}
+              <div className="px-6 pb-6">
+                <h3 className="text-base font-bold mb-3 text-gray-900 dark:text-foreground">Technologies Used</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedProject.techStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1.5 bg-white dark:bg-background text-gray-700 dark:text-foreground text-sm font-medium border border-gray-200 dark:border-border rounded"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Links */}
+              <div className="px-6 pb-6 flex gap-3">
+                {selectedProject.github && selectedProject.github !== '#' && (
+                  <a href={selectedProject.github as any} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" size="sm">View Code</Button>
+                  </a>
+                )}
+                {selectedProject.demo && selectedProject.demo !== '#' && (
+                  <a href={selectedProject.demo as any} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" size="sm">Live Demo</Button>
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-          {/* Content */}
-          <div className="relative flex-1 min-h-0 flex items-center justify-center bg-black">
-            <div className="w-full h-full flex items-center justify-center p-3 sm:p-4">
-              <img
-                src={lightboxImages[lightboxIndex]}
-                alt={`Screenshot ${lightboxIndex + 1}`}
-                onLoad={(e) => {
-                  const img = e.currentTarget;
-                  setLightboxIsLandscape(img.naturalWidth >= img.naturalHeight);
-                }}
-                className={
-                  `object-contain ${
-                    lightboxIsLandscape === null
-                      ? 'max-h-[85vh] max-w-[92vw]'
-                      : lightboxIsLandscape
-                        ? 'h-auto max-h-[75vh] w-auto max-w-[70vw]'
-                        : 'w-full max-w-[88%] h-auto max-h-[85vh]'
-                  }`
-                }
-              />
-            </div>
-            {lightboxImages.length > 1 && (
-              <>
-                <button
-                  aria-label="Previous"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
-                  onClick={() => lightboxStep(-1)}
-                >
-                  <ChevronLeft className="h-6 w-6" />
-                </button>
-                <button
-                  aria-label="Next"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-black shadow ring-1 ring-black/10 hover:bg-white"
-                  onClick={() => lightboxStep(1)}
-                >
-                  <ChevronRight className="h-6 w-6" />
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    )}
-  </section>
-);
+          )}
+        </DialogContent>
+      </Dialog>
+    </section>
+  );
 };
 
 export default ProjectsSection;

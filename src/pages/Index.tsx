@@ -4,6 +4,8 @@ import HeroSection from "@/components/portfolio/HeroSection";
 import SkillsSection from "@/components/portfolio/SkillsSection";
 import DSASection from "@/components/portfolio/DSASection";
 import ProjectsSection from "@/components/portfolio/ProjectsSection";
+import OpenSourceSection from "@/components/portfolio/OpenSourceSection";
+import ZyraDigitalsSection from "@/components/portfolio/ZyraDigitalsSection";
 import ContactSection from "@/components/portfolio/ContactSection";
 
 // Lazy-load lower-priority sections to reduce initial JS for mobile
@@ -25,13 +27,19 @@ const Index = () => {
       {/* Projects Section */}
       <ProjectsSection />
 
-      {/* DSA & LeetCode Section */}
-      <DSASection />
-      
       {/* Achievements Section */}
       <Suspense fallback={<div className="py-10 text-center text-sm text-gray-text">Loading achievements…</div>}>
         <AchievementsSection />
       </Suspense>
+
+      {/* Zyra Digitals Section (placed next to achievements and open source) */}
+      <ZyraDigitalsSection />
+
+      {/* Open Source Contributions */}
+      <OpenSourceSection />
+
+      {/* DSA & LeetCode Section */}
+      <DSASection />
       
       {/* Certifications Section */}
       <Suspense fallback={<div className="py-10 text-center text-sm text-gray-text">Loading certifications…</div>}>
